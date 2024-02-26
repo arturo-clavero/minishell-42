@@ -6,8 +6,10 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:28:31 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/02/26 10:28:46 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/02/26 10:59:31 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // -- LIBRARIES --
+#include "../libs/includes/libft.h"
+#include "utils.h"
