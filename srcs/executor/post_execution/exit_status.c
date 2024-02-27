@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   id.c                                               :+:      :+:    :+:   */
+/*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 04:26:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 04:28:42 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 07:19:13 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/13 09:14:48 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "post_exec.h"
 
-void	create_process_ids(t_cmd *cmd, t_exec *ex)
+void	wait_for_child_exit_status(t_exec *ex)
 {
-	int	total_cmds;
+	int	exit_status;
+	int	child_exit;
+	int	curr_child;
 
-	total_cmds = 0;
-	while (cmd)
+	curr_child = -1;
+	while (++curr_child < ex->total_children)
 	{
-		cmd = cmd->next;
-		total_cmds++;
+		waitpid(ex->id[curr_child], &exit_status, 0);
+		if (WIFEXITED(exit_status))
+			child_exit = WEXITSTATUS(exit_status);
+		else if (WIFSIGNALED(exit_status))
+			child_exit = WTERMSIG(exit_status);
+		if (ex->is_builtin_last == FALSE)
+			ex->exit = child_exit;
 	}
-	ex->id = (int *)malloc(sizeof(int) * total_cmds);
-	if (!ex->id)
-		return ;//MALLOC ERROR
 }

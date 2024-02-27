@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_letter.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 04:30:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:11:56 by artclave         ###   ########.fr       */
+/*   Created: 2024/01/29 01:10:51 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/13 09:09:13 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "utils_exec.h"
+#include "builtin_exec.h"
 
-int	is_letter(char c)
+int	exec_env(t_exec *ex)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (TRUE);
-	return (FALSE);
+	t_list	*env_node;
+	char	*found;
+	char	*env_str;
+
+	env_node = ex->env_list;
+	while (env_node)
+	{
+		env_str = ((char *)env_node->content);
+		found = ft_strchr(env_str, '=');
+		if (found)
+		{
+			write(STDOUT_FILENO, env_str, ft_strlen(env_str));
+			write(STDOUT_FILENO, "\n", 1);
+		}
+		env_node = env_node->next;
+	}
+	return (0);
 }

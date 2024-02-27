@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_status.c                                      :+:      :+:    :+:   */
+/*   input_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 08:26:04 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 04:38:01 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 07:03:24 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/13 09:18:07 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "process_exec.h"
 
-void	get_exit_status(t_exec *ex)
+void	save_original_io(t_exec *ex)
 {
-	int	exit_status;
-	int	child_exit;
-	int	i;
+	ex->stdin_original = dup(STDIN_FILENO);
+	ex->stdout_original = dup(STDOUT_FILENO);
+}
 
-	child_exit = 0;
-	exit_status = 0;
-	i = -1;
-	while (++i <= ex->total_pipes)
-	{
-		waitpid(ex->id[i], &exit_status, 0);
-		if (WIFEXITED(exit_status))
-			child_exit = WEXITSTATUS(exit_status);
-		else if (WIFSIGNALED(exit_status))
-			child_exit = WTERMSIG(exit_status);
-		ex->exit = child_exit;
-	}
+void	reset_io(t_exec *ex)
+{
+	dup2(ex->stdin_original, STDIN_FILENO);
+	close(ex->stdin_original);
+	dup2(ex->stdout_original, STDOUT_FILENO);
+	close(ex->stdout_original);
 }
