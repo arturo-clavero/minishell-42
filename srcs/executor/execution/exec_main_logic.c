@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   innit_minishell.c                                  :+:      :+:    :+:   */
+/*   exec_main_logic.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:03:11 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 04:16:34 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 05:36:31 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/13 09:13:25 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "prep_exec.h"
+#include "process_exec.h"
+#include "post_exec.h"
 
-void	initialize_minishell(t_exec *ex, char **env)
+void	execution_main(t_exec *ex)
 {
-	int		i;
+	t_cmd	*cmd;
 
-	ex->cmd = NULL;
-	ex->exit = 0;
-	ex->id_list = NULL;
-	ex->env_list = NULL;
-	ex->total_pipes = 0;
-	i = -1;
-	while (env[++i])
-		new_node((void *)env[i], &ex->env_list);
+	cmd = ex->cmd;
+	handle_dollar_sign(&ex->cmd, ex);
+	create_pipes(cmd, ex);
+	create_child_ids(cmd, ex);
+	process_cmds(cmd, ex);
+	wait_for_child_exit_status(ex);
+	adjust_shlvl(cmd, ex);
+	maybe_quit_program(ex);
+	clean_list(ex->short_term_data, TRUE);
+	clean_t_cmd(ex->cmd);
 }

@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 10:48:55 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/02/26 10:52:35 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/02/11 13:42:49 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/13 09:11:30 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "execution.h"
+#include "utils_exec.h"
 
-int	main(int argc, char **argv, char **envp)
+int	has_pipe(t_cmd *cmd)
 {
-	if (argc != 1 || argv[1])
+	t_redir	*redir;
+
+	redir = cmd->redir;
+	while (redir)
 	{
-		printf("[ERROR] - Program does not take any arguments\n");
-		exit(EXIT_FAILURE);
+		if (redir->type == PIPE)
+			return (TRUE);
+		redir = redir->next;
 	}
-	return (0);
+	return (FALSE);
 }

@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   str_is_numerical.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:10:51 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/01 16:15:07 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/07 02:08:45 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/13 09:12:12 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "utils_exec.h"
 
-void	exec_env(t_exec *ex)
+int	str_is_numerical(char *str)
 {
-	t_list	*env_str;
-	int		i;
+	int	i;
 
-	env_str = ex->env_list;
-	while (env_str)
+	i = -1;
+	while (str[++i])
 	{
-		i = -1;
-		while (((char *)env_str->content)[++i])
-		{
-			if (((char *)env_str->content)[i] == '=')
-				break ;
-		}
-		if (((char *)env_str->content)[i] == '\0')
-		{
-			env_str = env_str->next;
-			continue ;
-		}
-		printf("%s\n", ((char *)env_str->content));
-		env_str = env_str->next;
+		if (is_digit(str[i]) == FALSE)
+			return (FALSE);
 	}
-	exit (0);
+	return (TRUE);
 }

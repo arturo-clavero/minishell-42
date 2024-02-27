@@ -5,23 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 01:16:02 by artclave          #+#    #+#             */
-/*   Updated: 2024/01/29 08:53:21 by artclave         ###   ########.fr       */
+/*   Created: 2024/02/11 10:44:48 by artclave          #+#    #+#             */
+/*   Updated: 2024/02/13 09:08:53 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "builtin_exec.h"
+#include "utils_exec.h"
 
-void	exec_echo(char **cmd_array)
+static int	is_nflag(char *str);
+
+int	exec_echo(char **cmd_array)
 {
 	int	i;
 	int	n_flag;
 
 	i = 0;
 	n_flag = 0;
-	//GET ENV EXPANDABLES $
 	while (cmd_array[++i])
 	{
+		if (cmd_array[i][0] == '\0')
+			continue ;
 		if (is_nflag(cmd_array[i]) && n_flag + 1 == i)
 		{
 			n_flag++;
@@ -33,27 +38,22 @@ void	exec_echo(char **cmd_array)
 	}
 	if (!n_flag)
 		write(STDOUT_FILENO, "\n", 1);
-	exit (0);
+	return (0);
 }
 
-int	is_nflag(char *str)
+static int	is_nflag(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
+	skip_whitespace(str, &i);
 	if (str[i] != '-')
 		return (0);
 	i++;
 	while (str[i] == 'n')
 		i++;
-	while (str[i])
-	{
-		if (str[i] == ' ' || str[i] == '\t')
-			i++;
-		else
-			return (0);
-	}
+	skip_whitespace(str, &i);
+	if (str[i])
+		return (0);
 	return (1);
 }
