@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   innit_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:37:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:17:25 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/28 10:36:50 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 void	initialize_minishell(t_exec *ex, char **env)
 {
-	int		i;
 	int		shlvl;
 
 	ex->cmd = NULL;
