@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean.c                                            :+:      :+:    :+:   */
+/*   ft_clean.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:12:37 by artclave         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:01:43 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #include "post_exec.h"
 #include "utils_exec.h"
 
+/**
+ * @brief Exit the minishell
+ *
+ * @param t_exec *ex - the t_exec structure
+ * @param int exit_num - the exit number
+ * @return void
+*/
 void	exit_minishell(t_exec *ex, int exit_num)
 {
 	clean_t_cmd(ex->cmd);
@@ -24,14 +31,19 @@ void	exit_minishell(t_exec *ex, int exit_num)
 	exit(exit_num);
 }
 
+/**
+ * @brief Check if the command is exit and if it is, exit the program
+ *
+ * @param t_exec *ex - the t_exec structure
+ * @return void
+ */
 void	maybe_quit_program(t_exec *ex)
 {
 	if (ex->cmd->next)
 		return ;
 	if (ft_strncmp(ex->cmd->array[0], "exit", ft_strlen("exit")) != 0)
 		return ;
-	if (!(ex->cmd->array[1] == NULL
-			|| !str_is_numerical(ex->cmd->array[1])
+	if (!(ex->cmd->array[1] == NULL || !str_is_numerical(ex->cmd->array[1])
 			|| (str_is_numerical(ex->cmd->array[1])
 				&& ex->cmd->array[2] == NULL)))
 		return ;
@@ -40,6 +52,13 @@ void	maybe_quit_program(t_exec *ex)
 	exit_minishell(ex, ex->exit);
 }
 
+/**
+ * @brief Clean a list
+ *
+ * @param t_list *list - the list to clean
+ * @param int clean_content - if TRUE, the content of the list will be freed
+ * @return void
+ */
 void	clean_list(t_list *list, int clean_content)
 {
 	t_list	*temp;
@@ -54,6 +73,12 @@ void	clean_list(t_list *list, int clean_content)
 	}
 }
 
+/**
+ * @brief Clean the t_cmd structure
+ *
+ * @param t_cmd *cmd - the t_cmd structure to clean
+ * @return void
+ */
 void	clean_t_cmd(t_cmd *cmd)
 {
 	int		i;
@@ -78,6 +103,13 @@ void	clean_t_cmd(t_cmd *cmd)
 	}
 }
 
+/**
+ * @brief Add data to the cleanup list
+ *
+ * @param void *content - the content to add to the list
+ * @param t_list **list - the list to add the content to
+ * @return void
+ */
 void	add_data_to_cleanup_list(void *content, t_list **list)
 {
 	t_list	*node;
