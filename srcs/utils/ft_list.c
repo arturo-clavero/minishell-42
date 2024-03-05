@@ -6,7 +6,11 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:50:45 by artclave          #+#    #+#             */
+<<<<<<< HEAD:srcs/utils/ft_list.c
 /*   Updated: 2024/02/28 11:07:17 by ugolin-olle      ###   ########.fr       */
+=======
+/*   Updated: 2024/02/13 09:11:59 by artclave         ###   ########.fr       */
+>>>>>>> origin/execution:srcs/utils/list_utils.c
 /*                                                                            */
 /* ************************************************************************** */
 
