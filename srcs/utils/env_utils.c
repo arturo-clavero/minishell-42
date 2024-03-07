@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:24:21 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:11:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/07 10:52:27 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "utils_exec.h"
+#include "minishell.h"
 
+/**
+ * @brief Get the value of an environment variable.
+ *
+ * @param char *variable - The variable
+ * @param t_list *env_list - The environment list
+ * @return char*
+*/
 char	*get_env_value(char *variable, t_list *env_list)
 {
 	int		variable_len;
@@ -29,6 +35,13 @@ char	*get_env_value(char *variable, t_list *env_list)
 	return (NULL);
 }
 
+/**
+ * @brief Get the node of an environment variable.
+ *
+ * @param char *variable - The variable
+ * @param t_exec *ex - The execution
+ * @return t_list*
+*/
 t_list	*get_env_node(char *variable, t_exec *ex)
 {
 	int		variable_len;

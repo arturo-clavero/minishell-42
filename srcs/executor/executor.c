@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_main_logic.c                                  :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 05:36:31 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:13:25 by artclave         ###   ########.fr       */
+/*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/07 10:25:01 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "prep_exec.h"
-#include "process_exec.h"
-#include "post_exec.h"
+#include "minishell.h"
 
+/**
+ * @brief Execute the execution command.
+ *
+ * @param t_exec *ex - The execution structure.
+ * @return void
+*/
 void	execution_main(t_exec *ex)
 {
 	t_cmd	*cmd;

@@ -5,18 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 05:50:45 by artclave          #+#    #+#             */
-<<<<<<< HEAD:srcs/utils/ft_list.c
-/*   Updated: 2024/02/28 11:07:17 by ugolin-olle      ###   ########.fr       */
-=======
-/*   Updated: 2024/02/13 09:11:59 by artclave         ###   ########.fr       */
->>>>>>> origin/execution:srcs/utils/list_utils.c
+/*   Created: 2024/03/07 10:54:56 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/07 10:55:21 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "utils_exec.h"
+#include "minishell.h"
 
+/**
+ * @brief Create a new node.
+ *
+ * @param void *content - The content
+ * @param t_list **list - The list
+ * @return void
+ */
 void	new_node(void *content, t_list **list)
 {
 	t_list	*new_node;
@@ -36,6 +38,12 @@ void	new_node(void *content, t_list **list)
 	}
 }
 
+/**
+ * @brief Get the last node.
+ *
+ * @param t_list *list - The list
+ * @return t_list*
+ */
 t_list	*get_last_node(t_list *list)
 {
 	while (list->next)

@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils_other.c                               :+:      :+:    :+:   */
+/*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:09:47 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:14:03 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "builtin_exec.h"
-#include "utils_exec.h"
+#include "minishell.h"
 
 static int	next_smallest_string(t_list *env, char *new_min, char *old_min);
 
@@ -38,7 +36,7 @@ int	is_variable_content_valid(char *cmd_array, char *original_cmd)
 	skip_whitespace(cmd_array, &j);
 	while (cmd_array[j] && cmd_array[j] != '=')
 	{
-		if (!is_letter(cmd_array[j]) && !is_digit(cmd_array[j])
+		if (!is_letter(cmd_array[j]) && !ft_isdigit(cmd_array[j])
 			&& cmd_array[j] != '_')
 		{
 			print_error("export `", cmd_array, "': not a valid identifier");

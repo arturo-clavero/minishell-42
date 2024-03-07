@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:47:14 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:07:36 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:17:14 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "builtin_exec.h"
+#include "minishell.h"
 
+/**
+ * @brief Check if the command is a builtin
+ *
+ * @param char *cmd - The command to check
+ * @return int - TRUE if the command is a builtin, FALSE otherwise
+ */
 int	is_builtin(char *cmd)
 {
 	if (ft_strncmp(cmd, "echo", ft_strlen(cmd)) == 0)
@@ -32,6 +37,12 @@ int	is_builtin(char *cmd)
 	return (FALSE);
 }
 
+/**
+ * @brief Execute the builtin command
+ *
+ * @param t_cmd cmd - The command to execute
+ * @param t_exec *ex - The execution structure
+ */
 void	execute_builtin(t_cmd *cmd, t_exec *ex)
 {
 	int	exit_code;

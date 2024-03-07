@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:59:12 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:11:49 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/07 21:54:27 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "utils_exec.h"
+#include "minishell.h"
 
 int	free_data(char *should_exit, char *data, int exit_code)
 {

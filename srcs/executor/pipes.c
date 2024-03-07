@@ -3,17 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:43:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:19:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/07 21:51:00 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "prep_exec.h"
-#include "post_exec.h"
+#include "minishell.h"
 
+/**
+ * @brief Create the pipes for the commands.
+ *
+ * @param t_cmd *cmd - The command structure
+ * @param t_exec *ex - The execution structure
+ * @return void
+*/
 void	create_pipes(t_cmd *cmd, t_exec *ex)
 {
 	int	i;
@@ -40,6 +45,14 @@ void	create_pipes(t_cmd *cmd, t_exec *ex)
 	}
 }
 
+/**
+ * @brief Duplicate the pipes for the commands.
+ *
+ * @param int current - The current command
+ * @param t_cmd *cmd - The command structure
+ * @param t_exec *ex - The execution structure
+ * @return void
+*/
 void	dup_pipes(int current, t_cmd *cmd, t_exec *ex)
 {
 	(void)ex;
@@ -55,6 +68,13 @@ void	dup_pipes(int current, t_cmd *cmd, t_exec *ex)
 	}
 }
 
+/**
+ * @brief Close the open pipes.
+ *
+ * @param int curr_cmd - The current command
+ * @param t_exec *ex - The execution structure
+ * @return void
+*/
 void	close_open_pipes(int curr_cmd, t_exec *ex)
 {
 	int	i;

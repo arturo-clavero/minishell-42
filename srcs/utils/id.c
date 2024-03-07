@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   id.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:45:11 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:16:48 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/07 21:54:39 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "prep_exec.h"
-#include "builtin_exec.h"
-#include "post_exec.h"
-#include "utils_exec.h"
+#include "minishell.h"
 
 void	create_child_ids(t_cmd *cmd, t_exec *ex)
 {

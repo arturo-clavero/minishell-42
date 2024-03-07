@@ -1,0 +1,1 @@
+1. Need to send the command parsed in t_exec in cmd.

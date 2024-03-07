@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:10:51 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:09:13 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:20:44 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "builtin_exec.h"
+#include "minishell.h"
 
+/**
+ * @brief Execute the env command.
+ *
+ * @param t_exec *ex - The execution structure
+ * @return int - The exit status
+ */
 int	exec_env(t_exec *ex)
 {
 	t_list	*env_node;

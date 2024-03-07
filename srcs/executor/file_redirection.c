@@ -3,18 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   file_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:41:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:15:23 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/07 10:21:54 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "process_exec.h"
+#include "minishell.h"
 
-static int	write_heredoc_to_pipe(char *buffer);
+/**
+ * @brief Write heredoc to pipe
+ *
+ * @param char *buffer - The buffer
+ * @return int - The file descriptor
+ */
+static int	write_heredoc_to_pipe(char *buffer)
+{
+	int	fd[2];
+	int	len;
 
+	if (pipe(fd) == -1)
+		return (-1);
+	len = ft_strlen(buffer);
+	write(fd[STDOUT_FILENO], buffer, len);
+	close(fd[STDOUT_FILENO]);
+	return (fd[STDIN_FILENO]);
+}
+
+/**
+ * @brief Duplicate file input.
+ *
+ * @param t_cmd *cmd - The command
+ * @return void
+ */
 void	dup_file_input(t_cmd *cmd)
 {
 	int		fd;
@@ -37,6 +59,12 @@ void	dup_file_input(t_cmd *cmd)
 	}
 }
 
+/**
+ * @brief Duplicate file output.
+ *
+ * @param t_cmd *cmd - The command
+ * @return void
+ */
 void	dup_file_output(t_cmd *cmd)
 {
 	int		fd;
@@ -59,6 +87,12 @@ void	dup_file_output(t_cmd *cmd)
 	}
 }
 
+/**
+ * @brief Are redirections valid.
+ *
+ * @param t_cmd *cmd - The command
+ * @return int - The exit status
+ */
 int	are_redirections_valid(t_cmd *cmd)
 {
 	int		fd;
@@ -82,6 +116,13 @@ int	are_redirections_valid(t_cmd *cmd)
 	return (0);
 }
 
+/**
+ * @brief Open file.
+ *
+ * @param t_redir *redir - The redirection
+ * @param int pipe_fd - The pipe file descriptor
+ * @return int - The file descriptor
+ */
 int	open_file(t_redir *redir, int pipe_fd)
 {
 	int	fd;
@@ -98,17 +139,4 @@ int	open_file(t_redir *redir, int pipe_fd)
 	else if (redir->type == HEREDOC)
 		fd = write_heredoc_to_pipe(redir->heredoc_buff);
 	return (fd);
-}
-
-static int	write_heredoc_to_pipe(char *buffer)
-{
-	int	fd[2];
-	int	len;
-
-	if (pipe(fd) == -1)
-		return (-1);
-	len = ft_strlen(buffer);
-	write(fd[STDOUT_FILENO], buffer, len);
-	close(fd[STDOUT_FILENO]);
-	return (fd[STDIN_FILENO]);
 }

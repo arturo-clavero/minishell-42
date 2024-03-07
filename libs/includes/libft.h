@@ -38,6 +38,7 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
+void	ft_strcat(char *dst, char *src);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s1);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));

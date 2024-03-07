@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 13:29:15 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:11:07 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:26:54 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "builtin_exec.h"
-#include "utils_exec.h"
+#include "minishell.h"
 
+/**
+ * @brief Execute the pwd command.
+ *
+ * @param t_exec *ex - The execution structure
+ * @return int - The exit status
+ */
 int	exec_pwd(t_exec *ex)
 {
 	char	*pwd;
