@@ -6,19 +6,17 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/28 11:01:43 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/07 10:54:31 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "post_exec.h"
-#include "utils_exec.h"
+#include "minishell.h"
 
 /**
- * @brief Exit the minishell
+ * @brief Exit the minishell and free structure.
  *
- * @param t_exec *ex - the t_exec structure
- * @param int exit_num - the exit number
+ * @param t_exec *ex - The execution
+ * @param int exit_num - The exit number
  * @return void
 */
 void	exit_minishell(t_exec *ex, int exit_num)
@@ -32,18 +30,19 @@ void	exit_minishell(t_exec *ex, int exit_num)
 }
 
 /**
- * @brief Check if the command is exit and if it is, exit the program
+ * @brief Maybe quit the program.
  *
- * @param t_exec *ex - the t_exec structure
+ * @param t_exec *ex - The execution
  * @return void
- */
+*/
 void	maybe_quit_program(t_exec *ex)
 {
 	if (ex->cmd->next)
 		return ;
 	if (ft_strncmp(ex->cmd->array[0], "exit", ft_strlen("exit")) != 0)
 		return ;
-	if (!(ex->cmd->array[1] == NULL || !str_is_numerical(ex->cmd->array[1])
+	if (!(ex->cmd->array[1] == NULL
+			|| !str_is_numerical(ex->cmd->array[1])
 			|| (str_is_numerical(ex->cmd->array[1])
 				&& ex->cmd->array[2] == NULL)))
 		return ;
@@ -53,12 +52,12 @@ void	maybe_quit_program(t_exec *ex)
 }
 
 /**
- * @brief Clean a list
+ * @brief Clean the list.
  *
- * @param t_list *list - the list to clean
- * @param int clean_content - if TRUE, the content of the list will be freed
+ * @param t_list *list - The list
+ * @param int clean_content - The clean content
  * @return void
- */
+*/
 void	clean_list(t_list *list, int clean_content)
 {
 	t_list	*temp;
@@ -73,12 +72,6 @@ void	clean_list(t_list *list, int clean_content)
 	}
 }
 
-/**
- * @brief Clean the t_cmd structure
- *
- * @param t_cmd *cmd - the t_cmd structure to clean
- * @return void
- */
 void	clean_t_cmd(t_cmd *cmd)
 {
 	int		i;
@@ -103,13 +96,6 @@ void	clean_t_cmd(t_cmd *cmd)
 	}
 }
 
-/**
- * @brief Add data to the cleanup list
- *
- * @param void *content - the content to add to the list
- * @param t_list **list - the list to add the content to
- * @return void
- */
 void	add_data_to_cleanup_list(void *content, t_list **list)
 {
 	t_list	*node;

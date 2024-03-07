@@ -3,22 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   input_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 07:03:24 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:18:07 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/07 10:32:26 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "process_exec.h"
+#include "minishell.h"
 
+/**
+ * @brief Save the original input and output.
+ *
+ * @param t_exec *ex - The execution
+ * @return void
+*/
 void	save_original_io(t_exec *ex)
 {
 	ex->stdin_original = dup(STDIN_FILENO);
 	ex->stdout_original = dup(STDOUT_FILENO);
 }
 
+/**
+ * @brief Reset the input and output.
+ *
+ * @param t_exec *ex - The execution
+ * @return void
+*/
 void	reset_io(t_exec *ex)
 {
 	dup2(ex->stdin_original, STDIN_FILENO);

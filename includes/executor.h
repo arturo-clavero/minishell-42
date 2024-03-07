@@ -6,30 +6,15 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 02:03:36 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:21:17 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/07 21:40:24 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <unistd.h>
-# include <gmp.h>
-# include <stdio.h>
-# include <errno.h>
-# include <stdint.h>
-# include <limits.h>
+// -- LIBRAIRIES --
 # include "minishell.h"
-# include "libft.h"
 
 // -- DEFINES --
 # define SUCCESS 0
@@ -42,22 +27,44 @@
 # define TRUE 1
 # define FALSE 0
 
+// -- STRUCTURES --
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}					t_list;
+
+typedef struct s_redir
+{
+	int				type;
+	char			*file_name;
+	char			*heredoc_buff;
+	int				duplication;
+	struct s_redir	*next;
+}					t_redir;
+
+typedef struct s_cmd
+{
+	char			**array;
+	t_redir			*redir;
+	struct s_cmd	*next;
+}					t_cmd;
 typedef struct s_exec
 {
-	t_cmd	*cmd;
-	t_list	*env_list;
-	int		**fd;
-	int		*id;
-	int		total_pipes;
-	int		total_children;
-	int		stdin_original;
-	int		stdout_original;
-	char	*program_path;
-	int		exit;
-	t_list	*short_term_data;
-	t_list	*long_term_data;
-	t_list	*shell_env_list;
-	int		is_builtin_last;
-}		t_exec;
+	t_cmd			*cmd;
+	t_list			*env_list;
+	int				**fd;
+	int				*id;
+	int				total_pipes;
+	int				total_children;
+	int				stdin_original;
+	int				stdout_original;
+	char			*program_path;
+	int				exit;
+	t_list			*short_term_data;
+	t_list			*long_term_data;
+	t_list			*shell_env_list;
+	int				is_builtin_last;
+}					t_exec;
 
 #endif

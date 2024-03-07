@@ -3,19 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 10:44:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:08:53 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:19:46 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "builtin_exec.h"
-#include "utils_exec.h"
+#include "minishell.h"
 
-static int	is_nflag(char *str);
+/**
+ * @brief Check if the string is a n flag.
+ *
+ * @param char *str - The string to check
+ * @return int
+ */
+static int	is_nflag(char *str)
+{
+	int	i;
 
+	i = 0;
+	skip_whitespace(str, &i);
+	if (str[i] != '-')
+		return (0);
+	i++;
+	while (str[i] == 'n')
+		i++;
+	skip_whitespace(str, &i);
+	if (str[i])
+		return (0);
+	return (1);
+}
+
+/**
+ * @brief Execute the echo command.
+ *
+ * @param char **cmd_array - The command array
+ * @return int - The exit status
+ */
 int	exec_echo(char **cmd_array)
 {
 	int	i;
@@ -39,21 +64,4 @@ int	exec_echo(char **cmd_array)
 	if (!n_flag)
 		write(STDOUT_FILENO, "\n", 1);
 	return (0);
-}
-
-static int	is_nflag(char *str)
-{
-	int	i;
-
-	i = 0;
-	skip_whitespace(str, &i);
-	if (str[i] != '-')
-		return (0);
-	i++;
-	while (str[i] == 'n')
-		i++;
-	skip_whitespace(str, &i);
-	if (str[i])
-		return (0);
-	return (1);
 }

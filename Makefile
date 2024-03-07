@@ -6,7 +6,7 @@
 #    By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:29:34 by ugolin-olle       #+#    #+#              #
-#    Updated: 2024/02/26 10:34:22 by ugolin-olle      ###   ########.fr        #
+#    Updated: 2024/03/07 21:19:06 by ugolin-olle      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,11 @@ OBJDIR       = objs
 
 SRC_FILES = $(wildcard $(SRCSDIR)/**/*.c)
 OBJ_FILES = $(patsubst $(SRCSDIR)/%.c,$(OBJDIR)/%.o,$(SRC_FILES))
+HDR_FILES    = $(wildcard $(HDRDIR)/*.h)
 
 CC = cc
 C_FLAGS = -Werror -Wall -Wextra
-HDR_FLAG = includes/minishell.h
+HDR_FLAG = $(HDR_FILES)
 INC_FLAGS = -I $(HDRDIR)
 RM = rm -rf
 MKDIR = mkdir -p
@@ -34,17 +35,18 @@ GREEN = \033[0;92m
 
 .PHONY: all clean fclean re
 
-$(NAME): $(OBJ_FILES)
-	@echo "$(COLOR_INFO)Linking: $(NAME) $(COLOR_RESET)"
-	@$(CC) $(CFLAGS) $(INC_FLAGS) $(OBJ_FILES) -L$(LIBSDIR) -lft -o $(NAME)
-	@echo "$(COLOR_SUCCESS)$(NAME) has been successfully compiled$(COLOR_RESET)"
+all: $(NAME)
 
-$(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HDRFLAG) | $(OBJDIR) libft
+$(NAME): $(OBJ_FILES)
+	@$(CC) $(CFLAGS) $(INC_FLAGS) $(OBJ_FILES) -L$(LIBSDIR) -lft -o $(NAME)
+
+$(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HDR_FLAG) | $(OBJDIR) libft
 	@echo "$(COLOR_INFO)Compiling: $< $(COLOR_RESET)"
 	@$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@$(MKDIR) $(OBJDIR)
+	@$(MKDIR) $(dir $(OBJ_FILES))
 
 libft:
 	@make -C $(LIBSDIR)

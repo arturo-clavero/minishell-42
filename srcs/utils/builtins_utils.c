@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_is_numerical.c                                 :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 02:08:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:12:12 by artclave         ###   ########.fr       */
+/*   Created: 2024/03/05 11:10:30 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/05 11:10:38 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "utils_exec.h"
+#include "minishell.h"
 
-int	str_is_numerical(char *str)
+int	has_pipe(t_cmd *cmd)
 {
-	int	i;
+	t_redir	*redir;
 
-	i = -1;
-	while (str[++i])
+	redir = cmd->redir;
+	while (redir)
 	{
-		if (is_digit(str[i]) == FALSE)
-			return (FALSE);
+		if (redir->type == PIPE)
+			return (TRUE);
+		redir = redir->next;
 	}
-	return (TRUE);
+	return (FALSE);
 }
