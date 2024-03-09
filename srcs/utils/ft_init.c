@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   innit_minishell.c                                  :+:      :+:    :+:   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:15:24 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/07 11:15:33 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/08 09:58:10 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	initialize_minishell(t_exec *ex, char **env)
+void	ft_init_exec(t_exec *ex, char **env)
 {
 	int		i;
 	int		shlvl;

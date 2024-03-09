@@ -6,24 +6,11 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:06:09 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/07 21:46:24 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/09 14:02:34 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief Check if a character is a letter
- *
- * @param char c - the character to check
- * @return int - TRUE if the character is a letter, FALSE otherwise
- */
-int	is_letter(char c)
-{
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (TRUE);
-	return (FALSE);
-}
 
 /**
  * @brief Check if a character is a letter or a digit
@@ -37,25 +24,6 @@ void	skip_whitespace(char *str, int *i)
 		return ;
 	while (str[*i] == ' ' || str[*i] == '\t')
 		(*i)++;
-}
-
-/**
- * @brief Check if a string is numerical
- *
- * @param char *str - the string to check
- * @return int - TRUE if the string is numerical, FALSE otherwise
- */
-int	str_is_numerical(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (ft_isdigit(str[i]) == FALSE)
-			return (FALSE);
-	}
-	return (TRUE);
 }
 
 /**
