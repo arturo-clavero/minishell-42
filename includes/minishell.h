@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 21:47:05 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/09 13:59:55 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,7 @@
 # include "../libs/includes/libft.h"
 # include "executor.h"
 # include "builtins.h"
-# include "post_exec.h"
-# include "prep_exec.h"
-# include "process_exec.h"
 # include "utils.h"
-# include "utils_exec.h"
-
-// -- STRUCTURES --
-
 
 // -- DEFINES --
 # define PIPE 0

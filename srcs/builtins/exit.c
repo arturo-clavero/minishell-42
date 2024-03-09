@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 21:44:13 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/09 14:02:21 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	check_numeric_argument(char *str, __int128_t num)
 	while (str[++i])
 	{
 		if (num > LLONG_MAX || num < LLONG_MIN
-			|| str_is_numerical(&str[i]) == FALSE)
+			|| ft_isdigit(&str[i]) == FALSE)
 		{
 			print_error("exit: ", str, ": numeric argument required");
 			return (255);

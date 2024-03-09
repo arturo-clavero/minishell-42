@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 13:32:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 11:13:52 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/09 14:01:04 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_unset_syntax(char **array)
 		while (array[i][++j])
 		{
 			if (ft_isdigit(array[i][0]) || (!ft_isdigit(array[i][j])
-					&& !is_letter(array[i][j]) && array[i][j] != '_'))
+					&& !ft_isalpha(array[i][j]) && array[i][j] != '_'))
 			{
 				print_error("unset: `", array[i], "': not a valid identifier");
 				return (1);
