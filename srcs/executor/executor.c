@@ -18,11 +18,9 @@
  * @param t_exec *ex - The execution structure.
  * @return void
 */
-void	execution_main(t_exec *ex)
+void	execution_main(t_cmd *cmd, t_exec *ex)
 {
-	t_cmd	*cmd;
-
-	cmd = ex->cmd;
+	ex->cmd = cmd;
 	handle_dollar_sign(&ex->cmd, ex);
 	create_pipes(cmd, ex);
 	create_child_ids(cmd, ex);

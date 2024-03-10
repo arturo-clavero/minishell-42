@@ -38,7 +38,7 @@ GREEN = \033[0;92m
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	@$(CC) $(CFLAGS) $(INC_FLAGS) $(OBJ_FILES) -L$(LIBSDIR) -lft -o $(NAME)
+	@$(CC) $(CFLAGS) $(INC_FLAGS) $(OBJ_FILES) -L$(LIBSDIR) -lft  -lreadline -lhistory -o $(NAME)
 
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HDR_FLAG) | $(OBJDIR) libft
 	@echo "$(COLOR_INFO)Compiling: $< $(COLOR_RESET)"
