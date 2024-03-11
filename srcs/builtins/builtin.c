@@ -66,7 +66,7 @@ void	execute_builtin(t_cmd *cmd, t_exec *ex)
 		exit_code = exec_env(ex);
 	else if (ft_strncmp(cmd->array[0], "exit", ft_strlen(cmd->array[0])) == 0
 			&& ft_strncmp(cmd->array[0], "exit", ft_strlen("exit")) == 0)
-		exit_code = exec_exit(cmd->array, cmd);
+		exit_code = exec_exit(cmd->array, cmd, ex);
 	else if (ft_strncmp(cmd->array[0], "export", ft_strlen(cmd->array[0])) == 0
 			&& ft_strncmp(cmd->array[0], "export", ft_strlen("export")) == 0)
 		exit_code = exec_export(cmd->array, ex);

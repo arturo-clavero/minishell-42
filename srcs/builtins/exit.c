@@ -50,7 +50,7 @@ static __int128_t	atoi_128bits(const char *str)
  * @return int - 0 if the argument is numeric, 255 otherwise
  */
 
-static int	check_numeric_argument(char *str, __int128_t num)
+static int	check_numeric_argument(char *str, __int128_t num, t_exec *ex)
 {
 	int	i;
 
@@ -63,7 +63,7 @@ static int	check_numeric_argument(char *str, __int128_t num)
 			|| str_is_numerical(&str[i]) == FALSE)
 		{
 			print_error("exit: ", str, ": numeric argument required");
-			return (255);
+			exit_minishell(ex, 2);
 		}
 	}
 	return (0);
@@ -75,7 +75,7 @@ static int	check_numeric_argument(char *str, __int128_t num)
  * @param char *cmd - The command
  * @return int - The new exit number
  */
-static int	get_new_exit_num(char *cmd)
+static int	get_new_exit_num(char *cmd, t_exec *ex)
 {
 	__int128_t	num;
 	int			i;
@@ -83,8 +83,7 @@ static int	get_new_exit_num(char *cmd)
 	i = 0;
 	skip_whitespace(cmd, &i);
 	num = atoi_128bits(cmd);
-	if (check_numeric_argument(&cmd[i], num) == 255)
-		return (-1);
+	check_numeric_argument(&cmd[i], num, ex);
 	if (num > 255 || num < 0)
 		return ((int)(num % 256));
 	return ((int)num);
@@ -97,7 +96,7 @@ static int	get_new_exit_num(char *cmd)
  * @param t_cmd *cmd - The command structure
  * @return int - The exit status
  */
-int	exec_exit(char **cmd_array, t_cmd *cmd)
+int	exec_exit(char **cmd_array, t_cmd *cmd, t_exec *ex)
 {
 	int		new_exit_num;
 	t_redir	*redir;
@@ -107,9 +106,7 @@ int	exec_exit(char **cmd_array, t_cmd *cmd)
 		ft_putstr_fd("exit\n", 1);
 	if (cmd_array[1] == NULL)
 		exit(0);
-	new_exit_num = get_new_exit_num(cmd_array[1]);
-	if (new_exit_num == -1)
-		return (255);
+	new_exit_num = get_new_exit_num(cmd_array[1], ex);
 	if ((cmd_array[2]))
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);

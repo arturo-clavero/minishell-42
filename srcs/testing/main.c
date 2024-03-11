@@ -151,7 +151,9 @@ void	simple_parsing(char *input, t_cmd **cmd_head)
 		new_cmd_node->array = ft_split(cmd_str_array[i], ' ');
 		new_cmd_node->redir = redir_node; 
 		new_cmd_node->next = NULL;
+		free(cmd_str_array[i]);
 	}
+	free(cmd_str_array);
 }
 
 void	print_nodes(t_cmd *cmd_head)
