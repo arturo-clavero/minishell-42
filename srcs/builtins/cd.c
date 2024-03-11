@@ -66,6 +66,21 @@ static void	update_env(char *var_name, char *new_env, t_exec *ex)
 	return ;
 }
 
+//deletes last char '/'
+char	*get_new_dir(char *str)
+{
+	int	i;
+	
+	if (!str)
+		return (NULL);
+	i = ft_strlen(str) - 1;
+	while (str[i] == ' ' || str[i] == '\t')
+		i--;
+	if (str[i] == '/')
+		str[i] = '\0';
+	return (str);
+}
+
 /**
  * @brief Execute the cd command.
  *
@@ -86,14 +101,15 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 		return (malloc_error());
 	if (getcwd(buffer, MAX_PATH_LINUX) == NULL)
 		return (free_data(NULL, buffer, errno));
+	update_env("OLD_PWD=", buffer, ex);
+	new_dir = get_new_dir(cmd_array[1]);
 	new_dir = cmd_array[1];
 	cd_with_no_arguments(&new_dir, buffer);
 	if (chdir(new_dir) == -1)
 	{
-		print_error("cd: ", new_dir, ":No such file or directory");
+		print_error("cd: ", new_dir, ": No such file or directory");
 		return (free_data(NULL, buffer, 1));
 	}
-	update_env("OLD_PWD=", buffer, ex);
-	update_env("PWD=", new_dir, ex);
+	update_env("PWD=", getcwd(buffer, MAX_PATH_LINUX), ex);
 	return (free_data(NULL, buffer, SUCCESS));
 }

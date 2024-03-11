@@ -63,7 +63,10 @@ void	clean_list(t_list *list, int clean_content)
 {
 	t_list	*temp;
 
-	while (list)
+	if (clean_content == FALSE || list == NULL)
+		return ;
+	printf("cleaning list\n");
+	while (list && list->content)
 	{
 		temp = list->next;
 		if (clean_content == TRUE)

@@ -21,7 +21,6 @@
  */
 static void	delete_char_from_str(int delete, char **str)
 {
-	int		i;
 	int		len;
 	char	*new_str;
 
@@ -29,7 +28,6 @@ static void	delete_char_from_str(int delete, char **str)
 	new_str = (char *)malloc(sizeof(char) * len + 1);
 	if (!new_str)
 		return ;
-	i = -1;
 	ft_strlcpy(new_str, *str, delete + 1);
 	ft_strcat(new_str, &(*str)[delete + 1]);
 	free(*str);
