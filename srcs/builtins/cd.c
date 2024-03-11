@@ -13,6 +13,44 @@
 #include "minishell.h"
 
 /**
+ * @brief Go back one directory {cd ..} 
+ *
+ * @param char **new_dir - The new directory
+ * @param char *pwd - The current directory
+ * @return void
+ */
+static void	cd_with_double_dot(char **new_dir, char *pwd)
+{
+	int	i;
+
+	if (!(*new_dir))
+		return ;
+	i = 0;
+	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
+		i++;
+	if ((*new_dir)[i] != '.')
+		return ;
+	if ((*new_dir)[++i] != '.')
+		return ;
+	while ((*new_dir)[++i])
+	{
+		if ((*new_dir)[i] != ' ' && (*new_dir)[i] != '\t')
+			return ;
+	}
+	*new_dir = pwd;
+	i = ft_strlen(*new_dir);
+	while (--i >= 0)
+	{
+		if ((*new_dir)[i] == '/')
+		{
+			(*new_dir)[i] = '\0';
+			break ;	
+		}
+	}
+}
+
+
+/**
  * @brief Change the current directory with no arguments.
  *
  * @param char **new_dir - The new directory
@@ -100,11 +138,14 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 	if (!buffer)
 		return (malloc_error());
 	if (getcwd(buffer, MAX_PATH_LINUX) == NULL)
-		return (free_data(NULL, buffer, errno));
+	{
+		free(buffer);
+		buffer = ft_strdup(get_env_value("PWD=", ex->env_list));
+	}
 	update_env("OLD_PWD=", buffer, ex);
 	new_dir = get_new_dir(cmd_array[1]);
-	new_dir = cmd_array[1];
 	cd_with_no_arguments(&new_dir, buffer);
+	cd_with_double_dot(&new_dir, buffer);
 	if (chdir(new_dir) == -1)
 	{
 		print_error("cd: ", new_dir, ": No such file or directory");
