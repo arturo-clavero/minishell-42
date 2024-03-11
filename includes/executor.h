@@ -81,7 +81,7 @@ void				add_data_to_cleanup_list(void *content, t_list **list);
 
 // -- PREPARE EXECUTION PROTOTYPES --
 void				initialize_minishell(t_exec *ex, char **env);
-void				execution_main(t_exec *ex);
+void				execution_main(t_cmd *cmd, t_exec *ex);
 void				handle_dollar_sign(t_cmd **cmd_ptr, t_exec *ex);
 void				create_pipes(t_cmd *cmd, t_exec *ex);
 void				create_child_ids(t_cmd *cmd, t_exec *ex);
