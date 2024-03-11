@@ -6,47 +6,46 @@
 #    By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:29:34 by ugolin-olle       #+#    #+#              #
-#    Updated: 2024/03/07 21:19:06 by ugolin-olle      ###   ########.fr        #
+#    Updated: 2024/03/10 16:20:35by ugolin-olle      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# -- Variables
-HDRDIR       = includes
+# -- Compilation
+INCDIR       = includes
 SRCSDIR      = srcs
 LIBSDIR      = libs
 OBJDIR       = objs
+SRC_FILES    = $(wildcard $(SRCSDIR)/*.c) $(wildcard $(SRCSDIR)/**/*.c)
+HDR_FILES    = $(wildcard $(INCDIR)/*.h)
+OBJ_FILES    = $(patsubst $(SRCSDIR)/%.c, $(OBJDIR)/%.o, $(SRC_FILES))
+INC_FILES    = -I $(INCDIR) -I $(LIBSDIR)/includes
+LIBS_FLAGS   = -L$(LIBSDIR) -lft
 
-SRC_FILES = $(wildcard $(SRCSDIR)/**/*.c)
-OBJ_FILES = $(patsubst $(SRCSDIR)/%.c,$(OBJDIR)/%.o,$(SRC_FILES))
-HDR_FILES    = $(wildcard $(HDRDIR)/*.h)
-
+# -- Compilation flags
 CC = cc
-C_FLAGS = -Werror -Wall -Wextra
-HDR_FLAG = $(HDR_FILES)
-INC_FLAGS = -I $(HDRDIR)
+C_FLAGS = -Werror -Wall -Wextra -g
+RL_FLAGS = -l readline
 RM = rm -rf
 MKDIR = mkdir -p
-
 NAME = minishell
 
+# -- Colors
 RESET = \033[0m
 BLUE = \033[0;94m
 GREEN = \033[0;92m
+PURPLE = \033[0;95m
 
-.PHONY: all clean fclean re
+.PHONY: all re clean fclean norm
 
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	@$(CC) $(CFLAGS) $(INC_FLAGS) $(OBJ_FILES) -L$(LIBSDIR) -lft  -lreadline -lhistory -o $(NAME)
+	@$(CC) $(C_FLAGS) $(OBJ_FILES) $(INC_FILES) $(LIBS_FLAGS) $(RL_FLAGS) -o $@
 
-$(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HDR_FLAG) | $(OBJDIR) libft
-	@echo "$(COLOR_INFO)Compiling: $< $(COLOR_RESET)"
-	@$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
-
-$(OBJDIR):
-	@$(MKDIR) $(OBJDIR)
-	@$(MKDIR) $(dir $(OBJ_FILES))
+$(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HDR_FILES) | libft
+	@$(MKDIR) $(dir $@)
+	@$(CC) $(C_FLAGS) $(INC_FILES) -c $< -o $@
+	@echo "$(BLUE)[COMPILING] - $< $(RESET)"
 
 libft:
 	@make -C $(LIBSDIR)
@@ -54,15 +53,15 @@ libft:
 clean:
 	@$(RM) $(OBJDIR)
 	@make clean -C $(LIBSDIR)
-	@echo "$(COLOR_INFO)$(NAME) object files cleaned!$(COLOR_RESET)"
+	@echo "$(PURPLE)[INFO] -				$(NAME) object files cleaned!$(RESET)"
 
 fclean: clean
 	@$(RM) $(NAME)
 	@make fclean -C $(LIBSDIR)
-	@echo "$(COLOR_SUCCESS)$(NAME) executable has been cleaned!$(COLOR_RESET)"
+	@echo "$(PURPLE)[INFO] -				$(NAME) executable has been cleaned!$(RESET)"
 
 norm:
-	@norminette $(SRCSDIR) $(HDRDIR)
+	@norminette $(SRCSDIR) $(INCDIR)
 
 re: fclean all
-	@echo "$(COLOR_SUCCESS)Cleaned and rebuilt successfully!$(COLOR_RESET)"
+	@echo "$(PURPLE)[INFO] -				Cleaned and rebuilt successfully!$(RESET)"

@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 10:55:08 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 13:18:20 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/11 12:26:59 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/11 13:17:04 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "minishell.h"
 
-// -- LIBRAIRIES --
-# include "minishell.h"
+/**
+ * @brief Split the input string into tokens.
+ *
+ * @param char *str - The input string
+ * @return t_token* : The token list
+ */
+t_lexer	*ft_input(char *str)
+{
+	t_lexer	*lexer;
+	int		i;
 
-// -- PROTOTYPES --
-void	ft_exit(char *content, int status);
-char	*ft_strjoin_with_sep(char const *s1, char const *s2, char sep);
-int		ft_isnum(char str);
-int		ft_is_numericable(char *str);
-
-#endif
+	lexer = NULL;
+	i = 0;
+	while (str[i])
+	{
+		if (ft_lexer(str, i, &lexer) == -1)
+			return (NULL);
+		i++;
+	}
+	return (lexer);
+}

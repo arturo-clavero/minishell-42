@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:52:30 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/05 11:25:38 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/10 16:04:04 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
  */
 static void	delete_char_from_str(int delete, char **str)
 {
-	int		i;
 	int		len;
 	char	*new_str;
 
@@ -29,7 +28,6 @@ static void	delete_char_from_str(int delete, char **str)
 	new_str = (char *)malloc(sizeof(char) * len + 1);
 	if (!new_str)
 		return ;
-	i = -1;
 	ft_strlcpy(new_str, *str, delete + 1);
 	ft_strcat(new_str, &(*str)[delete + 1]);
 	free(*str);

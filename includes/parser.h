@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 10:55:08 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 13:18:20 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/11 11:24:30 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/11 12:19:11 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef PARSER_H
+# define PARSER_H
 
-// -- LIBRAIRIES --
+// -- LIBRARIES --
 # include "minishell.h"
 
 // -- PROTOTYPES --
-void	ft_exit(char *content, int status);
-char	*ft_strjoin_with_sep(char const *s1, char const *s2, char sep);
-int		ft_isnum(char str);
-int		ft_is_numericable(char *str);
+t_cmd	*ft_parse_input(char *str);
 
 #endif

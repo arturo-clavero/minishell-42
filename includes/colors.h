@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 10:55:08 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 13:18:20 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/11 13:22:18 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/11 13:23:04 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef COLORS_H
+# define COLORS_H
 
-// -- LIBRAIRIES --
+// -- LIBRARIES --
 # include "minishell.h"
 
-// -- PROTOTYPES --
-void	ft_exit(char *content, int status);
-char	*ft_strjoin_with_sep(char const *s1, char const *s2, char sep);
-int		ft_isnum(char str);
-int		ft_is_numericable(char *str);
+// -- COLORS --
+# define BLACK "\033[0;30m"
+# define RED "\033[0;31m"
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
+# define BLUE "\033[0;34m"
+# define PURPLE "\033[0;35m"
+# define CYAN "\033[0;36m"
+# define WHITE "\033[0;37m"
+# define RESET "\033[0m"
 
 #endif

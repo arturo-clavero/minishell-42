@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 10:55:08 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 13:18:20 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/11 10:59:10 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/11 12:22:40 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "minishell.h"
 
-// -- LIBRAIRIES --
-# include "minishell.h"
-
-// -- PROTOTYPES --
-void	ft_exit(char *content, int status);
-char	*ft_strjoin_with_sep(char const *s1, char const *s2, char sep);
-int		ft_isnum(char str);
-int		ft_is_numericable(char *str);
-
-#endif
+/**
+ * @brief Handle tokens in the string.
+ *
+ * @param char *str - The string to handle
+ * @param int i - The index of the string
+ * @param t_lexer **lexer - The lexer list
+ * @return int
+ */
+int	ft_lexer(char *str, int i, t_lexer **lexer)
+{
+	(*lexer)->token = ft_tokens(str[i]);
+	printf("Token: %d\n", (*lexer)->token);
+	return (0);
+}
