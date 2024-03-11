@@ -41,13 +41,16 @@ void	maybe_quit_program(t_exec *ex)
 		return ;
 	if (ft_strncmp(ex->cmd->array[0], "exit", ft_strlen("exit")) != 0)
 		return ;
-	if (!(ex->cmd->array[1] == NULL || !ft_isdigit(ex->cmd->array[1])
-			|| (ft_isdigit(ex->cmd->array[1]) && ex->cmd->array[2] == NULL)))
+	if (!(ex->cmd->array[1] == NULL
+			|| !str_is_numerical(ex->cmd->array[1])
+			|| (str_is_numerical(ex->cmd->array[1])
+				&& ex->cmd->array[2] == NULL)))
 		return ;
 	if (change_shlvl(-1, ex) > 1)
 		get_previous_shells_env(ex);
 	exit_minishell(ex, ex->exit);
 }
+
 
 /**
  * @brief Clean the list.

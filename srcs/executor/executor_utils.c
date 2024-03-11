@@ -134,3 +134,31 @@ void	wait_for_child_exit_status(t_exec *ex)
 			ex->exit = child_exit;
 	}
 }
+
+void	initialize_minishell(t_exec *ex, char **env)
+{
+	int		i;
+	int		shlvl;
+
+	ex->cmd = NULL;
+	ex->env_list = NULL;
+	ex->short_term_data = NULL;
+	ex->long_term_data = NULL;
+	ex->program_path = NULL;
+	ex->total_pipes = 0;
+	ex->total_children = 0;
+	ex->is_builtin_last = FALSE;
+	ex->fd = NULL;
+	ex->id = NULL;
+	ex->exit = 0;
+	ex->shell_env_list = NULL;
+	i = -1;
+	while (env[++i])
+	{
+		new_node((void *)env[i], &ex->env_list);
+		if (ft_strncmp(env[i], "PWD=", 4) == 0)
+			ex->program_path = &env[i][4];
+	}
+	shlvl = change_shlvl(0, ex);
+	change_shlvl(2 - shlvl, ex);
+}

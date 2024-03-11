@@ -49,6 +49,7 @@ static __int128_t	atoi_128bits(const char *str)
  * @param __int128_t num - The 128 bits integer
  * @return int - 0 if the argument is numeric, 255 otherwise
  */
+
 static int	check_numeric_argument(char *str, __int128_t num)
 {
 	int	i;
@@ -59,7 +60,7 @@ static int	check_numeric_argument(char *str, __int128_t num)
 	while (str[++i])
 	{
 		if (num > LLONG_MAX || num < LLONG_MIN
-			|| ft_isdigit(&str[i]) == FALSE)
+			|| str_is_numerical(&str[i]) == FALSE)
 		{
 			print_error("exit: ", str, ": numeric argument required");
 			return (255);
