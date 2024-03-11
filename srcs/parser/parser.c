@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 10:55:08 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 13:18:20 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/11 11:23:10 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/11 12:23:32 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "minishell.h"
 
-// -- LIBRAIRIES --
-# include "minishell.h"
+/**
+ * @brief Parse the input string
+ *
+ * @param char *str - The input string
+ * @return t_cmd* : The command list
+ */
+t_cmd	*ft_parse_input(char *str)
+{
+	t_lexer	*lexer;
+	t_cmd	*cmd;
+	int		i;
 
-// -- PROTOTYPES --
-void	ft_exit(char *content, int status);
-char	*ft_strjoin_with_sep(char const *s1, char const *s2, char sep);
-int		ft_isnum(char str);
-int		ft_is_numericable(char *str);
-
-#endif
+	lexer = NULL;
+	cmd = NULL;
+	i = 0;
+	while (str[i])
+	{
+		if (ft_lexer(str, i, &lexer) == -1)
+			return (NULL);
+		printf("Token: %d\n", lexer->token);
+		i++;
+	}
+	return (cmd);
+}

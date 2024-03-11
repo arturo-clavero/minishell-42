@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/09 13:59:55 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/11 13:29:43 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,23 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
-# include <readline/history.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdint.h>
+#include <termios.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+// -- CUSTOM LIBRARIES --
 # include "../libs/includes/libft.h"
+# include "messages.h"
+# include "colors.h"
+# include "lexer.h"
 # include "executor.h"
 # include "builtins.h"
+# include "parser.h"
 # include "utils.h"
 
 // -- DEFINES --
