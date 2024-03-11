@@ -22,7 +22,7 @@ void	execute_builtin(t_cmd *cmd, t_exec *ex);
 int		exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex);
 int		exec_echo(char **cmd_array);
 int		exec_env(t_exec *ex);
-int		exec_exit(char **cmd_array, t_cmd *cmd);
+int     exec_exit(char **cmd_array, t_cmd *cmd, t_exec *ex);
 int		exec_export(char **cmd_array, t_exec *ex);
 int		has_unclosed_quotes(char *str, char *cmd);
 void	delete_outside_quotes(char **str);
