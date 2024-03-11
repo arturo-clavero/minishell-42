@@ -202,6 +202,7 @@ int	main(int ac, char **av, char **env)
 	t_cmd	*cmd;
 	char	*input;
 
+
 	(void)av;
 	(void)ac;
 	initialize_minishell(&ex, env);
@@ -209,17 +210,14 @@ int	main(int ac, char **av, char **env)
 	{
 		input = readline("minishell: ");
 		if (!input)
-		{
-			free(input);
-			break ;
-		}
+			exit_minishell(&ex, ex.exit);
 		if (*input)
 			add_history(input);
 		else
 			continue ;
 		cmd = NULL;
 		simple_parsing(input, &cmd);
-		print_nodes(cmd);
+	//	print_nodes(cmd);
 		execution_main(cmd, &ex);
 		free(input);
 	}
