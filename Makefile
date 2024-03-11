@@ -21,7 +21,7 @@ OBJ_FILES = $(patsubst $(SRCSDIR)/%.c,$(OBJDIR)/%.o,$(SRC_FILES))
 HDR_FILES    = $(wildcard $(HDRDIR)/*.h)
 
 CC = cc
-C_FLAGS = -Werror -Wall -Wextra
+C_FLAGS = -Werror -Wall -Wextra 
 HDR_FLAG = $(HDR_FILES)
 INC_FLAGS = -I $(HDRDIR)
 RM = rm -rf
