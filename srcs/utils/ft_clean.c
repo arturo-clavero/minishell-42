@@ -51,7 +51,6 @@ void	maybe_quit_program(t_exec *ex)
 	exit_minishell(ex, ex->exit);
 }
 
-
 /**
  * @brief Clean the list.
  *
