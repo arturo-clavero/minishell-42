@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/10 16:26:58 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/11 23:05:08 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_cmd
  */
 typedef struct s_exec
 {
+	char			*args;
 	t_cmd			*cmd;
 	t_list			*env_list;
 	int				**fd;

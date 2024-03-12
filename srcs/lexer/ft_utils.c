@@ -6,11 +6,28 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 09:11:47 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 14:51:44 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/11 23:35:27 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief Skip the spaces in the string.
+ *
+ * @param char *str - The string to handle
+ * @param int i - The index of the string
+ * @return int
+ */
+int	ft_skip_spaces(char *str, int i)
+{
+	int	j;
+
+	j = 0;
+	while ((str[i + j] == ' ' || (str[i + j] > 8 && str[i + j] < 14)))
+		j++;
+	return (j);
+}
 
 /**
  * @brief Handle the quotes.
@@ -23,11 +40,13 @@ int	ft_quotes(char *str, int i, char quote)
 {
 	int	j;
 
-	j = i;
-	while (str[++j])
+	j = 0;
+	if (str[i + j] == quote)
 	{
-		if (str[j] == quote)
-			return (j);
+		j++;
+		while (str[i + j] != quote && str[i + j] != '\0')
+			j++;
+		j++;
 	}
 	return (j);
 }
@@ -42,10 +61,8 @@ int	ft_tokens(int c)
 	unsigned long	i;
 
 	static char tokens[][2] = {
-		{'|', PIPE},
-		{'<', INFILE},
-		{'>', OUTFILE},
-		{'>>', APPEND},
+		{'|', PIPE}, {'<', INFILE}, {'>', OUTFILE},
+		// {'>>', APPEND},
 	};
 	i = 0;
 	while (i < sizeof(tokens) / sizeof(tokens[0]))
@@ -54,5 +71,5 @@ int	ft_tokens(int c)
 			return (tokens[i][1]);
 		i++;
 	}
-	return (0);
+	return (-1);
 }

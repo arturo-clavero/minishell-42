@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 10:59:10 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 12:22:40 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/11 23:25:37 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,5 @@
 int	ft_lexer(char *str, int i, t_lexer **lexer)
 {
 	(*lexer)->token = ft_tokens(str[i]);
-	printf("Token: %d\n", (*lexer)->token);
 	return (0);
 }
