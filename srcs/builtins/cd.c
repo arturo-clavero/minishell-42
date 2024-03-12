@@ -13,6 +13,41 @@
 #include "minishell.h"
 
 /**
+ * @brief Go back one directory {cd ..} 
+ *
+ * @param char **new_dir - The new directory
+ * @param char *pwd - The current directory
+ * @return void
+ */
+static void	cd_with_double_dot(char **new_dir, char *pwd)
+{
+	int	i;
+
+	if (!(*new_dir))
+		return ;
+	i = 0;
+	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
+		i++;
+	if ((*new_dir)[i] != '.' || (*new_dir)[++i] != '.')
+		return ;
+	while ((*new_dir)[++i])
+	{
+		if ((*new_dir)[i] != ' ' && (*new_dir)[i] != '\t')
+			return ;
+	}
+	*new_dir = pwd;
+	i = ft_strlen(*new_dir);
+	while (--i >= 0)
+	{
+		if ((*new_dir)[i] == '/')
+		{
+			(*new_dir)[i] = '\0';
+			break ;
+		}
+	}
+}
+
+/**
  * @brief Change the current directory with no arguments.
  *
  * @param char **new_dir - The new directory
@@ -66,6 +101,21 @@ static void	update_env(char *var_name, char *new_env, t_exec *ex)
 	return ;
 }
 
+//deletes last char '/'
+char	*get_new_dir(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (NULL);
+	i = ft_strlen(str) - 1;
+	while (str[i] == ' ' || str[i] == '\t')
+		i--;
+	if (str[i] == '/')
+		str[i] = '\0';
+	return (str);
+}
+
 /**
  * @brief Execute the cd command.
  *
@@ -85,15 +135,19 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 	if (!buffer)
 		return (malloc_error());
 	if (getcwd(buffer, MAX_PATH_LINUX) == NULL)
-		return (free_data(NULL, buffer, errno));
-	new_dir = cmd_array[1];
-	cd_with_no_arguments(&new_dir, buffer);
-	if (chdir(new_dir) == -1)
 	{
-		print_error("cd: ", new_dir, ":No such file or directory");
-		return (free_data(NULL, buffer, 1));
+		free(buffer);
+		buffer = ft_strdup(get_env_value("PWD=", ex->env_list));
 	}
 	update_env("OLD_PWD=", buffer, ex);
-	update_env("PWD=", new_dir, ex);
+	new_dir = get_new_dir(cmd_array[1]);
+	cd_with_no_arguments(&new_dir, buffer);
+	cd_with_double_dot(&new_dir, buffer);
+	if (chdir(new_dir) == -1)
+	{
+		print_error("cd: ", new_dir, ": No such file or directory");
+		return (free_data(NULL, buffer, 1));
+	}
+	update_env("PWD=", getcwd(buffer, MAX_PATH_LINUX), ex);
 	return (free_data(NULL, buffer, SUCCESS));
 }

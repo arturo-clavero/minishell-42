@@ -84,7 +84,6 @@ static void	sub_expandable(char **str, int prefix, int delete, t_exec *ex)
 	new_str = (char *)malloc(sizeof(char) * new_len + 1);
 	if (substitute)
 	{
-		printf("hey\n");
 		ft_strlcpy(new_str, *str, prefix + 1);
 		ft_strcat(new_str, substitute);
 		free(substitute);

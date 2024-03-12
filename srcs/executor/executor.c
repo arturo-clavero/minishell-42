@@ -21,6 +21,7 @@
 void	execution_main(t_cmd *cmd, t_exec *ex)
 {
 	ex->cmd = cmd;
+	ex->short_term_data = NULL;
 	handle_dollar_sign(&ex->cmd, ex);
 	create_pipes(cmd, ex);
 	create_child_ids(cmd, ex);
