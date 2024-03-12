@@ -28,9 +28,7 @@ static void	cd_with_double_dot(char **new_dir, char *pwd)
 	i = 0;
 	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
 		i++;
-	if ((*new_dir)[i] != '.')
-		return ;
-	if ((*new_dir)[++i] != '.')
+	if ((*new_dir)[i] != '.' || (*new_dir)[++i] != '.')
 		return ;
 	while ((*new_dir)[++i])
 	{
@@ -44,11 +42,10 @@ static void	cd_with_double_dot(char **new_dir, char *pwd)
 		if ((*new_dir)[i] == '/')
 		{
 			(*new_dir)[i] = '\0';
-			break ;	
+			break ;
 		}
 	}
 }
-
 
 /**
  * @brief Change the current directory with no arguments.
@@ -108,7 +105,7 @@ static void	update_env(char *var_name, char *new_env, t_exec *ex)
 char	*get_new_dir(char *str)
 {
 	int	i;
-	
+
 	if (!str)
 		return (NULL);
 	i = ft_strlen(str) - 1;

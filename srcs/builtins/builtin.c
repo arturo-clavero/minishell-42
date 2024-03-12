@@ -13,6 +13,21 @@
 #include "minishell.h"
 
 /**
+ * @brief ft_strncmp for both lengths of both strings
+ *
+ * @param char *str1 - first string to compare
+ * @param char *str2 - second string to compare
+ * @return int - 0 both ft_strncmp are 0, else 1
+ */
+static int	double_strncmp(char *str1, char *str2)
+{
+	if (ft_strncmp(str1, str2, ft_strlen(str1)) == 0
+		&& ft_strncmp(str1, str2, ft_strlen(str2)) == 0)
+		return (0);
+	return (1);
+}
+
+/**
  * @brief Check if the command is a builtin
  *
  * @param char *cmd - The command to check
@@ -20,26 +35,19 @@
  */
 int	is_builtin(char *cmd)
 {
-	if (ft_strncmp(cmd, "cd", ft_strlen(cmd)) == 0
-			&& ft_strncmp(cmd, "cd", ft_strlen("cd")) == 0)
+	if (double_strncmp(cmd, "cd") == 0)
 		return (TRUE);
-	else if (ft_strncmp(cmd, "echo", ft_strlen(cmd)) == 0
-			&& ft_strncmp(cmd, "echo", ft_strlen("echo")) == 0)
+	else if (double_strncmp(cmd, "echo") == 0)
 		return (TRUE);
-	else if (ft_strncmp(cmd, "env", ft_strlen(cmd)) == 0
-			&& ft_strncmp(cmd, "env", ft_strlen("env")) == 0)
+	else if (double_strncmp(cmd, "env") == 0)
 		return (TRUE);
-	else if (ft_strncmp(cmd, "exit", ft_strlen(cmd)) == 0
-			&& ft_strncmp(cmd, "exit", ft_strlen("exit")) == 0)
+	else if (double_strncmp(cmd, "exit") == 0)
 		return (TRUE);
-	else if (ft_strncmp(cmd, "export", ft_strlen(cmd)) == 0
-			&& ft_strncmp(cmd, "export", ft_strlen("export")) == 0)
+	else if (double_strncmp(cmd, "export") == 0)
 		return (TRUE);
-	else if (ft_strncmp(cmd, "pwd", ft_strlen(cmd)) == 0
-			&& ft_strncmp(cmd, "pwd", ft_strlen("pwd")) == 0)
+	else if (double_strncmp(cmd, "pwd") == 0)
 		return (TRUE);
-	else if (ft_strncmp(cmd, "unset", ft_strlen(cmd)) == 0
-			&& ft_strncmp(cmd, "unset", ft_strlen("unset")) == 0)
+	else if (double_strncmp(cmd, "unset") == 0)
 		return (TRUE);
 	return (FALSE);
 }
@@ -55,26 +63,19 @@ void	execute_builtin(t_cmd *cmd, t_exec *ex)
 	int	exit_code;
 
 	ex->is_builtin_last = FALSE;
-	if (ft_strncmp(cmd->array[0], "cd", ft_strlen(cmd->array[0])) == 0
-			&& ft_strncmp(cmd->array[0], "cd", ft_strlen("cd")) == 0)
+	if (double_strncmp("cd", cmd->array[0]) == 0)
 		exit_code = exec_cd(cmd->array, cmd, ex);
-	else if (ft_strncmp(cmd->array[0], "echo", ft_strlen(cmd->array[0])) == 0
-			&& ft_strncmp(cmd->array[0], "echo", ft_strlen("echo")) == 0)
+	else if (double_strncmp("echo", cmd->array[0]) == 0)
 		exit_code = exec_echo(cmd->array);
-	else if (ft_strncmp(cmd->array[0], "env", ft_strlen(cmd->array[0])) == 0
-			&& ft_strncmp(cmd->array[0], "env", ft_strlen("env")) == 0)
+	else if (double_strncmp("env", cmd->array[0]) == 0)
 		exit_code = exec_env(ex);
-	else if (ft_strncmp(cmd->array[0], "exit", ft_strlen(cmd->array[0])) == 0
-			&& ft_strncmp(cmd->array[0], "exit", ft_strlen("exit")) == 0)
+	else if (double_strncmp("exit", cmd->array[0]) == 0)
 		exit_code = exec_exit(cmd->array, cmd, ex);
-	else if (ft_strncmp(cmd->array[0], "export", ft_strlen(cmd->array[0])) == 0
-			&& ft_strncmp(cmd->array[0], "export", ft_strlen("export")) == 0)
+	else if (double_strncmp("export", cmd->array[0]) == 0)
 		exit_code = exec_export(cmd->array, ex);
-	else if (ft_strncmp(cmd->array[0], "pwd", ft_strlen(cmd->array[0])) == 0
-			&& ft_strncmp(cmd->array[0], "pwd", ft_strlen("pwd")) == 0)
+	else if (double_strncmp("pwd", cmd->array[0]) == 0)
 		exit_code = exec_pwd(ex);
-	else if (ft_strncmp(cmd->array[0], "unset", ft_strlen(cmd->array[0])) == 0
-			&& ft_strncmp(cmd->array[0], "unset", ft_strlen("unset")) == 0)
+	else if (double_strncmp("unset", cmd->array[0]) == 0)
 		exit_code = exec_unset(cmd->array, ex);
 	if (!cmd->next)
 	{
