@@ -63,8 +63,6 @@ void	process_cmds(t_cmd *cmd, t_exec *ex)
 	{
 		save_original_io(ex);
 		dup_pipes(curr_cmd, cmd, ex);
-		dup_file_input(cmd);
-		dup_file_output(cmd);
 		if (is_builtin(cmd->array[0]) == TRUE)
 			execute_builtin(cmd, ex);
 		else
