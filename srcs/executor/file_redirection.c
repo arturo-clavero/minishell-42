@@ -113,6 +113,8 @@ int	are_redirections_valid(t_cmd *cmd)
 		}
 		redir = redir->next;
 	}
+	dup_file_input(cmd);
+	dup_file_output(cmd);
 	return (0);
 }
 

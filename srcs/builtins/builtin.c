@@ -63,6 +63,8 @@ void	execute_builtin(t_cmd *cmd, t_exec *ex)
 	int	exit_code;
 
 	ex->is_builtin_last = FALSE;
+	if (are_redirections_valid(cmd) == EXIT_FAILURE)
+		return ;
 	if (double_strncmp("cd", cmd->array[0]) == 0)
 		exit_code = exec_cd(cmd->array, cmd, ex);
 	else if (double_strncmp("echo", cmd->array[0]) == 0)
