@@ -51,7 +51,6 @@ void	maybe_quit_program(t_exec *ex)
 	exit_minishell(ex, ex->exit);
 }
 
-
 /**
  * @brief Clean the list.
  *
@@ -63,7 +62,9 @@ void	clean_list(t_list *list, int clean_content)
 {
 	t_list	*temp;
 
-	while (list)
+	if (clean_content == FALSE || list == NULL)
+		return ;
+	while (list && list->content)
 	{
 		temp = list->next;
 		if (clean_content == TRUE)
