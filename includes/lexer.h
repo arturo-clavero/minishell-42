@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:06 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 11:11:54 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/11 23:33:55 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_lexer
 }					t_lexer;
 
 // -- PROTOTYPES --
+int					ft_skip_spaces(char *str, int i);
 int					ft_tokens(int c);
 int					ft_quotes(char *str, int i, char quote);
 int					ft_lexer(char *str, int i, t_lexer **lexer);
