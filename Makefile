@@ -40,12 +40,12 @@ PURPLE = \033[0;95m
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	@$(CC) $(CFLAGS) $(INC_FLAGS) $(OBJ_FILES) -L$(LIBSDIR) -lft  -lreadline -lhistory -o $(NAME)
+	@$(CC) $(C_FLAGS) $(OBJ_FILES) $(INC_FILES) $(LIBS_FLAGS) $(RL_FLAGS) -o $@
 
-$(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HDR_FLAG) | $(OBJDIR) libft
-	@echo "$(COLOR_INFO)Compiling: $< $(COLOR_RESET)"
-	@$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
-
+$(OBJDIR)/%.o: $(SRCSDIR)/%.c $(HDR_FILES) | libft
+	@$(MKDIR) $(dir $@)
+	@$(CC) $(C_FLAGS) $(INC_FILES) -c $< -o $@
+	@echo "$(BLUE)[COMPILING] - $< $(RESET)"
 libft:
 	@make -C $(LIBSDIR)
 
