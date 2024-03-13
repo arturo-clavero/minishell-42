@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/12 10:13:51 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/13 12:47:44 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,22 @@ static char	*ft_prompt_display(void)
 {
 	char	*line;
 
-	struct termios old_term, new_term;
-	tcgetattr(STDIN_FILENO, &old_term);
-	new_term = old_term;
-	new_term.c_lflag &= ~(ECHO | ICANON);
-	tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
 	printf(BLUE "[MINISHELL]:" RED "%s$ " RESET, getcwd(NULL, 0));
 	line = readline("");
-	tcsetattr(STDIN_FILENO, TCSANOW, &old_term);
-	if (line != NULL)
-		if (ft_strlen(line) > 0)
-			add_history(line);
+	if (ft_strlen(line) > 0)
+		add_history(line);
+	rl_forced_update_display();
 	return (line);
 }
 
+/**
+ * @brief Launch the minishell.
+ *
+ * @param int argc - The number of arguments
+ * @param char **argv - The arguments list
+ * @param char **env - The environment variables list
+ * @return int 0 if success, 1 if error.
+ */
 int	main(int argc, char **argv, char **env)
 {
 	t_exec	ex;
@@ -50,10 +52,9 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		line = ft_prompt_display();
-		if (line == NULL)
-			ft_prompt_display();
+		if (!line)
+			continue ;
 		ex.args = line;
-		ex.cmd = ft_parse_input(ex.args);
 	}
 	return (0);
 }
