@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 21:44:29 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/13 18:49:38 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,18 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env)
 	return (NULL);
 }
 
-/**
- * @brief Process the commands.
- *
- * @param t_cmd *cmd - The command
- * @param t_exec *ex - The execution
- * @return void
- */
-void	process_cmds(t_cmd *cmd, t_exec *ex)
+int	bad_substitution_error(t_cmd *cmd)
 {
-	int	curr_cmd;
-	int	curr_child;
+	int	i;
 
-	curr_cmd = 0;
-	curr_child = 0;
-	while (cmd)
+	i = 0;
+	while (cmd->array[++i])
 	{
-		save_original_io(ex);
-		dup_pipes(curr_cmd, cmd, ex);
-		if (is_builtin(cmd->array[0]) == TRUE)
-			execute_builtin(cmd, ex);
-		else
-		{
-			execute_command(ex->id[curr_child], curr_cmd, cmd, ex);
-			curr_child++;
-		}
-		curr_cmd++;
-		reset_io(ex);
-		cmd = cmd->next;
+		ft_putstr_fd(cmd->array[i], 2);
+		ft_putchar_fd(' ', 2);
 	}
+	ft_putstr_fd(": bad substitution\n", 2);
+	return (1);
 }
 
 /**
@@ -96,6 +79,8 @@ void	execute_command(int id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 	if (id == 0)
 	{
 		close_open_pipes(curr_cmd, ex);
+		if (cmd->bad_substitution == TRUE)
+			exit (bad_substitution_error(cmd));
 		if (are_redirections_valid(cmd) == EXIT_FAILURE)
 			exit(1);
 		if (is_executable_minishell(cmd->array[0], ex) == TRUE)
@@ -132,6 +117,7 @@ void	wait_for_child_exit_status(t_exec *ex)
 			ex->exit = child_exit;
 	}
 }
+	//first check all heredocs 
 
 void	initialize_minishell(t_exec *ex, char **env)
 {

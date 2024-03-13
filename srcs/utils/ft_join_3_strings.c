@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_join_3_strings.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 22:55:34 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/13 20:21:23 by artclave         ###   ########.fr       */
+/*   Created: 2024/03/13 12:46:38 by artclave          #+#    #+#             */
+/*   Updated: 2024/03/13 18:17:59 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s);
-void	*ft_memmove(void *dst, const void *src, size_t len);
-
-char	*ft_strdup(const char *s1)
+char	*ft_join_3_strings(char *str1, char *str2, char *str3)
 {
-	size_t	i;
-	char	*res;
+	int		len;
+	char	*result;
 
-	if (!s1)
-		return (NULL);
-	i = ft_strlen(s1);
-	res = (char *)malloc(sizeof(char) * (i + 1));
-	if (!(res))
-		return (NULL);
-	ft_memmove(res, s1, i);
-	res[i] = '\0';
-	return (res);
+	len = ft_strlen(str1) + ft_strlen(str2) + ft_strlen(str3);
+	result = (char *)malloc(sizeof(char) * (len + 1));
+	ft_strlcpy(result, str1, ft_strlen(str1) + 1);
+	ft_strcat(result, str2);
+	ft_strcat(result, str3);
+	result[len] = '\0';
+	return (result);
 }

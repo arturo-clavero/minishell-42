@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 10:35:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/02/13 09:02:05 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/13 23:04:51 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,8 +220,10 @@ int	main(int ac, char **av, char **env)
 		cmd = NULL;
 		simple_parsing(input, &cmd);
 	//	print_nodes(cmd);
+		expand_each_cmd_node(&cmd, &ex);
 		execution_main(cmd, &ex);
 		free(input);
 	}
 	return (SUCCESS);
 }
+*/

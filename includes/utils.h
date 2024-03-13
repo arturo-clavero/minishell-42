@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:55:08 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 22:59:26 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/13 20:18:40 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,9 @@ char	*ft_strjoin_with_sep(char const *s1, char const *s2, char sep);
 int		ft_isnum(char str);
 int		ft_is_numericable(char *str);
 void	ft_print_cmd(t_cmd *cmd);
+void	ft_init_exec(t_exec *ex, char **env);
+char	*ft_join_3_strings(char *str1, char *str2, char *str3);
+char	*ft_get_pid(void);
+int		double_strncmp(char *str1, char *str2);
 
 #endif
