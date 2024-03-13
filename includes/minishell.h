@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/11 13:29:43 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/13 20:17:48 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include "executor.h"
 # include "builtins.h"
 # include "parser.h"
+# include "expander.h"
 # include "utils.h"
 
 // -- DEFINES --

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_redir.c                                       :+:      :+:    :+:   */
+/*   file_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:41:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 10:21:54 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/13 18:39:32 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	dup_file_input(t_cmd *cmd)
 
 /**
  * @brief Duplicate file output.
- *
+ *file_redire
  * @param t_cmd *cmd - The command
  * @return void
  */

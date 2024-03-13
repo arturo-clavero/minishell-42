@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 23:05:08 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/13 20:33:01 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,15 @@ typedef struct s_redir
  * @param char **array - The command array
  * @param t_redir *redir - The redirections
  * @param struct s_cmd *next - The next command
+ * @param int bad_substitution - TRUE (= error) or FALSE (= no error) indicates 
+ * wether the current command has a bad substitution error from an erronous expandable
  * @return void
  */
 typedef struct s_cmd
 {
 	char			**array;
 	t_redir			*redir;
+	int				bad_substitution;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -124,6 +127,7 @@ void				print_error(char *str1, char *str2, char *str3);
 int					malloc_error(void);
 void				skip_whitespace(char *str, int *i);
 int					has_pipe(t_cmd *cmd);
+int					bad_substitution_error(t_cmd *cmd);
 
 // -- POST EXECUTION PROTOTYPES --
 int					is_executable_minishell(char *cmd, t_exec *ex);
@@ -140,9 +144,9 @@ void				add_data_to_cleanup_list(void *content, t_list **list);
 // -- PREPARE EXECUTION PROTOTYPES --
 void				initialize_minishell(t_exec *ex, char **env);
 void				execution_main(t_cmd *cmd, t_exec *ex);
-void				handle_dollar_sign(t_cmd **cmd_ptr, t_exec *ex);
 void				create_pipes(t_cmd *cmd, t_exec *ex);
 void				create_child_ids(t_cmd *cmd, t_exec *ex);
+
 
 // -- PROCESS EXECUTION PROTOTYPES --
 void				process_cmds(t_cmd *cmd, t_exec *ex);
