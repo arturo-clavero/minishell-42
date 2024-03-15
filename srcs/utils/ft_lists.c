@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list.c                                          :+:      :+:    :+:   */
+/*   ft_lists.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:54:56 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/07 10:55:21 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/15 07:53:58 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	new_node(void *content, t_list **list)
  */
 t_list	*get_last_node(t_list *list)
 {
-	while (list->next)
+	while (list && list->next)
 		list = list->next;
 	return (list);
 }

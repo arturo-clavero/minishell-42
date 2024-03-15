@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:43:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 21:51:00 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/15 05:35:17 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,18 @@ void	close_open_pipes(int curr_cmd, t_exec *ex)
 		return ;
 	close(ex->fd[curr_cmd][STDIN_FILENO]);
 	i = curr_cmd;
+	while (++i < ex->total_pipes)
+	{
+		close(ex->fd[i][STDIN_FILENO]);
+		close(ex->fd[i][STDOUT_FILENO]);
+	}
+}
+
+void	close_all_pipes(t_exec *ex)
+{
+	int	i;
+
+	i = -1;
 	while (++i < ex->total_pipes)
 	{
 		close(ex->fd[i][STDIN_FILENO]);

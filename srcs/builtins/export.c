@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/05 11:23:41 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/15 05:38:08 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,56 @@ static int	is_export_syntax_valid(char **cmd_array, char *original_cmd)
 	if (error > 0)
 		return (error);
 	add_slash_to_inside_double_quotes(cmd_array, ft_strlen(*cmd_array));
-	add_quotes_around_value(cmd_array);
+	if (ft_strchr(*cmd_array, '='))
+		add_quotes_around_value(cmd_array);
 	return (0);
+}
+
+
+t_list	*env_variable_exists(char *str, t_list *env, int double_check)
+{
+	char *temp;
+	int	len;
+
+	if (!double_check)
+	{
+		temp = ft_strchr(str, '=');
+		if (temp == NULL)
+			return (NULL);
+		len = ft_strlen(str) - ft_strlen(temp) + 1;
+	}
+	if (double_check)
+		len = ft_strlen((char *)env->content);
+	while (env)
+	{
+		if (ft_strncmp(str, (char *)env->content, len) == 0)
+				return (env);
+		env = env->next;
+	}
+	return (NULL);
+}
+
+void	add_export_to_env(char *export_str, t_list **env_list)
+{
+	char	*variable;
+	int		i;
+	t_list	*old_node;
+
+	old_node = NULL;
+	variable = ft_strdup(export_str);
+	i = 0;	
+	while (variable[i] && variable[i] != '=' && variable[i] != ' '
+		&& variable[i] != '\t')
+		i++;
+	variable[i] = '\0';
+	old_node = env_variable_exists(variable, *env_list, 1);
+	if (!old_node)
+		old_node = env_variable_exists(export_str, *env_list, 0);
+	if (old_node)
+		old_node->content = export_str;
+	else
+			new_node(export_str, env_list);
+	free(variable);
 }
 
 /**
@@ -62,7 +110,7 @@ int	exec_export(char **cmd_array, t_exec *ex)
 		if (error > 0)
 			return (error);
 		new_value = ft_strdup(cmd_array[i]);
-		new_node((void *)new_value, &ex->env_list);
+		add_export_to_env(new_value, &ex->env_list);
 		add_data_to_cleanup_list(new_value, &ex->long_term_data);
 	}
 	if (!cmd_array[1])

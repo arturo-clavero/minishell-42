@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:52:30 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/10 16:04:04 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/15 01:30:04 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void	delete_outside_quotes(char **str)
 void	add_quotes_around_value(char **str)
 {
 	int		i;
+	int		j;
 	int		len;
 	char	*new_str;
 
@@ -155,17 +156,17 @@ void	add_quotes_around_value(char **str)
 	if (!new_str)
 		return ;
 	i = -1;
-	while ((*str)[++i] && (*str)[i] != '=')
-		new_str[i] = (*str)[i];
-	if ((*str)[i] != '=')
+	while ((*str)[++i])
 	{
-		free(new_str);
-		return ;
+		new_str[i] = (*str)[i];
+		if ((*str)[i] == '=')
+			break ;
 	}
+	j = i;
 	new_str[++i] = '"';
-	while (++i < len - 1)
-		new_str[i] = (*str)[i - 1];
-	new_str[i] = '"';
+	while ((*str)[++j] && (*str)[j] != ' ' && (*str)[j] != '\t')
+		new_str[++i] = (*str)[j];
+	new_str[++i] = '"';
 	new_str[++i] = '\0';
 	free(*str);
 	*str = new_str;

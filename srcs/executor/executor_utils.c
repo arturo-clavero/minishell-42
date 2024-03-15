@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/13 18:49:38 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 08:04:26 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env)
 	}
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd_array[0], 2);
+	//printf("heyyy\n");
 	if (ft_strchr(cmd_array[0], '/'))
 		ft_putstr_fd(": No such file or directory\n", 2);
 	else
@@ -72,6 +73,7 @@ void	execute_command(int id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 {
 	char	*cmd_path;
 	char	**env;
+	struct stat cmd_stat;
 
 	id = fork();
 	if (id == -1)
@@ -79,14 +81,21 @@ void	execute_command(int id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 	if (id == 0)
 	{
 		close_open_pipes(curr_cmd, ex);
+
 		if (cmd->bad_substitution == TRUE)
 			exit (bad_substitution_error(cmd));
 		if (are_redirections_valid(cmd) == EXIT_FAILURE)
 			exit(1);
-		if (is_executable_minishell(cmd->array[0], ex) == TRUE)
-			exit(0);
-		env = ft_split(get_env_value("PATH=", ex->env_list), ':');
+		if (ft_strncmp(cmd->array[0], "./minishell", ft_strlen(cmd->array[0])) == 0)
+			env = ft_list_to_str_array(ex->env_list);
+		else
+			env = ft_split(get_env_value("PATH=", ex->env_list), ':');
 		cmd_path = get_cmd_path_for_exec(cmd->array, env);
+        stat(cmd->array[0], &cmd_stat);
+        if (S_ISDIR(cmd_stat.st_mode)) {
+            fprintf(stderr, "minishell: %s: Is a directory\n", cmd->array[0]);
+            exit(1);
+        }
 		execve(cmd_path, cmd->array, env);
 		perror(cmd->array[0]);
 		exit(127);
@@ -115,34 +124,30 @@ void	wait_for_child_exit_status(t_exec *ex)
 			child_exit = WTERMSIG(exit_status);
 		if (ex->is_builtin_last == FALSE)
 			ex->exit = child_exit;
+		//close(ex->fd[curr_child][STDIN_FILENO]);
+		//close(ex->fd[curr_child][STDOUT_FILENO]);
 	}
+	if (ex->exit == 13)
+		ex->exit = 127;
 }
 	//first check all heredocs 
 
 void	initialize_minishell(t_exec *ex, char **env)
 {
 	int		i;
-	int		shlvl;
 
 	ex->cmd = NULL;
 	ex->env_list = NULL;
 	ex->short_term_data = NULL;
 	ex->long_term_data = NULL;
-	ex->program_path = NULL;
 	ex->total_pipes = 0;
 	ex->total_children = 0;
 	ex->is_builtin_last = FALSE;
 	ex->fd = NULL;
 	ex->id = NULL;
 	ex->exit = 0;
-	ex->shell_env_list = NULL;
 	i = -1;
-	while (env[++i])
-	{
+	while (env && env[++i])
 		new_node((void *)env[i], &ex->env_list);
-		if (ft_strncmp(env[i], "PWD=", 4) == 0)
-			ex->program_path = &env[i][4];
-	}
-	shlvl = change_shlvl(0, ex);
-	change_shlvl(2 - shlvl, ex);
+	change_shlvl(1, ex);
 }
