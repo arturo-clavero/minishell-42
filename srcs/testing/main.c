@@ -6,10 +6,12 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 10:35:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 06:56:52 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:29:53 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+/*
 #include "minishell.h"
 
 t_redir	*get_last_redir_node(t_redir *redir)
@@ -226,3 +228,4 @@ int	main(int ac, char **av, char **env)
 	}
 	return (SUCCESS);
 }
+*/
