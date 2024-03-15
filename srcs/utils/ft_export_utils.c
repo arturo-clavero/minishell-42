@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/14 07:25:10 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:47:49 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 static int	next_smallest_string(t_list *env, char *new_min, char *old_min);
 
+/**
+ * @brief checks syntax of the first char of variable name
+ * 
+ * @param char *cmd_array - current string being modified
+ * @param char *orginal_cmd - initial string prior to any modifications
+ * @return int (0) no errors, (1) errors
+ */
 int	is_variable_start_valid(char *cmd_array, char *original_cmd)
 {
 	int	j;
@@ -28,6 +35,13 @@ int	is_variable_start_valid(char *cmd_array, char *original_cmd)
 	return (0);
 }
 
+/**
+ * @brief checks syntax of variable name
+ * 
+ * @param char *cmd_array - current string being modified
+ * @param char *original_cmd - initial string prior to any modifications
+ * @return int (0) no errors, (1) errors
+ */
 int	is_variable_content_valid(char *cmd_array, char *original_cmd)
 {
 	int	j;
@@ -47,6 +61,13 @@ int	is_variable_content_valid(char *cmd_array, char *original_cmd)
 	return (0);
 }
 
+/**
+ * @brief	prints environment list in alphabetical order 
+ * 
+ * @param t_list *env - environment list
+ * @param t_list *head - copy of environment list
+ * @return void
+ */
 void	print_env_alphabetically(t_list *env, t_list *head)
 {
 	char	*new_min;
@@ -71,6 +92,15 @@ void	print_env_alphabetically(t_list *env, t_list *head)
 		old_min = new_min;
 	}
 }
+
+/**
+ * @brief checks if new_min should be printed next
+ * 
+ * @param t_list *env - environment list
+ * @param char *new_min - next possible string to be printed
+ * @param char *old_min - last string printed
+ * @return int
+ */
 
 static int	next_smallest_string(t_list *env, char *new_min, char *old_min)
 {

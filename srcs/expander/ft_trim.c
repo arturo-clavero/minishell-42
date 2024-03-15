@@ -6,12 +6,18 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:57:26 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/13 18:25:13 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:18:21 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief if no expansion value is found $VARIABLE is trimmed
+ * 
+ * @param char **str - pointer to str being trimmed
+ * @return int - 0 
+ */
 int	trim_dollar_substr(char **str)
 {
 	int		i;
@@ -31,6 +37,14 @@ int	trim_dollar_substr(char **str)
 	return (0);
 }
 
+/**
+ * @brief trims garbage values within ${} when '?' is the first char
+ * found within ${}
+ * 
+ * @param char **str - pointer to string to be modified
+ * @param int j - index of char right after first '?'
+ * @return int (0)
+ */
 int	trim_question_mark(char **str, int j)
 {
 	char	*result;
@@ -46,6 +60,13 @@ int	trim_question_mark(char **str, int j)
 	return (0);
 }
 
+/**
+ * @brief trims curly brackets found after '$'
+ * 
+ * @param char **str - pointer to str being modified
+ * @param int j - index of closing curly bracket '}'
+ * @return int (0)
+ */
 int	trim_curly_brackets_only(char **str, int j)
 {
 	char	*result;

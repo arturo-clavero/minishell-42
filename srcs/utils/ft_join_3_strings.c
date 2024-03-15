@@ -6,12 +6,20 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:46:38 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/13 18:17:59 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:51:58 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief joins 3 strings
+ * 
+ * @param char *str1 - first part of string
+ * @param char *str2 - second part of string
+ * @param char *str3 - third part of string
+ * @return char * - combined string
+ */
 char	*ft_join_3_strings(char *str1, char *str2, char *str3)
 {
 	int		len;
