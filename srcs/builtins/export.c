@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 14:50:06 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:25:42 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int	exec_export(char **cmd_array, t_exec *ex)
 	char	*new_value;
 	int		error;
 
+	new_value = NULL;
+	original_cmd_str = NULL;
 	if (has_pipe(ex->cmd) == TRUE && cmd_array[1])
 		return (0);
 	i = 0;
@@ -128,10 +130,9 @@ int	exec_export(char **cmd_array, t_exec *ex)
 		new_value = ft_strdup(cmd_array[i]);
 		add_export_to_env(new_value, &ex->env_list);
 		add_data_to_cleanup_list(new_value, &ex->long_term_data);
+		free(original_cmd_str);
 	}
 	if (!cmd_array[1])
 		print_env_alphabetically(ex->env_list, ex->env_list);
-	else
-		free(original_cmd_str);
 	return (0);
 }
