@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/13 20:33:01 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 05:36:00 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,9 @@ typedef struct s_exec
 	int				total_children;
 	int				stdin_original;
 	int				stdout_original;
-	char			*program_path;
 	int				exit;
 	t_list			*short_term_data;
 	t_list			*long_term_data;
-	t_list			*shell_env_list;
 	int				is_builtin_last;
 }					t_exec;
 
@@ -130,10 +128,7 @@ int					has_pipe(t_cmd *cmd);
 int					bad_substitution_error(t_cmd *cmd);
 
 // -- POST EXECUTION PROTOTYPES --
-int					is_executable_minishell(char *cmd, t_exec *ex);
 int					change_shlvl(int change, t_exec *ex);
-void				adjust_shlvl(t_cmd *cmd, t_exec *ex);
-void				get_previous_shells_env(t_exec *ex);
 void				wait_for_child_exit_status(t_exec *ex);
 void				maybe_quit_program(t_exec *ex);
 void				exit_minishell(t_exec *ex, int exit_num);
@@ -153,6 +148,7 @@ void				process_cmds(t_cmd *cmd, t_exec *ex);
 void				execute_command(int id, int curr_cmd, t_cmd *cmd,
 						t_exec *ex);
 void				close_open_pipes(int curr_cmd, t_exec *ex);
+void				close_all_pipes(t_exec *ex);
 void				save_original_io(t_exec *ex);
 void				reset_io(t_exec *ex);
 void				dup_pipes(int curr_cmd, t_cmd *cmd, t_exec *ex);

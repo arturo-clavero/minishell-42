@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:55:08 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/13 20:18:40 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 03:37:02 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	ft_init_exec(t_exec *ex, char **env);
 char	*ft_join_3_strings(char *str1, char *str2, char *str3);
 char	*ft_get_pid(void);
 int		double_strncmp(char *str1, char *str2);
+char	**ft_list_to_str_array(t_list *lst);
 
 #endif

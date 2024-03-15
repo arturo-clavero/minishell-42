@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/13 20:17:48 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 05:45:00 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdint.h>
-#include <termios.h>
+# include <termios.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <unistd.h>
 
 // -- CUSTOM LIBRARIES --

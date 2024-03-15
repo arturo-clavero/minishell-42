@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 10:35:42 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/13 23:04:51 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 06:56:52 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,9 +204,10 @@ int	main(int ac, char **av, char **env)
 	t_cmd	*cmd;
 	char	*input;
 
-
 	(void)av;
 	(void)ac;
+	input = NULL;
+	cmd = NULL;
 	initialize_minishell(&ex, env);
 	while (1)
 	{
@@ -219,11 +220,9 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		cmd = NULL;
 		simple_parsing(input, &cmd);
-	//	print_nodes(cmd);
 		expand_each_cmd_node(&cmd, &ex);
 		execution_main(cmd, &ex);
 		free(input);
 	}
 	return (SUCCESS);
 }
-*/

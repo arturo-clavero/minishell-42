@@ -6,11 +6,22 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/13 18:53:00 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 05:40:14 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	initialize_execution(t_cmd *cmd, t_exec *ex)
+{
+	ex->cmd = cmd;
+	ex->short_term_data = NULL;
+	ex->total_pipes = 0;
+	ex->total_children = 0;
+	ex->is_builtin_last = FALSE;
+	ex->fd = NULL;
+	ex->id = NULL;
+}
 
 /**
  * @brief Process the commands.
@@ -34,6 +45,8 @@ void	process_cmds(t_cmd *cmd, t_exec *ex)
 		{
 			if (are_redirections_valid(cmd) == EXIT_SUCCESS)
 				execute_builtin(cmd, ex);
+			else if (!cmd->next)
+				ex->exit = 1;
 		}
 		else
 		{
@@ -54,13 +67,12 @@ void	process_cmds(t_cmd *cmd, t_exec *ex)
 */
 void	execution_main(t_cmd *cmd, t_exec *ex)
 {
-	ex->cmd = cmd;
-	ex->short_term_data = NULL;
+	initialize_execution(cmd, ex);
 	create_pipes(cmd, ex);
 	create_child_ids(cmd, ex);
 	process_cmds(cmd, ex);
 	wait_for_child_exit_status(ex);
-	adjust_shlvl(cmd, ex);
+	close_all_pipes(ex);
 	maybe_quit_program(ex);
 	clean_list(ex->short_term_data, TRUE);
 	clean_t_cmd(ex->cmd);
