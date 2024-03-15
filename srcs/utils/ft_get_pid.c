@@ -6,12 +6,19 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:48:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/13 23:02:39 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:50:52 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief extracts the parent process id from the output of "ps" command
+ * 
+ * @param char *str - output of "ps" command
+ * @param int i - length of "ps" command output (str)
+ * @return char * - parent process id numbers as a string
+ */
 static char	*find_last_minishell_pid(char *str, int i)
 {
 	int		j;
@@ -38,6 +45,12 @@ static char	*find_last_minishell_pid(char *str, int i)
 	return (result);
 }
 
+/**
+ * @brief gets current parent process id
+ * 
+ * @param void
+ * @return char * - parent process id numbers as a string
+ */
 char	*ft_get_pid(void)
 {
 	int		id;

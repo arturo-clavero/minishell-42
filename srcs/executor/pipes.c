@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:43:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 05:35:17 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:57:36 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	dup_pipes(int current, t_cmd *cmd, t_exec *ex)
 }
 
 /**
- * @brief Close the open pipes.
+ * @brief Child processes close remaining open pipes.
  *
  * @param int curr_cmd - The current command
  * @param t_exec *ex - The execution structure
@@ -90,6 +90,12 @@ void	close_open_pipes(int curr_cmd, t_exec *ex)
 	}
 }
 
+/**
+ * @brief Parent process closes all pipes after all children are done
+ * 
+ * @param t_exec *ex - Exec structure
+ * @return void
+ */
 void	close_all_pipes(t_exec *ex)
 {
 	int	i;

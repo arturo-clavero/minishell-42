@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 05:38:08 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:50:06 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,20 @@ static int	is_export_syntax_valid(char **cmd_array, char *original_cmd)
 	return (0);
 }
 
-
+/**
+ * @brief Check if the exported variable is already in environment list
+ *
+ * @param char *str - export variable name
+ * @param t_list *env - environment list
+ * @param int double_check, if TRUE variable name without '=',
+ * if FALSE variable name with '='
+ * @return enviroment node that matches the variable name, 
+ * if no matches found, returns NULL
+ */
 t_list	*env_variable_exists(char *str, t_list *env, int double_check)
 {
-	char *temp;
-	int	len;
+	char	*temp;
+	int		len;
 
 	if (!double_check)
 	{
@@ -57,12 +66,19 @@ t_list	*env_variable_exists(char *str, t_list *env, int double_check)
 	while (env)
 	{
 		if (ft_strncmp(str, (char *)env->content, len) == 0)
-				return (env);
+			return (env);
 		env = env->next;
 	}
 	return (NULL);
 }
 
+/**
+ * @brief Adds export argument to enviroment list
+ *
+ * @param char *export_str - export argument -> variable="value"
+ * @param t_list **env_list - pointer to environment list
+ * @return void
+ */
 void	add_export_to_env(char *export_str, t_list **env_list)
 {
 	char	*variable;
@@ -71,7 +87,7 @@ void	add_export_to_env(char *export_str, t_list **env_list)
 
 	old_node = NULL;
 	variable = ft_strdup(export_str);
-	i = 0;	
+	i = 0;
 	while (variable[i] && variable[i] != '=' && variable[i] != ' '
 		&& variable[i] != '\t')
 		i++;
@@ -82,7 +98,7 @@ void	add_export_to_env(char *export_str, t_list **env_list)
 	if (old_node)
 		old_node->content = export_str;
 	else
-			new_node(export_str, env_list);
+		new_node(export_str, env_list);
 	free(variable);
 }
 

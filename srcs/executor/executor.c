@@ -6,22 +6,11 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/15 05:40:14 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:23:13 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	initialize_execution(t_cmd *cmd, t_exec *ex)
-{
-	ex->cmd = cmd;
-	ex->short_term_data = NULL;
-	ex->total_pipes = 0;
-	ex->total_children = 0;
-	ex->is_builtin_last = FALSE;
-	ex->fd = NULL;
-	ex->id = NULL;
-}
 
 /**
  * @brief Process the commands.
