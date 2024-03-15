@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 17:25:42 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:16:50 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,46 @@ static int	is_export_syntax_valid(char **cmd_array, char *original_cmd)
 }
 
 /**
- * @brief Check if the exported variable is already in environment list
+ * @brief Finds index where variable name ends in environment node
  *
- * @param char *str - export variable name
- * @param t_list *env - environment list
- * @param int double_check, if TRUE variable name without '=',
- * if FALSE variable name with '='
- * @return enviroment node that matches the variable name, 
- * if no matches found, returns NULL
+ * @param char *str - environment node->content
+ * @return int - ending index of variable name
  */
-t_list	*env_variable_exists(char *str, t_list *env, int double_check)
+int	find_end_variable_index(char *str)
 {
-	char	*temp;
-	int		len;
+	int	i;
 
-	if (!double_check)
-	{
-		temp = ft_strchr(str, '=');
-		if (temp == NULL)
-			return (NULL);
-		len = ft_strlen(str) - ft_strlen(temp) + 1;
-	}
-	if (double_check)
-		len = ft_strlen((char *)env->content);
-	while (env)
-	{
-		if (ft_strncmp(str, (char *)env->content, len) == 0)
-			return (env);
-		env = env->next;
-	}
-	return (NULL);
+	i = 0;
+	if (!str)
+		return (i);
+	while (str[i] && str[i] == ' ' && str[i] == '\t')
+		i++;
+	while (str[i] && str[i] != '=' && str[i] != ' ' && str[i] != '\t')
+		i++;
+	return (i);
+}
+
+/**
+ * @brief Checks wether the environment variable should be substituted
+ * by export argument or not
+ *
+ * @param char *new - export argument
+ * @param char *old - environemnt node being evaluated
+ * @return int - (-1) for no match, (1) for match and substitution required,
+ * (0) for match and no substitution
+ */
+int	find_env_match(char *new, char *old)
+{
+	int	len;
+
+	len = find_end_variable_index(new);
+	if (find_end_variable_index(old) != len)
+		return (-1);
+	if (ft_strncmp(new, old, len) != 0)
+		return (-1);
+	if (ft_strchr(new, '='))
+		return (1);
+	return (0);
 }
 
 /**
@@ -81,25 +91,23 @@ t_list	*env_variable_exists(char *str, t_list *env, int double_check)
  */
 void	add_export_to_env(char *export_str, t_list **env_list)
 {
-	char	*variable;
+	t_list	*node;
 	int		i;
-	t_list	*old_node;
 
-	old_node = NULL;
-	variable = ft_strdup(export_str);
-	i = 0;
-	while (variable[i] && variable[i] != '=' && variable[i] != ' '
-		&& variable[i] != '\t')
-		i++;
-	variable[i] = '\0';
-	old_node = env_variable_exists(variable, *env_list, 1);
-	if (!old_node)
-		old_node = env_variable_exists(export_str, *env_list, 0);
-	if (old_node)
-		old_node->content = export_str;
-	else
-		new_node(export_str, env_list);
-	free(variable);
+	node = *env_list;
+	while (node)
+	{
+		i = find_env_match(export_str, (char *)node->content);
+		if (i == 1)
+		{
+			delete_node(node, env_list);
+			break ;
+		}
+		if (i == 0)
+			return ;
+		node = node->next;
+	}
+	new_node(export_str, env_list);
 }
 
 /**

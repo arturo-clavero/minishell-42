@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 16:07:28 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:27:39 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int	exec_exit(char **cmd_array, t_cmd *cmd, t_exec *ex)
 		ft_putstr_fd("exit\n", 1);
 	if (cmd_array[1] == NULL)
 		return (0);
-		//exit_minishell(ex, 0);
 	new_exit_num = get_new_exit_num(cmd_array[1], ex);
 	if ((cmd_array[2]))
 	{
