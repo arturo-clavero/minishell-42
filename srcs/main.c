@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/15 03:24:21 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:30:11 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param void
  * @return char * The command entered by the user.
  */
-/*
+
 static char	*ft_prompt_display(void)
 {
 	char	*line;
@@ -30,7 +30,7 @@ static char	*ft_prompt_display(void)
 	rl_forced_update_display();
 	return (line);
 }
-*/
+
 /**
  * @brief Launch the minishell.
  *
@@ -39,7 +39,7 @@ static char	*ft_prompt_display(void)
  * @param char **env - The environment variables list
  * @return int 0 if success, 1 if error.
  */
-/*
+
 int	main(int argc, char **argv, char **env)
 {
 	t_exec	ex;
@@ -60,4 +60,3 @@ int	main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
-*/

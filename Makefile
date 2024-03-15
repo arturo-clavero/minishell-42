@@ -23,7 +23,7 @@ LIBS_FLAGS   = -L$(LIBSDIR) -lft
 
 # -- Compilation flags
 CC = cc
-C_FLAGS = -fsanitize=address -Werror -Wall -Wextra -g
+C_FLAGS = -Werror -Wall -Wextra -g
 RL_FLAGS = -l readline
 RM = rm -rf
 MKDIR = mkdir -p
