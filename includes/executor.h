@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/15 15:56:49 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:20:09 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ void				new_node(void *content, t_list **list);
 t_list				*get_last_node(t_list *list);
 char				*get_env_value(char *variable, t_list *env_list);
 t_list				*get_env_node(char *variable, t_exec *ex);
+void				delete_node(t_list *node_delete, t_list **head);
+int					find_env_match(char *new, char *old);
 int					free_data(char *should_exit, char *data, int exit_code);
 void				print_error(char *str1, char *str2, char *str3);
 int					malloc_error(void);
