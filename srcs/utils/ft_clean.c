@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clean.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/09 23:43:57 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/15 16:19:10 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	exit_minishell(t_exec *ex, int exit_num)
 {
 	clean_t_cmd(ex->cmd);
 	clean_list(ex->env_list, FALSE);
-	clean_list(ex->shell_env_list, FALSE);
 	clean_list(ex->short_term_data, TRUE);
 	clean_list(ex->long_term_data, TRUE);
 	exit(exit_num);
@@ -46,8 +45,6 @@ void	maybe_quit_program(t_exec *ex)
 			|| (str_is_numerical(ex->cmd->array[1])
 				&& ex->cmd->array[2] == NULL)))
 		return ;
-	if (change_shlvl(-1, ex) > 1)
-		get_previous_shells_env(ex);
 	exit_minishell(ex, ex->exit);
 }
 

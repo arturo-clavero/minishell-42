@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:43:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 21:51:00 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/15 14:57:36 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	dup_pipes(int current, t_cmd *cmd, t_exec *ex)
 }
 
 /**
- * @brief Close the open pipes.
+ * @brief Child processes close remaining open pipes.
  *
  * @param int curr_cmd - The current command
  * @param t_exec *ex - The execution structure
@@ -83,6 +83,24 @@ void	close_open_pipes(int curr_cmd, t_exec *ex)
 		return ;
 	close(ex->fd[curr_cmd][STDIN_FILENO]);
 	i = curr_cmd;
+	while (++i < ex->total_pipes)
+	{
+		close(ex->fd[i][STDIN_FILENO]);
+		close(ex->fd[i][STDOUT_FILENO]);
+	}
+}
+
+/**
+ * @brief Parent process closes all pipes after all children are done
+ * 
+ * @param t_exec *ex - Exec structure
+ * @return void
+ */
+void	close_all_pipes(t_exec *ex)
+{
+	int	i;
+
+	i = -1;
 	while (++i < ex->total_pipes)
 	{
 		close(ex->fd[i][STDIN_FILENO]);
