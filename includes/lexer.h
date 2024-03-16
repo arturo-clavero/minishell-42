@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 11:04:06 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 23:33:55 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/14 18:37:19 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/16 23:49:25 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,15 @@
 // -- LIBRARIES --
 # include "minishell.h"
 
-// -- STRUCTURES --
-
-/**
- * @brief Structure for the lexer
- *
- * @param char *input - The input string
- * @param int token - The tokens list
- * @param int pos - The position in the input string
- */
-typedef struct s_lexer
-{
-	char			*input;
-	int				token;
-	int				pos;
-	struct s_lexer	*next;
-	struct s_lexer	*prev;
-}					t_lexer;
-
 // -- PROTOTYPES --
-int					ft_skip_spaces(char *str, int i);
-int					ft_tokens(int c);
-int					ft_quotes(char *str, int i, char quote);
-int					ft_lexer(char *str, int i, t_lexer **lexer);
+int				ft_handle_quote(char *str, int i, char quote);
+t_token_type	ft_check_string_token(int c);
+int				ft_handle_token(t_lexer *lexer, char *str, int i);
+int				ft_get_word(char *str, int i, t_lexer *lexer);
+t_lexer			*ft_init_lexer(void);
+int				ft_add_lexer(char *str, t_token_type type, t_lexer *lexer);
+void			ft_lexer(t_exec *ex);
+void			ft_debug_lexer(t_lexer *lexer);
+void			ft_free_lexer(t_lexer *lexer);
 
 #endif

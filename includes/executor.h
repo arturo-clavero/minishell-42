@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 23:05:08 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/17 00:48:44 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,46 @@
 # define FALSE 0
 
 // -- STRUCTURES --
+
+/**
+ * @brief The t_token_type enum
+ *
+ * @param PIPE - The pipe token
+ * @param INFILE - The input file token
+ * @param OUTFILE - The output file token
+ * @param APPEND - The append file token
+ * @param HEREDOC - The heredoc token
+ * @param WORD - The word token
+ * @return void
+ */
+typedef enum e_token_type
+{
+	UNINITIALIZED,
+	WORD,
+	PIPE,    // |
+	INFILE,  // <
+	OUTFILE, // >
+	APPEND,  // >>
+	HEREDOC, // <<
+}					t_token_type;
+
+/**
+ * @brief The t_lexer structure
+ *
+ * @param char *str - The string
+ * @param t_token_type token - The token type
+ * @param int i - The index
+ * @param struct s_lexer *next - The next node
+ * @param struct s_lexer *prev - The previous node
+ * @return void
+ */
+typedef struct s_lexer
+{
+	char			*str;
+	t_token_type	token;
+	struct s_lexer	*next;
+	struct s_lexer	*prev;
+}					t_lexer;
 
 /**
  * @brief The t_list structure
@@ -98,6 +138,7 @@ typedef struct s_cmd
 typedef struct s_exec
 {
 	char			*args;
+	t_lexer			*lexer;
 	t_cmd			*cmd;
 	t_list			*env_list;
 	int				**fd;

@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:06:09 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/09 21:50:06 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/17 00:18:27 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 /**
  * @brief Check if a character is a letter or a digit
  *
- * @param char c - the character to check
+ * @param char c - The character to check
+ * @param int - The index of the character in the string
  * @return int - TRUE if the character is a letter or a digit, FALSE otherwise
  */
 void	skip_whitespace(char *str, int *i)
 {
 	if (!str)
 		return ;
-	while (str[*i] == ' ' || str[*i] == '\t')
+	while (str[*i] == ' ' || str[*i] == '\t' || (str[*i] > 8 && str[*i] < 14))
 		(*i)++;
 }
 
@@ -89,4 +90,15 @@ int	ft_is_numericable(char *str)
 		if (ft_isdigit(str[i]) == FALSE)
 			return (FALSE);
 	return (TRUE);
+}
+
+/**
+ * @brief Check if the string a space.
+ *
+ * @param int c - The character to check.
+ * @return int - TRUE if the string is a space, FALSE otherwise.
+ */
+int	ft_is_space(int c)
+{
+	return (c == ' ' || (c > 8 && c < 14));
 }

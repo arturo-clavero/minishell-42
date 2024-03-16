@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 12:26:59 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/11 13:17:04 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/15 21:45:52 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/17 00:16:22 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Split the input string into tokens.
+ * @brief Print the lexer.
  *
- * @param char *str - The input string
- * @return t_token* : The token list
+ * @param t_lexer *lexer The lexer to print.
  */
-t_lexer	*ft_input(char *str)
+void	ft_debug_lexer(t_lexer *lexer)
 {
-	t_lexer	*lexer;
-	int		i;
-
-	lexer = NULL;
-	i = 0;
-	while (str[i])
+	while (lexer)
 	{
-		if (ft_lexer(str, i, &lexer) == -1)
-			return (NULL);
-		i++;
+		printf("str: %s\n", lexer->str);
+		printf("token: %d\n", lexer->token);
+		lexer = lexer->next;
 	}
-	return (lexer);
+	ft_free_lexer(lexer);
 }
