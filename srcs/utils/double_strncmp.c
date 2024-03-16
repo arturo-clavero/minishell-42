@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   double_strncmp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 22:55:34 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/13 20:21:23 by artclave         ###   ########.fr       */
+/*   Created: 2024/03/13 16:48:09 by artclave          #+#    #+#             */
+/*   Updated: 2024/03/13 16:48:28 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s);
-void	*ft_memmove(void *dst, const void *src, size_t len);
-
-char	*ft_strdup(const char *s1)
+/**
+ * @brief ft_strncmp for both lengths of both strings
+ *
+ * @param char *str1 - first string to compare
+ * @param char *str2 - second string to compare
+ * @return int - 0 both ft_strncmp are 0, else 1
+ */
+int	double_strncmp(char *str1, char *str2)
 {
-	size_t	i;
-	char	*res;
-
-	if (!s1)
-		return (NULL);
-	i = ft_strlen(s1);
-	res = (char *)malloc(sizeof(char) * (i + 1));
-	if (!(res))
-		return (NULL);
-	ft_memmove(res, s1, i);
-	res[i] = '\0';
-	return (res);
+	if (ft_strncmp(str1, str2, ft_strlen(str1)) == 0
+		&& ft_strncmp(str1, str2, ft_strlen(str2)) == 0)
+		return (0);
+	return (1);
 }

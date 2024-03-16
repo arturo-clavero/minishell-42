@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
 /*   Updated: 2024/03/17 00:57:17 by ugolin-olle      ###   ########.fr       */
@@ -46,33 +46,43 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env)
 }
 
 /**
- * @brief Process the commands.
- *
- * @param t_cmd *cmd - The command
- * @param t_exec *ex - The execution
+ * @brief Prints error when expander has issues with curly brackets
+ * 
+ * @param t_cmd *cmd - current command node
+ * @return int - error number for potential exit code
+ */
+int	bad_substitution_error(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->array[++i])
+	{
+		ft_putstr_fd(cmd->array[i], 2);
+		ft_putchar_fd(' ', 2);
+	}
+	ft_putstr_fd(": bad substitution\n", 2);
+	return (1);
+}
+
+/**
+ * @brief Checks if current command string is a directory
+ * instead of a command
+ * 
+ * @param t_cmd *cmd - current command node
  * @return void
  */
-void	process_cmds(t_cmd *cmd, t_exec *ex)
+static void	check_if_cmd_is_directory(t_cmd *cmd)
 {
-	int	curr_cmd;
-	int	curr_child;
+	struct stat	cmd_stat;
 
-	curr_cmd = 0;
-	curr_child = 0;
-	while (cmd)
+	stat(cmd->array[0], &cmd_stat);
+	if (S_ISDIR(cmd_stat.st_mode))
 	{
-		save_original_io(ex);
-		dup_pipes(curr_cmd, cmd, ex);
-		if (is_builtin(cmd->array[0]) == TRUE)
-			execute_builtin(cmd, ex);
-		else
-		{
-			execute_command(ex->id[curr_child], curr_cmd, cmd, ex);
-			curr_child++;
-		}
-		curr_cmd++;
-		reset_io(ex);
-		cmd = cmd->next;
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->array[0], 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+		exit(1);
 	}
 }
 
@@ -87,8 +97,8 @@ void	process_cmds(t_cmd *cmd, t_exec *ex)
  */
 void	execute_command(int id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 {
-	char	*cmd_path;
-	char	**env;
+	char		*cmd_path;
+	char		**env;
 
 	id = fork();
 	if (id == -1)
@@ -96,12 +106,17 @@ void	execute_command(int id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 	if (id == 0)
 	{
 		close_open_pipes(curr_cmd, ex);
+		if (cmd->bad_substitution == TRUE)
+			exit (bad_substitution_error(cmd));
 		if (are_redirections_valid(cmd) == EXIT_FAILURE)
 			exit(1);
-		if (is_executable_minishell(cmd->array[0], ex) == TRUE)
-			exit(0);
-		env = ft_split(get_env_value("PATH=", ex->env_list), ':');
+		if (ft_strncmp(cmd->array[0], "./minishell",
+				ft_strlen(cmd->array[0])) == 0)
+			env = ft_list_to_str_array(ex->env_list);
+		else
+			env = ft_split(get_env_value("PATH=", ex->env_list), ':');
 		cmd_path = get_cmd_path_for_exec(cmd->array, env);
+		check_if_cmd_is_directory(cmd);
 		execve(cmd_path, cmd->array, env);
 		perror(cmd->array[0]);
 		exit(127);
@@ -131,6 +146,8 @@ void	wait_for_child_exit_status(t_exec *ex)
 		if (ex->is_builtin_last == FALSE)
 			ex->exit = child_exit;
 	}
+	if (ex->exit == 13)
+		ex->exit = 127;
 }
 
 void	initialize_minishell(t_exec *ex, char **env)

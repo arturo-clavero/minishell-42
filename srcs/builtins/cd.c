@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 21:49:17 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/15 14:44:23 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,12 @@ static void	update_env(char *var_name, char *new_env, t_exec *ex)
 	return ;
 }
 
-//deletes last char '/'
+/**
+ * @brief Deletes last char '/' of a directory.
+ *
+ * @param char *str - string containing directory
+ * @return char *str - modified string
+ */
 char	*get_new_dir(char *str)
 {
 	int	i;

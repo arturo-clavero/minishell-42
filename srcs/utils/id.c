@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   id.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:45:11 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 21:54:39 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/15 15:54:24 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief malloc array of integers to hold children process ids
+ * 
+ * @param t_cmd *cmd - command list
+ * @param t_exec *ex - exec structure
+ * @return void
+ */
 void	create_child_ids(t_cmd *cmd, t_exec *ex)
 {
 	int	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 13:32:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/09 21:38:32 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/15 19:25:16 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	check_unset_syntax(char **array)
 		j = -1;
 		while (array[i][++j])
 		{
-			if (ft_isnum(array[i][0]) || (!ft_isnum(array[i][j])
+			if (ft_isdigit(array[i][0]) || (!ft_isdigit(array[i][j])
 					&& !ft_isalpha(array[i][j]) && array[i][j] != '_'))
 			{
 				print_error("unset: `", array[i], "': not a valid identifier");
@@ -47,7 +47,7 @@ static int	check_unset_syntax(char **array)
  * @param t_list **head - The head of the list
  * @return void
  */
-static void	delete_node(t_list *node_delete, t_list **head)
+void	delete_node(t_list *node_delete, t_list **head)
 {
 	t_list	*list;
 
@@ -79,20 +79,28 @@ static void	delete_node(t_list *node_delete, t_list **head)
  * @param t_exec *ex - The execution structure
  * @return int - The exit status
  */
-int	exec_unset(char **cmd_array, t_exec *ex)
+int	exec_unset(char **cmd, t_exec *ex)
 {
 	int		i;
-	t_list	*env_node;
+	t_list	*node;
 
 	if (has_pipe(ex->cmd))
 		return (0);
-	if (check_unset_syntax(cmd_array) == EXIT_FAILURE)
+	if (check_unset_syntax(cmd) == EXIT_FAILURE)
 		return (1);
 	i = 0;
-	while (cmd_array[++i])
+	while (cmd[++i])
 	{
-		env_node = get_env_node(cmd_array[i], ex);
-		delete_node(env_node, &ex->env_list);
+		node = ex->env_list;
+		while (node)
+		{
+			if (find_env_match(cmd[i], (char *)node->content) != -1)
+			{
+				delete_node(node, &ex->env_list);
+				break ;
+			}
+			node = node->next;
+		}
 	}
 	return (0);
 }

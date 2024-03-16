@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
 /*   Updated: 2024/03/17 00:56:03 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+//#include "minishell.h"
 
 /**
  * @brief Prompt the user for a command and execute it.
@@ -18,6 +18,7 @@
  * @param void
  * @return char * The command entered by the user.
  */
+
 static char	*ft_prompt_display(void)
 {
 	char	*line;
@@ -37,6 +38,7 @@ static char	*ft_prompt_display(void)
  * @param char **env - The environment variables list
  * @return int 0 if success, 1 if error.
  */
+
 int	main(int argc, char **argv, char **env)
 {
 	t_exec	ex;

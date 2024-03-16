@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
 /*   Updated: 2024/03/16 10:14:22 by ugolin-olle      ###   ########.fr       */
@@ -25,7 +25,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
-# include <signal.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <unistd.h>
 
 // -- CUSTOM LIBRARIES --
@@ -36,6 +37,7 @@
 # include "builtins.h"
 # include "parser.h"
 # include "lexer.h"
+# include "expander.h"
 # include "utils.h"
 
 // -- DEFINES --
