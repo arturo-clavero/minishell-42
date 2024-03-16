@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/13 12:47:44 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/17 00:56:03 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static char	*ft_prompt_display(void)
 	line = readline("");
 	if (ft_strlen(line) > 0)
 		add_history(line);
-	rl_forced_update_display();
 	return (line);
 }
 
@@ -45,7 +44,7 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 1 || argv[0] == NULL)
 	{
-		printf("Error: Invalid arguments.\n");
+		printf(ERROR_NO_ARGS);
 		return (1);
 	}
 	initialize_minishell(&ex, env);
@@ -55,6 +54,7 @@ int	main(int argc, char **argv, char **env)
 		if (!line)
 			continue ;
 		ex.args = line;
+		ft_lexer(&ex);
 	}
 	return (0);
 }

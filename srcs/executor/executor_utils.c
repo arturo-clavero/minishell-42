@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/07 21:44:29 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/17 00:57:17 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,11 @@ void	wait_for_child_exit_status(t_exec *ex)
 
 void	initialize_minishell(t_exec *ex, char **env)
 {
-	int		i;
-	int		shlvl;
+	int	i;
+	int	shlvl;
 
+	ex->args = NULL;
+	ex->lexer = ft_init_lexer();
 	ex->cmd = NULL;
 	ex->env_list = NULL;
 	ex->short_term_data = NULL;
