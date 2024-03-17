@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:32:30 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/17 00:50:43 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/18 01:14:58 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token_type	ft_check_string_token(int c)
 {
 	static const char			operators[] = "|<>>";
 	static const t_token_type	operator_types[] = {PIPE, INFILE, OUTFILE,
-			APPEND, HEREDOC};
+		APPEND, HEREDOC};
 	unsigned long				i;
 
 	i = 0;
