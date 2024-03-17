@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/17 00:48:44 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/18 01:14:44 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ typedef enum e_token_type
 {
 	UNINITIALIZED,
 	WORD,
-	PIPE,    // |
-	INFILE,  // <
-	OUTFILE, // >
-	APPEND,  // >>
-	HEREDOC, // <<
+	PIPE,
+	INFILE,
+	OUTFILE,
+	APPEND,
+	HEREDOC,
 }					t_token_type;
 
 /**
@@ -107,7 +107,7 @@ typedef struct s_redir
  * @param char **array - The command array
  * @param t_redir *redir - The redirections
  * @param struct s_cmd *next - The next command
- * @param int bad_substitution - TRUE (= error) or FALSE (= no error) indicates 
+ * @param int bad_substitution - TRUE (= error) or FALSE (= no error) indicates
  * wether the command has a bad substitution error from an erronous expandable
  * @return void
  */
