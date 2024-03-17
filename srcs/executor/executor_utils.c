@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/17 00:57:17 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/17 21:31:31 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env)
 
 /**
  * @brief Prints error when expander has issues with curly brackets
- * 
+ *
  * @param t_cmd *cmd - current command node
  * @return int - error number for potential exit code
  */
@@ -68,7 +68,7 @@ int	bad_substitution_error(t_cmd *cmd)
 /**
  * @brief Checks if current command string is a directory
  * instead of a command
- * 
+ *
  * @param t_cmd *cmd - current command node
  * @return void
  */
@@ -97,8 +97,8 @@ static void	check_if_cmd_is_directory(t_cmd *cmd)
  */
 void	execute_command(int id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 {
-	char		*cmd_path;
-	char		**env;
+	char	*cmd_path;
+	char	**env;
 
 	id = fork();
 	if (id == -1)
@@ -107,7 +107,7 @@ void	execute_command(int id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 	{
 		close_open_pipes(curr_cmd, ex);
 		if (cmd->bad_substitution == TRUE)
-			exit (bad_substitution_error(cmd));
+			exit(bad_substitution_error(cmd));
 		if (are_redirections_valid(cmd) == EXIT_FAILURE)
 			exit(1);
 		if (ft_strncmp(cmd->array[0], "./minishell",
@@ -148,34 +148,4 @@ void	wait_for_child_exit_status(t_exec *ex)
 	}
 	if (ex->exit == 13)
 		ex->exit = 127;
-}
-
-void	initialize_minishell(t_exec *ex, char **env)
-{
-	int	i;
-	int	shlvl;
-
-	ex->args = NULL;
-	ex->lexer = ft_init_lexer();
-	ex->cmd = NULL;
-	ex->env_list = NULL;
-	ex->short_term_data = NULL;
-	ex->long_term_data = NULL;
-	ex->program_path = NULL;
-	ex->total_pipes = 0;
-	ex->total_children = 0;
-	ex->is_builtin_last = FALSE;
-	ex->fd = NULL;
-	ex->id = NULL;
-	ex->exit = 0;
-	ex->shell_env_list = NULL;
-	i = -1;
-	while (env[++i])
-	{
-		new_node((void *)env[i], &ex->env_list);
-		if (ft_strncmp(env[i], "PWD=", 4) == 0)
-			ex->program_path = &env[i][4];
-	}
-	shlvl = change_shlvl(0, ex);
-	change_shlvl(2 - shlvl, ex);
 }
