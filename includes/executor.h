@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/18 01:14:44 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/18 23:37:26 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct s_exec
 	char			*args;
 	t_lexer			*lexer;
 	t_cmd			*cmd;
+	char			**env;
 	t_list			*env_list;
 	int				**fd;
 	int				*id;

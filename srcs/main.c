@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/17 00:56:03 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/18 23:38:52 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "minishell.h"
+#include "minishell.h"
 
 /**
  * @brief Prompt the user for a command and execute it.
@@ -23,11 +23,24 @@ static char	*ft_prompt_display(void)
 {
 	char	*line;
 
-	printf(BLUE "[MINISHELL]:" RED "%s$ " RESET, getcwd(NULL, 0));
-	line = readline("");
+	line = readline(RED "[MINISHELL] $> " RESET);
 	if (ft_strlen(line) > 0)
 		add_history(line);
 	return (line);
+}
+
+/**
+ * @brief Relaunch the minishell.
+ *
+ * @param t_exec *ex - The execution structure.
+ * @return void
+ */
+void	ft_relaunch_minishell(t_exec *ex)
+{
+	free(ex->args);
+	initialize_minishell(ex, ex->env);
+	initialize_execution(ex->cmd, ex);
+	ft_prompt_display();
 }
 
 /**
@@ -50,6 +63,7 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	}
 	initialize_minishell(&ex, env);
+	initialize_execution(ex.cmd, &ex);
 	while (1)
 	{
 		line = ft_prompt_display();
@@ -57,6 +71,8 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		ex.args = line;
 		ft_lexer(&ex);
+		ft_parser(&ex);
+		free(line);
 	}
 	return (0);
 }
