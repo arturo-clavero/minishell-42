@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:20:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/17 23:11:05 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/18 23:37:14 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	initialize_minishell(t_exec *ex, char **env)
 	int	i;
 
 	ex->args = NULL;
-	ex->cmd = NULL;
+	ex->lexer = ft_init_lexer();
+	ex->cmd = ft_init_cmd();
+	ex->env = env;
 	ex->env_list = NULL;
 	ex->short_term_data = NULL;
 	ex->long_term_data = NULL;

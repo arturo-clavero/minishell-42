@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/16 10:14:22 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/18 23:36:47 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,8 @@
 // # define APPEND 2
 // # define INFILE 3
 // # define HEREDOC 4
+
+// -- PROTOTYPES --
+void	ft_relaunch_minishell(t_exec *ex);
 
 #endif
