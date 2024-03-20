@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.c                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 21:45:52 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 20:05:35 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/18 23:32:59 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/18 23:50:49 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Print the lexer.
+ * @brief Print an error message, free the lexer structure and exit.
  *
- * @param t_lexer *lexer The lexer to print.
+ * @param t_exec *ex - The minishell object.
+ * @param char *message - The error message.
+ * @return void
  */
-void	ft_debug_lexer(t_lexer *lexer)
+void	ft_parser_error(t_exec *ex, char *message)
 {
-	printf("\n=====================================\n\n");
-	printf("\nLexer:\n\n");
-	while (lexer)
-	{
-		printf("lexer->str: %s\n", lexer->str);
-		printf("lexer->token: %d\n", lexer->token);
-		lexer = lexer->next;
-	}
-	printf("\n=====================================\n\n");
+	ft_putstr_fd(RED "minishell: " RESET, STDERR_FILENO);
+	ft_putstr_fd(message, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	ft_relaunch_minishell(ex);
 }

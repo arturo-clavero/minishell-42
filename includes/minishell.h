@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/18 23:36:47 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/20 14:51:41 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@
 
 // -- PROTOTYPES --
 void	ft_relaunch_minishell(t_exec *ex);
+void	ft_launch_minishell(t_exec *ex);
 
 #endif
