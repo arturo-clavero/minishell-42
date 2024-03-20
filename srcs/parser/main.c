@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:39:09 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 20:05:59 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/20 20:22:52 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	ft_parser(t_exec *ex)
 		if (lexer->str)
 		{
 			if (!ft_close_quotes(lexer->str, 0, '\'')
-				&& !ft_close_quotes(lexer->str, 0, '"'))
+					&& !ft_close_quotes(lexer->str, 0, '"'))
 				ft_parser_error(ex, ERROR_NO_CLOSE_QUOTE);
-			ft_add_cmd(&cmd, &lexer->str, redir, ft_count_token(lexer));
+			ft_add_cmd(&cmd, &lexer->str, redir);
 		}
 		// if (lexer->token > 1)
 		// 	if (lexer->token == OUTFILE)

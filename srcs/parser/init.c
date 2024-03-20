@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 19:55:33 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/20 20:22:26 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,9 @@ int	ft_add_redir(t_redir *redir, char *file_name, char *heredoc_buff, int type)
  * @param t_cmd **cmd - The command to add.
  * @param char *array - The array to add to the command.
  * @param t_redir *redir - The redirection to add to the command.
- * @param int count_token - The number of token to add to the command.
  * @return int - 1 if success, 0 if error.
  */
-int	ft_add_cmd(t_cmd **cmd, char **array, t_redir *redir, int count_token)
+int	ft_add_cmd(t_cmd **cmd, char **array, t_redir *redir)
 {
 	t_cmd	*tmp;
 	t_cmd	*node;
@@ -103,10 +102,10 @@ int	ft_add_cmd(t_cmd **cmd, char **array, t_redir *redir, int count_token)
 	node = ft_init_cmd();
 	if (!node)
 		return (0);
-	node->array = malloc(sizeof(char *) * (count_token + 1));
+	node->array = malloc(sizeof(char *));
 	if (!node->array)
 		return (0);
-	ft_memcpy(node->array, array, sizeof(char *) * (count_token + 1));
+	ft_memcpy(node->array, array, sizeof(char *));
 	(void)redir;
 	node->next = NULL;
 	if (*cmd == NULL)
