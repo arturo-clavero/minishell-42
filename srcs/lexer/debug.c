@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:45:52 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 20:05:35 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/20 22:50:40 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	ft_debug_lexer(t_lexer *lexer)
 	while (lexer)
 	{
 		printf("lexer->str: %s\n", lexer->str);
-		printf("lexer->token: %d\n", lexer->token);
+		printf("lexer->token: %d\n\n", lexer->token);
 		lexer = lexer->next;
 	}
-	printf("\n=====================================\n\n");
 }
