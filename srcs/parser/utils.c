@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:40:16 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 20:02:06 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/21 00:30:18 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,33 @@ int	ft_close_quotes(char *str, int i, char c)
 }
 
 /**
- * @brief Count token from lexer.
+ * @brief Get the file name after or before the redirection.
  *
  * @param t_lexer *lexer - The lexer structure.
- * @return int - The number of token.
+ * @return char * - The file name.
  */
-int	ft_count_token(t_lexer *lexer)
+char	*ft_get_file_name(t_lexer *lexer)
 {
-	int	i;
+	char	*file_name;
 
-	i = 0;
-	while (lexer)
-	{
-		if (lexer->token == WORD || lexer->token == UNINITIALIZED
-			|| lexer->token == PIPE)
-			i++;
-		lexer = lexer->next;
-	}
-	return (i);
+	file_name = NULL;
+	if (lexer->next && lexer->next->str)
+		file_name = lexer->next->str;
+	return (file_name);
+}
+
+/**
+ * @brief Get heredoc buffer.
+ *
+ * @param t_lexer *lexer - The lexer structure.
+ * @return char * - The heredoc buffer.
+ */
+char	*ft_get_heredoc_buff(t_lexer *lexer)
+{
+	char	*heredoc_buff;
+
+	heredoc_buff = NULL;
+	if (lexer->next && lexer->next->str)
+		heredoc_buff = lexer->next->str;
+	return (heredoc_buff);
 }
