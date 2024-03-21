@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:00:47 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/21 15:01:08 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/21 21:18:32 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,34 +58,31 @@ void	ft_print_redir(t_redir *redir)
  */
 void	ft_debug_parser(t_cmd *cmd)
 {
+	int	i;
+
 	while (cmd)
 	{
-		printf("-----\n");
-		printf("Command:\n");
-		printf("  - Bad substitution: %d\n", cmd->bad_substitution);
+		printf("\n-----\n");
+		printf("\nCommand:\n");
+		printf(" - Bad substitution: %d\n", cmd->bad_substitution);
 		if (cmd->array)
 		{
-			int i = 0;
+			i = 0;
 			while (cmd->array[i])
 			{
-				printf("    - Argument %d: %s\n", i + 1, cmd->array[i]);
+				printf("  - Argument %d: %s\n", i + 1, cmd->array[i]);
 				i++;
 			}
 		}
 		else
-			printf("  - Arguments: (null)\n");
+			printf(" - Arguments: (null)\n");
 		if (cmd->redir)
 		{
-			t_redir *tmp_redir = cmd->redir;
-			while (tmp_redir)
-			{
-				ft_print_redir(tmp_redir);
-				tmp_redir = tmp_redir->next;
-			}
+			ft_print_redir(cmd->redir);
 		}
 		else
-			printf("  - Redirections: (none)\n");
+			printf(" - Redirections: (none)\n");
 		cmd = cmd->next;
 	}
-	printf("-----\n");
+	printf("\n-----\n");
 }

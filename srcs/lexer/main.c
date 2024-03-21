@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 14:32:39 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/21 23:55:32 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,4 @@ void	ft_lexer(t_exec *exec)
 			return ;
 		i += j;
 	}
-	ft_debug_lexer(exec->lexer);
 }
