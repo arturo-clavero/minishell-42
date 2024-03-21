@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:20:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/21 17:12:03 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/21 23:41:20 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	initialize_minishell(t_exec *ex, char **env)
 	int	i;
 
 	ex->args = NULL;
-	ex->lexer = NULL;
+	ex->lexer = ft_init_lexer();
 	ex->cmd = NULL;
 	ex->env = env;
 	ex->env_list = NULL;
@@ -58,4 +58,5 @@ void	initialize_minishell(t_exec *ex, char **env)
 	while (env && env[++i])
 		new_node((void *)env[i], &ex->env_list);
 	change_shlvl(1, ex);
+	ft_signals();
 }
