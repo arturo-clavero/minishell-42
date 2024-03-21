@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 20:22:26 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/21 17:15:04 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ t_cmd	*ft_init_cmd(void)
 /**
  * @brief Initialize the redirection structure.
  *
- * @param void
+ * @param t_cmd **node, pointer to node which teh redireciton belongs to
  * @return t_redir* The new redirection.
  */
-t_redir	*ft_init_redir(void)
+t_redir	*ft_init_redir(t_cmd **node)
 {
 	t_redir	*new_redir;
+	t_redir	*last;
 
 	new_redir = malloc(sizeof(t_redir));
 	if (!new_redir)
@@ -50,72 +51,87 @@ t_redir	*ft_init_redir(void)
 	new_redir->type = UNINITIALIZED;
 	new_redir->duplication = UNINITIALIZED;
 	new_redir->next = NULL;
+	if ((*node)->redir == NULL)
+		(*node)->redir = new_redir;
+	else
+	{
+		last = (*node)->redir;
+		while (last->next)
+			last = last->next;
+		last->next = new_redir;
+	}
 	return (new_redir);
 }
 
 /**
- * @brief Add a new redirection.
+ * @brief fills data for redirection node
  *
- * @param t_redir *redir - The redirection to add.
- * @param char *file_name - The file name to add to the redirection.
- * @param char *heredoc_buff - The heredoc buffer to add to the redirection.
- * @param int type - The redirection type to add to the redirection.
- * @param int - 1 if success, 0 if error.
+ * @param t_cmd **node, pointer to current command node
+ * @param t_lexer *lexer, pointer to lexer node containing redireciton token
+ * @return void
  */
-int	ft_add_redir(t_redir *redir, char *file_name, char *heredoc_buff, int type)
+void	ft_add_redir(t_cmd **node, t_lexer **lexer)
 {
-	t_redir	*tmp;
-	t_redir	*node;
+	t_redir	*redir;
 
-	node = ft_init_redir();
-	if (!node)
-		return (0);
-	node->file_name = file_name;
-	node->heredoc_buff = heredoc_buff;
-	node->type = type;
-	node->duplication = STDOUT_FILENO;
-	tmp = redir;
-	if (tmp == NULL)
+	redir = ft_init_redir(node);
+	redir->type = (*lexer)->token;
+	if (redir->type == OUTFILE)
+		redir->duplication = STDOUT_FILENO;
+	if (redir->type == PIPE)
 	{
-		redir = node;
-		return (1);
+		if ((*node)->array)
+			redir->duplication = STDOUT_FILENO;
+		return ;
 	}
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = node;
-	return (1);
+	*lexer = (*lexer)->next;
+	if (*lexer && (int)(*lexer)->token == redir->type)
+	{
+		redir->type = HEREDOC;
+		if ((*lexer)->token == OUTFILE)
+			redir->type = APPEND;
+		*lexer = (*lexer)->next;
+	}
+	if (redir->type != HEREDOC)
+		redir->file_name = (*lexer)->str;
 }
 
 /**
- * @brief Add new command to the structure.
+ * @brief fills data for one command node.
  *
- * @param t_cmd **cmd - The command to add.
- * @param char *array - The array to add to the command.
- * @param t_redir *redir - The redirection to add to the command.
- * @return int - 1 if success, 0 if error.
+ * @param t_cmd **cmd, pointer to command structure
+ * @param t_lexer *lexer, pointer to first lexer node for each "command node"
+ * @return void
  */
-int	ft_add_cmd(t_cmd **cmd, char **array, t_redir *redir)
+int	ft_add_cmd(t_cmd **cmd, t_lexer *lexer)
 {
-	t_cmd	*tmp;
 	t_cmd	*node;
+	int		i;
 
 	node = ft_init_cmd();
 	if (!node)
 		return (0);
-	node->array = malloc(sizeof(char *));
-	if (!node->array)
-		return (0);
-	ft_memcpy(node->array, array, sizeof(char *));
-	(void)redir;
+	node->bad_substitution = 0;
+	node->redir = NULL;
 	node->next = NULL;
-	if (*cmd == NULL)
+	node->array = ft_malloc_node_array(lexer);
+	i = -1;
+	while (lexer)
 	{
-		*cmd = node;
-		return (1);
+		if (lexer->str && lexer->token == WORD)
+			node->array[++i] = ft_strdup(lexer->str);
+		if (lexer->token != WORD)
+			ft_add_redir(&node, &lexer);
+		if (lexer->token == PIPE)
+			break ;
+		lexer = lexer->next;
 	}
-	tmp = *cmd;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = node;
+	node->array[++i] = NULL;
+	ft_add_cmd_node_to_list(node, cmd);
+	if (lexer)
+	{
+		lexer = lexer->next;
+		ft_add_cmd(cmd, lexer);
+	}
 	return (1);
 }

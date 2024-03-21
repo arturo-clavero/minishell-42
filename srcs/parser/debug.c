@@ -5,67 +5,87 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 00:44:38 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 20:11:24 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/21 15:00:47 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/21 15:01:08 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Calculate length of an array.
+ * @brief Prints details of a redirection.
  *
- * @param char **array - The array to calculate the length.
- * @return int - The length of the array.
+ * @param t_redir *redir - The redirection structure.
+ * @return void
  */
-static int	ft_array_len(char **array)
+void	ft_print_redir(t_redir *redir)
 {
-	int	i;
-
-	if (!array)
-		return (0);
-	i = 0;
-	while (array[i])
-		i++;
-	return (i);
+	printf("Redirection:\n");
+	printf("  - Type: ");
+	switch (redir->type)
+	{
+	case PIPE:
+		printf("PIPE\n");
+		break ;
+	case INFILE:
+		printf("INFILE\n");
+		break ;
+	case OUTFILE:
+		printf("OUTFILE\n");
+		break ;
+	case APPEND:
+		printf("APPEND\n");
+		break ;
+	case HEREDOC:
+		printf("HEREDOC\n");
+		break ;
+	default:
+		printf("UNKNOWN\n");
+	}
+	if (redir->file_name)
+		printf("  - File name: %s\n", redir->file_name);
+	if (redir->heredoc_buff)
+		printf("  - Heredoc buffer: %s\n", redir->heredoc_buff);
+	if (redir->duplication != UNINITIALIZED)
+		printf("  - Duplication: %d\n", redir->duplication);
 }
 
 /**
- * @brief Print the cmd and the redir structure.
+ * @brief Prints details of parsed commands and their redirections.
  *
- * @param t_exec *ex - The minishell object.
+ * @param t_cmd *cmd - The head of the command list.
  * @return void
  */
 void	ft_debug_parser(t_cmd *cmd)
 {
-	int	i;
-
-	printf("\n=====================================\n\n");
-	printf("\nCommand:\n\n");
 	while (cmd)
 	{
-		i = 0;
-		printf("cmd->bad_substitution: %d\n", cmd->bad_substitution);
+		printf("-----\n");
+		printf("Command:\n");
+		printf("  - Bad substitution: %d\n", cmd->bad_substitution);
 		if (cmd->array)
 		{
-			printf("cmd->array length: %d\n", ft_array_len(cmd->array));
+			int i = 0;
 			while (cmd->array[i])
 			{
-				printf("cmd->array[%d]: %s\n", i, cmd->array[i]);
+				printf("    - Argument %d: %s\n", i + 1, cmd->array[i]);
 				i++;
 			}
 		}
 		else
-			printf("cmd->array[%d]: (null)\n", i);
-		// if (cmd->redir)
-		// {
-		// 	printf("cmd->redir:\n");
-		// 	printf("  cmd->redir->type: %d\n", cmd->redir->type);
-		// 	printf("  cmd->redir->file: %s\n", cmd->redir->file_name);
-		// }
-		// else
-		// 	printf("cmd->redir: (null)\n");
+			printf("  - Arguments: (null)\n");
+		if (cmd->redir)
+		{
+			t_redir *tmp_redir = cmd->redir;
+			while (tmp_redir)
+			{
+				ft_print_redir(tmp_redir);
+				tmp_redir = tmp_redir->next;
+			}
+		}
+		else
+			printf("  - Redirections: (none)\n");
 		cmd = cmd->next;
 	}
-	printf("\n=====================================\n\n");
+	printf("-----\n");
 }
