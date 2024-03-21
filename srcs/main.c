@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/21 23:55:24 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 00:46:13 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ void	ft_launch_minishell(t_exec *ex)
 		ex->args = line;
 		ft_lexer(ex);
 		ft_parser(ex);
-		execution_main(ex->cmd, ex);
 		free(line);
+		expand_each_cmd_node(&ex->cmd, ex);
+		execution_main(ex->cmd, ex);
 		ft_relaunch_minishell(ex);
 	}
 }
