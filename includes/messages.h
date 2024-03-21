@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:58:38 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/18 20:47:24 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/20 22:43:41 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,3 +19,6 @@
 
 // -- LEXER --
 #define ERROR_LENGTH_WORD "Error: Word exceeds maximum length\n"
+
+// -- PARSER --
+#define ERROR_INVALID_TOKEN "minishell: syntax error: invalid token\n"
