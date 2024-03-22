@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:32:59 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 15:00:11 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:30:41 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@
  *
  * @param t_exec *ex - The minishell object.
  * @param char *message - The error message.
+ * @param int err_code = Exit error code
  * @return void
  */
-void	ft_parser_error(t_exec *ex, char *message)
+void	ft_parser_error(t_exec *ex, char *message, int err_code)
 {
-	ft_putstr_fd(RED "minishell: " RESET, STDERR_FILENO);
-	ft_putstr_fd(message, STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
+	if (message)
+	{
+		ft_putstr_fd(RED "minishell: " RESET, STDERR_FILENO);
+		ft_putstr_fd(message, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+	}
+	ex->exit = err_code; 
 	ft_free_lexer(ex);
 	ft_launch_minishell(ex);
 }

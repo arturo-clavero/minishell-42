@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 15:01:00 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:23:14 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,38 +103,29 @@ void	ft_add_redir(t_cmd **node, t_lexer **lexer)
  * @param t_lexer *lexer, pointer to first lexer node for each "command node"
  * @return void
  */
-int	ft_add_cmd(t_cmd **cmd, t_lexer *lexer)
+void	ft_add_cmd(t_cmd **node, t_lexer *lexer, t_exec *ex)
 {
-	t_cmd	*node;
 	int		i;
 
-	node = ft_init_cmd();
-	if (!node)
-		return (0);
-	node->bad_substitution = 0;
-	node->redir = NULL;
-	node->next = NULL;
-	node->array = ft_malloc_node_array(lexer);
 	i = -1;
 	while (lexer)
 	{
 		if (lexer->str && lexer->token == WORD)
-			node->array[++i] = ft_strdup(lexer->str);
+			(*node)->array[++i] = ft_strdup(lexer->str);
 		if (lexer->token != WORD)
-			ft_add_redir(&node, &lexer);
+			ft_add_redir(node, &lexer);
 		if (lexer->token == PIPE)
 		{
-			if (node->array && node->array[0])
+			if ((*node)->array && (*node)->array[0])
 				break ;
 		}
 		lexer = lexer->next;
 	}
-	node->array[++i] = NULL;
-	ft_add_cmd_node_to_list(node, cmd);
+	(*node)->array[++i] = NULL;
+	ft_add_cmd_node_to_list(*node, &ex->cmd);
 	if (lexer && lexer->token == PIPE)
 	{
 		lexer = lexer->next;
-		ft_add_cmd(cmd, lexer);
+		ft_parser(lexer, ex);
 	}
-	return (1);
 }

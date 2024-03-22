@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 15:09:05 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:32:32 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	ft_launch_minishell(t_exec *ex)
 			continue ;
 		initialize_parsing(ex);
 		ex->args = line;
+		quotes(ex);
 		ft_lexer(ex);
-		ft_parser(ex);
+		ft_parser(ex->lexer, ex);
 		free(line);
 		ft_free_lexer(ex);
 		expand_each_cmd_node(&ex->cmd, ex);
