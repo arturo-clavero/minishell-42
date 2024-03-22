@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:32:30 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/21 22:57:26 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 21:54:26 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	ft_get_word(char *str, int i, t_lexer *lexer)
 	n = 0;
 	while (str[i + n] && ft_check_string_token(str[i + n]) <= 1)
 	{
-		n += ft_handle_quote(str, i + n, 34);
 		n += ft_handle_quote(str, i + n, 39);
+		n += ft_handle_quote(str, i + n, 34);
 		if (ft_is_space(str[i + n]))
 			break ;
 		else
