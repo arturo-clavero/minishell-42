@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:39:09 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 18:23:57 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 01:56:15 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ void	ft_parser(t_lexer *lexer, t_exec *ex)
 	node->redir = NULL;
 	node->next = NULL;
 	node->array = ft_malloc_node_array(lexer);
-	ft_add_cmd(&node, ex->lexer, ex);
+	ft_add_cmd(&node, lexer, ex);
 }
