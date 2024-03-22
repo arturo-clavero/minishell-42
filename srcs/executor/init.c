@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:20:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/22 13:43:42 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:58:14 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	initialize_minishell(t_exec *ex, char **env)
 {
 	int	i;
 
-	ex->args = NULL;
-	ex->lexer = ft_init_lexer();
 	ex->cmd = NULL;
 	ex->env = env;
 	ex->env_list = NULL;
@@ -58,5 +56,17 @@ void	initialize_minishell(t_exec *ex, char **env)
 	while (env && env[++i])
 		new_node((void *)env[i], &ex->env_list);
 	change_shlvl(1, ex);
-	ft_signals();
+}
+
+/**
+ * @brief Initialize parsing part.
+ *
+ * @param t_exec *ex - The minishell object.
+ * @return void
+ */
+void	initialize_parsing(t_exec * ex)
+{
+	ex->args = NULL;
+	ex->lexer = ft_init_lexer();
+	//ft_signals();
 }

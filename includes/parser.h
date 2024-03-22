@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:24:30 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/21 17:14:18 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 14:26:25 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ char	*ft_get_file_name(t_lexer *lexer);
 char	*ft_get_heredoc_buff(t_lexer *lexer);
 
 void	ft_parser(t_exec *ex);
+
+void	initialize_parsing(t_exec * ex);
 
 #endif

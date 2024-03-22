@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/15 14:23:13 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:54:55 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ void	execution_main(t_cmd *cmd, t_exec *ex)
 	close_all_pipes(ex);
 	maybe_quit_program(ex);
 	clean_list(ex->short_term_data, TRUE);
-	clean_t_cmd(ex->cmd);
+	clean_t_cmd(ex->cmd, ex);
 }
