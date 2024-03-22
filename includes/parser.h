@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:24:30 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 18:23:39 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:10:03 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ t_redir	*ft_init_redir(t_cmd **node);
 void	ft_add_redir(t_cmd **node, t_lexer **lexer);
 void	ft_add_cmd(t_cmd **cmd, t_lexer *lexer, t_exec *ex);
 
-void	quotes(t_exec *ex);
 char	*ft_get_file_name(t_lexer *lexer);
 char	*ft_get_heredoc_buff(t_lexer *lexer);
 
 void	ft_parser(t_lexer *lexer, t_exec *ex);
 
-void	initialize_parsing(t_exec * ex);
+void	initialize_parsing(t_exec *ex);
 
 #endif

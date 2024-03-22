@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:33:24 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/22 15:23:48 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:20:26 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,7 @@ static int	check_curly_brackets(char **str, int j)
 
 /**
  * @brief Gets expandable variables from enviroment list
- * 
- * @param char *str - string being expanded
- * @param int i - index of first char right after '$'
- * @param int *j - int pointer that will be modified to indicate
- * the ending index of the new expanded value
- * @return char * - modified string with expanded value
+ * USER home -> $HOME" expanded value
  */
 char	*get_expandable_value(char *str, int i, int *j, t_exec *ex)
 {
@@ -62,7 +57,7 @@ char	*get_expandable_value(char *str, int i, int *j, t_exec *ex)
 	while (str[*j] && (ft_isdigit(str[*j]) || ft_isalpha(str[*j])
 			|| str[*j] == '_'))
 		(*j)++;
-	temp = ft_strjoin(&(str)[i], "=\0");
+	temp = modify_str_for_expansion(&str[i]);
 	result = get_env_value(temp, ex->env_list);
 	if (result == NULL)
 		return (result);
@@ -82,6 +77,7 @@ char	*get_expandable_value(char *str, int i, int *j, t_exec *ex)
  * @param char **str - pointer to string to be expanded
  * @param int *i - pointer to current char in string being evaluated
  * @param t_exec *ex - exec structure
+ * @param qt	- if there is a double quote
  * @return int - (-1) for expanding errors, (0) for no expanding value
  * (1) for successful expansion
  *  */
@@ -143,7 +139,8 @@ char	*check_str_expandables(t_cmd **cmd, t_exec *ex, char *str)
 		if (str[i] == '$' && (double_quotes
 				|| (!double_quotes && !single_quotes)))
 		{
-			if (expand_variable(&str, &i, ex) == -1)
+			if (only_dollar_sign(str, i, double_quotes) == FALSE
+				&& expand_variable(&str, &i, ex) == -1)
 				(*cmd)->bad_substitution = TRUE;
 		}
 	}

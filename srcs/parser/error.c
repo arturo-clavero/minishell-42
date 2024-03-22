@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:32:59 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 18:30:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:09:08 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_parser_error(t_exec *ex, char *message, int err_code)
 		ft_putstr_fd(message, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
 	}
-	ex->exit = err_code; 
+	ex->exit = err_code;
 	ft_free_lexer(ex);
 	ft_launch_minishell(ex);
 }

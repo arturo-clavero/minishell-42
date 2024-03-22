@@ -6,12 +6,11 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:40:16 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 20:47:57 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/23 00:08:54 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 /**
  * @brief Get the file name after or before the redirection.

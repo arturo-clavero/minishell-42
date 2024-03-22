@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 22:04:50 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/23 00:09:22 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,42 @@ int	ft_handle_token(t_lexer *lexer, char *str, int i)
 	return (0);
 }
 
+void	check_unclosed_quotes(t_exec *exec)
+{
+	char	*str;
+	int		i;
+	int		double_q;
+	int		single_q;
+
+	double_q = FALSE;
+	single_q = FALSE;
+	str = exec->args;
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '"' && single_q == FALSE)
+			double_q ^= 1;
+		if (str[i] == '\'' && double_q == FALSE)
+			single_q ^= 1;
+	}
+	if (single_q == TRUE || double_q == TRUE)
+		ft_parser_error(exec, "Unclosed quotes", 404);
+}
+
+void	check_empty_str(t_exec *exec)
+{
+	int	i;
+
+	i = -1;
+	while (exec->args[++i])
+	{
+		if (exec->args[i] != 0 || exec->args[i] != ' ')
+			break ;
+	}
+	if (i == (int)ft_strlen(exec->args))
+		ft_parser_error(exec, NULL, 0);
+}
+
 /**
  * @brief The main function of the lexer.
  *
@@ -68,13 +104,13 @@ void	ft_lexer(t_exec *exec)
 	int	i;
 	int	j;
 
+	check_empty_str(exec);
+	check_unclosed_quotes(exec);
 	i = 0;
 	while (exec->args[i])
 	{
 		j = 0;
 		skip_whitespace(exec->args, &i);
-		if (!exec->args[i])
-			break ;
 		if (ft_check_string_token(exec->args[i]))
 			j = ft_handle_token(exec->lexer, exec->args, i);
 		else

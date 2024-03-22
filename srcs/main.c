@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 23:36:15 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/23 00:32:20 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	ft_launch_minishell(t_exec *ex)
 			continue ;
 		initialize_parsing(ex);
 		ex->args = line;
-		quotes(ex);
 		ft_lexer(ex);
 		ft_parser(ex->lexer, ex);
 		free(line);
 		ft_free_lexer(ex);
 		expand_each_cmd_node(&ex->cmd, ex);
+		quotes(ex->cmd);
 		execution_main(ex->cmd, ex);
 	}
 }
