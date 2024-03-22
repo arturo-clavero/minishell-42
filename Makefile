@@ -18,13 +18,13 @@ OBJDIR       = objs
 SRC_FILES    = $(wildcard $(SRCSDIR)/*.c) $(wildcard $(SRCSDIR)/**/*.c)
 HDR_FILES    = $(wildcard $(INCDIR)/*.h)
 OBJ_FILES    = $(patsubst $(SRCSDIR)/%.c, $(OBJDIR)/%.o, $(SRC_FILES))
-INC_FILES    = -I $(INCDIR) -I $(LIBSDIR)/includes
-LIBS_FLAGS   = -L$(LIBSDIR) -lft
+INC_FILES    = -I $(INCDIR) -I $(LIBSDIR)/includes #-I/opt/homebrew/Cellar/readline/8.2.10/include
+LIBS_FLAGS   = -L$(LIBSDIR) -lft #-L/opt/homebrew/Cellar/readline/8.2.10/lib
 
 # -- Compilation flags
 CC = cc
 C_FLAGS = -Werror -Wall -Wextra -g
-RL_FLAGS = -l readline
+RL_FLAGS = -lreadline
 RM = rm -rf
 MKDIR = mkdir -p
 NAME = minishell
