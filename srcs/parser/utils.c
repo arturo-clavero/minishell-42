@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:40:16 by ugolin-olle       #+#    #+#             */
 /*   Updated: 2024/03/22 20:47:57 by ugolin-olle      ###   ########.fr       */
@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-/**
- * @brief Check if the string has open quotes.
- *
- * @param char *str The string to check.
- * @return int 0 if the string has open quotes, 1 otherwise.
- */
-int	ft_open_quotes(char *str)
-{
-}
 
 /**
  * @brief Get the file name after or before the redirection.

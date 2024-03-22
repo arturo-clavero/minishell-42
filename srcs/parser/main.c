@@ -18,9 +18,9 @@
  * @param t_exec *ex - The minishell object.
  * @return void
  */
-void	ft_parser(t_exec *ex)
+void	ft_parser(t_lexer *lexer, t_exec *ex)
 {
-	t_lexer	*head;
+	t_cmd	*node;
 
 	head = ex->lexer;
 	while (ex->lexer)
