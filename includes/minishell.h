@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/22 13:18:18 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 23:31:06 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 void			ft_relaunch_minishell(t_exec *ex);
 void			ft_launch_minishell(t_exec *ex);
 void			ft_signal_quit(int sig);
-void			ft_signals(void);
+void			ft_handle_quit_signal(int sig);
+void			ft_init_signals(void);
 
 #endif

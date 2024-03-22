@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 18:32:32 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 23:36:15 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static char	*ft_prompt_display(void)
 	char	*line;
 
 	line = readline(RED "[MINISHELL] $> " RESET);
+	if (!line)
+		exit(EXIT_SUCCESS);
 	if (ft_strlen(line) > 0)
 		add_history(line);
 	return (line);
@@ -75,6 +77,7 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	}
 	initialize_minishell(&ex, env);
+	ft_init_signals();
 	ft_launch_minishell(&ex);
 	return (0);
 }
