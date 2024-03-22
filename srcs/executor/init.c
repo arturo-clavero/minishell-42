@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:20:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/22 14:58:14 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:09:49 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	initialize_minishell(t_exec *ex, char **env)
  * @param t_exec *ex - The minishell object.
  * @return void
  */
-void	initialize_parsing(t_exec * ex)
+void	initialize_parsing(t_exec *ex)
 {
 	ex->args = NULL;
 	ex->lexer = ft_init_lexer();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 10:44:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/05 11:19:46 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 23:39:41 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ int	exec_echo(char **cmd_array)
 			n_flag++;
 			continue ;
 		}
-		write(STDOUT_FILENO, cmd_array[i], ft_strlen(cmd_array[i]));
+		printf("%s", cmd_array[i]);
 		if (cmd_array[i + 1] != NULL)
-			write(STDOUT_FILENO, " ", 1);
+			printf(" ");
 	}
 	if (!n_flag)
-		write(STDOUT_FILENO, "\n", 1);
+		printf("\n");
 	return (0);
 }
