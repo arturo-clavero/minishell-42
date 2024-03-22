@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:39:09 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 13:34:40 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:59:17 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,8 @@ void	ft_parser(t_exec *ex)
 	while (ex->lexer)
 	{
 		if (ex->lexer->str)
-		{
-			if (!ft_close_quotes(ex->lexer->str, 0, '\'')
-				&& !ft_close_quotes(ex->lexer->str, 0, '"'))
+			if (!ft_open_quotes(ex->lexer->str))
 				ft_parser_error(ex, ERROR_NO_CLOSE_QUOTE);
-		}
 		ex->lexer = ex->lexer->next;
 	}
 	ex->lexer = head;

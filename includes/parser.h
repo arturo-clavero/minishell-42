@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:24:30 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/21 17:14:18 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 14:46:04 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_redir	*ft_init_redir(t_cmd **node);
 void	ft_add_redir(t_cmd **node, t_lexer **lexer);
 int		ft_add_cmd(t_cmd **cmd, t_lexer *lexer);
 
-int		ft_close_quotes(char *str, int i, char c);
+int		ft_open_quotes(char *str);
 char	*ft_get_file_name(t_lexer *lexer);
 char	*ft_get_heredoc_buff(t_lexer *lexer);
 
