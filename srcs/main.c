@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 13:47:50 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 18:32:32 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,6 @@ static char	*ft_prompt_display(void)
 }
 
 /**
- * @brief Relaunch the minishell.
- *
- * @param t_exec *ex - The execution structure.
- * @return void
- */
-void	ft_relaunch_minishell(t_exec *ex)
-{
-	ft_free_lexer(ex);
-	clean_list(ex->env_list, FALSE);
-	clean_list(ex->short_term_data, TRUE);
-	clean_list(ex->long_term_data, TRUE);
-	initialize_minishell(ex, ex->env);
-	ft_launch_minishell(ex);
-}
-
-/**
  * @brief Launch minishell.
  *
  * @param t_exec *ex - The execution structure.
@@ -60,13 +44,15 @@ void	ft_launch_minishell(t_exec *ex)
 		line = ft_prompt_display();
 		if (!line)
 			continue ;
+		initialize_parsing(ex);
 		ex->args = line;
+		quotes(ex);
 		ft_lexer(ex);
-		ft_parser(ex);
+		ft_parser(ex->lexer, ex);
 		free(line);
+		ft_free_lexer(ex);
 		expand_each_cmd_node(&ex->cmd, ex);
 		execution_main(ex->cmd, ex);
-		ft_relaunch_minishell(ex);
 	}
 }
 

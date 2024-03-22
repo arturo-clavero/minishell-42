@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 18:05:31 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 16:00:47 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ int					malloc_error(void);
 void				skip_whitespace(char *str, int *i);
 int					has_pipe(t_cmd *cmd);
 int					bad_substitution_error(t_cmd *cmd);
+void				delete_char_from_str(int delete, char **str);
 
 // -- POST EXECUTION PROTOTYPES --
 int					change_shlvl(int change, t_exec *ex);
@@ -175,7 +176,7 @@ void				wait_for_child_exit_status(t_exec *ex);
 void				maybe_quit_program(t_exec *ex);
 void				exit_minishell(t_exec *ex, int exit_num);
 void				clean_list(t_list *list, int clean_content);
-void				clean_t_cmd(t_cmd *cmd);
+void				clean_t_cmd(t_cmd *cmd, t_exec *ex);
 void				add_data_to_cleanup_list(void *content, t_list **list);
 
 // -- PREPARE EXECUTION PROTOTYPES --
