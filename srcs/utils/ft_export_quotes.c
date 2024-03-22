@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:52:30 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 01:30:04 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:00:32 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param char **str - The string to modify
  * @return void
  */
-static void	delete_char_from_str(int delete, char **str)
+void	delete_char_from_str(int delete, char **str)
 {
 	int		len;
 	char	*new_str;

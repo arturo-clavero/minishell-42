@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:39:09 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 13:34:40 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:23:57 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,16 @@
  * @param t_exec *ex - The minishell object.
  * @return void
  */
-void	ft_parser(t_exec *ex)
+void	ft_parser(t_lexer *lexer, t_exec *ex)
 {
-	t_lexer	*head;
+	t_cmd	*node;
 
-	head = ex->lexer;
-	while (ex->lexer)
-	{
-		if (ex->lexer->str)
-		{
-			if (!ft_close_quotes(ex->lexer->str, 0, '\'')
-				&& !ft_close_quotes(ex->lexer->str, 0, '"'))
-				ft_parser_error(ex, ERROR_NO_CLOSE_QUOTE);
-		}
-		ex->lexer = ex->lexer->next;
-	}
-	ex->lexer = head;
-	ft_add_cmd(&ex->cmd, ex->lexer);
+	node = ft_init_cmd();
+	if (!node)
+		return ;
+	node->bad_substitution = 0;
+	node->redir = NULL;
+	node->next = NULL;
+	node->array = ft_malloc_node_array(lexer);
+	ft_add_cmd(&node, ex->lexer, ex);
 }

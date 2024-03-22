@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 14:55:07 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:00:47 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ int					malloc_error(void);
 void				skip_whitespace(char *str, int *i);
 int					has_pipe(t_cmd *cmd);
 int					bad_substitution_error(t_cmd *cmd);
+void				delete_char_from_str(int delete, char **str);
 
 // -- POST EXECUTION PROTOTYPES --
 int					change_shlvl(int change, t_exec *ex);
