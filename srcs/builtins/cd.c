@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 14:44:23 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:45:35 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 	char	*buffer;
 	char	*new_dir;
 
+//	if (check_total_arguments(cmd_array, ex))
+//		return (1);
 	if (has_pipe(cmd) == TRUE)
 		return (0);
 	buffer = (char *)malloc(sizeof(char) * MAX_PATH_LINUX);
