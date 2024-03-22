@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 16:19:10 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:56:16 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  */
 void	exit_minishell(t_exec *ex, int exit_num)
 {
-	clean_t_cmd(ex->cmd);
+	clean_t_cmd(ex->cmd, ex);
 	clean_list(ex->env_list, FALSE);
 	clean_list(ex->short_term_data, TRUE);
 	clean_list(ex->long_term_data, TRUE);
@@ -67,6 +67,7 @@ void	clean_list(t_list *list, int clean_content)
 		if (clean_content == TRUE)
 			free(list->content);
 		free(list);
+		list = NULL;
 		list = temp;
 	}
 }
@@ -77,7 +78,7 @@ void	clean_list(t_list *list, int clean_content)
  * @param t_cmd *cmd - The command structure
  * @return void
  */
-void	clean_t_cmd(t_cmd *cmd)
+void	clean_t_cmd(t_cmd *cmd, t_exec *ex)
 {
 	int		i;
 	t_cmd	*temp_cmd;
@@ -93,12 +94,19 @@ void	clean_t_cmd(t_cmd *cmd)
 			cmd->redir = temp_redir;
 		}
 		while (cmd->array[++i])
+		{
 			free(cmd->array[i]);
+			cmd->array[i] = NULL;
+		}
+		
 		free(cmd->array);
+		cmd->array = NULL;
 		temp_cmd = cmd->next;
 		free(cmd);
+		cmd = NULL;
 		cmd = temp_cmd;
 	}
+	ex->cmd = NULL;
 }
 
 /**
