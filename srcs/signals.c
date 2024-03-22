@@ -3,39 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:07 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 13:44:45 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/22 23:34:26 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <readline/readline.h>
-/*
-void	signal_ctlc(int sig)
+
+/**
+ * @brief Handle the signal.
+ *
+ * @param int sig - The signal to handle.
+ * @return void
+ */
+static void	ft_handle_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(STDERR_FILENO, "\n", 1);
-		rl_replace_line("", 0);
+		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
 
-void	signal_ctlc_heredoc(int sig)
+/**
+ * @brief Handle quit signal.
+ *
+ * @param int sig - The signal to handle.
+ * @return void
+ */
+void	ft_handle_quit_signal(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGQUIT)
 	{
-		close(STDIN_FILENO);
-		write(STDERR_FILENO, "\n", 1);
+		ft_putstr_fd("Quit: \n", 1);
+		ft_putnbr_fd(sig, 1);
+		ft_putstr_fd("\n", 1);
 	}
 }
 
-void	ft_signals(void)
+/**
+ * @brief Initialize the signals.
+ *
+ * @param void
+ * @return void
+ */
+void	ft_init_signals(void)
 {
-	signal(SIGINT, signal_ctlc);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ft_handle_signal);
+	signal(SIGQUIT, ft_handle_quit_signal);
 }
-*/
