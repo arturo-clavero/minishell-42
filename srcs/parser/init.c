@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/21 21:08:04 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 13:42:59 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,10 @@ int	ft_add_cmd(t_cmd **cmd, t_lexer *lexer)
 		if (lexer->token != WORD)
 			ft_add_redir(&node, &lexer);
 		if (lexer->token == PIPE)
+		{
 			if (node->array && node->array[0])
 				break ;
+		}
 		lexer = lexer->next;
 	}
 	node->array[++i] = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:39:09 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/21 23:55:28 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 13:34:40 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
  */
 void	ft_parser(t_exec *ex)
 {
+	t_lexer	*head;
+
+	head = ex->lexer;
 	while (ex->lexer)
 	{
 		if (ex->lexer->str)
@@ -28,7 +31,8 @@ void	ft_parser(t_exec *ex)
 				&& !ft_close_quotes(ex->lexer->str, 0, '"'))
 				ft_parser_error(ex, ERROR_NO_CLOSE_QUOTE);
 		}
-		ft_add_cmd(&ex->cmd, ex->lexer);
 		ex->lexer = ex->lexer->next;
 	}
+	ex->lexer = head;
+	ft_add_cmd(&ex->cmd, ex->lexer);
 }
