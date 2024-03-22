@@ -6,31 +6,20 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:40:16 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/21 00:30:18 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/22 20:47:57 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Check if the string has close quotes.
+ * @brief Check if the string has open quotes.
  *
  * @param char *str The string to check.
- * @param int i The index of the string.
- * @param char c The quote to check.
- * @return int 0 if the string has close quotes, 1 otherwise.
+ * @return int 0 if the string has open quotes, 1 otherwise.
  */
-int	ft_close_quotes(char *str, int i, char c)
+int	ft_open_quotes(char *str)
 {
-	if (str == NULL || (c != '"' && c != '\''))
-		return (1);
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 /**
