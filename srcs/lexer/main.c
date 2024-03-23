@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/23 12:17:31 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:39:41 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,60 +91,6 @@ void	check_empty_str(t_exec *exec)
 	}
 	if (i == (int)ft_strlen(exec->args))
 		ft_parser_error(exec, NULL, 0);
-}
-
-void	delete_lexer_node(t_lexer *delete, t_lexer **list)
-{
-	printf("check\n");
-	if (*list == delete)
-	{
-		printf("delete first\n");
-		(*list) = (*list)->next;
-		//printf("{%d}{%d}\n", (*list)->token, (*list)->next->token);
-		//(*list)->token = (*list)->next->token;
-		//printf("{%d}{%d}\n", (*list)->token, (*list)->next->token);
-		(*list) = (*list);
-		printf("end first\n");
-	}
-	else
-	{
-		while (*list)
-		{
-			if ((*list)->next == delete)
-			{
-				(*list)->next = (*list)->next->next;
-				//(*list)->token = (*list)->next->token;
-			}
-			(*list) = (*list)->next;
-		}
-	}
-	free(delete);
-	printf("end free \n");
-}
-
-void	lexer_redirection(t_lexer *lex, t_exec *ex)
-{
-	int	redir;
-
-	redir = FALSE;
-	while (lex)
-	{
-		if (lex->token != PIPE && lex->token != WORD)
-			redir = lex->token;
-		else if (lex->token == WORD && redir != FALSE)
-		{
-			lex->token = redir;
-			redir = FALSE;
-		}
-		lex = lex->next;
-	}
-	lex = ex->lexer;
-	while (lex)
-	{
-		if (lex->token != PIPE && lex->token != WORD && lex->str == NULL)
-			delete_lexer_node(lex, &ex->lexer);
-		lex = lex->next;
-	}
 }
 
 /**
