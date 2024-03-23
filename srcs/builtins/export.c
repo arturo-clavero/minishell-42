@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 19:16:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:54:23 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
  * @param char *original_cmd - The original command
  * @return int - 0 if the syntax is valid, 1 otherwise
  */
+
 static int	is_export_syntax_valid(char **cmd_array, char *original_cmd)
 {
 	int	error;
@@ -30,12 +31,12 @@ static int	is_export_syntax_valid(char **cmd_array, char *original_cmd)
 	error = is_variable_start_valid(*cmd_array, original_cmd);
 	if (error > 0)
 		return (error);
-	error = is_variable_content_valid(*cmd_array, original_cmd);
+	error = is_variable_content_valid(cmd_array, original_cmd);
 	if (error > 0)
 		return (error);
 	add_slash_to_inside_double_quotes(cmd_array, ft_strlen(*cmd_array));
 	if (ft_strchr(*cmd_array, '='))
-		add_quotes_around_value(cmd_array);
+	add_quotes_around_value(cmd_array);
 	return (0);
 }
 
@@ -125,6 +126,7 @@ int	exec_export(char **cmd_array, t_exec *ex)
 	int		error;
 
 	new_value = NULL;
+	error = 0;
 	original_cmd_str = NULL;
 	if (has_pipe(ex->cmd) == TRUE && cmd_array[1])
 		return (0);
@@ -132,15 +134,26 @@ int	exec_export(char **cmd_array, t_exec *ex)
 	while (cmd_array[++i])
 	{
 		original_cmd_str = ft_strdup(cmd_array[i]);
-		error = is_export_syntax_valid(&cmd_array[i], original_cmd_str);
-		if (error > 0)
-			return (error);
+		if (is_export_syntax_valid(&cmd_array[i], original_cmd_str) > 0)
+		{
+			error = 1;
+			//if (original_cmd_str)
+			//{
+			//	free(original_cmd_str);
+			//	original_cmd_str = NULL;
+		//	}
+			continue ;
+		}
 		new_value = ft_strdup(cmd_array[i]);
 		add_export_to_env(new_value, &ex->env_list);
 		add_data_to_cleanup_list(new_value, &ex->long_term_data);
-		free(original_cmd_str);
+		if (original_cmd_str)
+		{
+			free(original_cmd_str);
+			original_cmd_str = NULL;
+		}
 	}
 	if (!cmd_array[1])
 		print_env_alphabetically(ex->env_list, ex->env_list);
-	return (0);
+	return (error);
 }
