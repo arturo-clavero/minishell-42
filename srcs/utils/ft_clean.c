@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 00:08:23 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:57:52 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,12 @@ void	clean_t_cmd(t_cmd *cmd, t_exec *ex)
 			free(cmd->redir);
 			cmd->redir = temp_redir;
 		}
-		while (cmd->array[++i])
-			free(cmd->array[i]);
-		free(cmd->array);
+		if (cmd->array)
+		{
+			while (cmd->array[++i])
+				free(cmd->array[i]);
+			free(cmd->array);
+		}
 		temp_cmd = cmd->next;
 		free(cmd);
 		cmd = temp_cmd;

@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:45:11 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 15:54:24 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:02:23 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	create_child_ids(t_cmd *cmd, t_exec *ex)
 	ex->id = NULL;
 	while (cmd)
 	{
-		if (is_builtin(cmd->array[0]) == FALSE)
+		if (!cmd->array || is_builtin(cmd->array[0]) == FALSE)
 			ex->total_children++;
 		cmd = cmd->next;
 	}
