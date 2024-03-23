@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:33:24 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 00:20:26 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:01:26 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,13 +168,13 @@ void	expand_each_cmd_node(t_cmd **cmd_head, t_exec *ex)
 	{
 		(cmd)->bad_substitution = FALSE;
 		i = -1;
-		while ((cmd)->array[++i])
+		while (cmd->array && cmd->array[++i])
 			cmd->array[i] = check_str_expandables(&cmd, ex, cmd->array[i]);
 		redir = cmd->redir;
 		while (redir)
 		{
 			file = redir->file_name;
-			if (redir->type != PIPE && redir->type != HEREDOC)
+			if (file && redir->type != PIPE && redir->type != HEREDOC)
 				file = check_str_expandables(&cmd, ex, file);
 			redir = redir->next;
 		}

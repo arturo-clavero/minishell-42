@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 00:28:42 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 04:22:26 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 // -- CUSTOM LIBRARIES --
 # include "../libs/includes/libft.h"

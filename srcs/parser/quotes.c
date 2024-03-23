@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:24:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/22 23:31:24 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:51:02 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	quotes(t_cmd *cmd)
 	{
 		i = -1;
 		next = FALSE;
-		while (!next && cmd->array[++i])
+		while (!next && cmd->array && cmd->array[++i])
 		{
 			j = -1;
 			while (!next && cmd->array[i][++j])

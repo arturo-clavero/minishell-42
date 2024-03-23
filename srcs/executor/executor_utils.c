@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/17 21:31:31 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/23 12:25:57 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
  * @param char **env - The environment
  * @return char* - The command path
  */
-static char	*get_cmd_path_for_exec(char **cmd_array, char **env)
+static char	*get_cmd_path_for_exec(char **cmd_array, char **env, t_exec *ex)
 {
 	char	*test_path;
 	int		i;
+	DIR		*dir;
 
 	i = -1;
 	if (access(cmd_array[0], F_OK | X_OK) == 0)
@@ -35,12 +36,46 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env)
 		else
 			free(test_path);
 	}
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd_array[0], 2);
 	if (ft_strchr(cmd_array[0], '/'))
-		ft_putstr_fd(": No such file or directory\n", 2);
-	else
+	{
+		dir = opendir(cmd_array[0]);
+		if (dir == NULL && errno == EACCES)
+		{
+			ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd_array[0], 2);
+			ft_putstr_fd(": Permission denied\n", 2);
+			exit (126);
+		}
+		else if (-1 == access(cmd_array[0], R_OK) && errno == EACCES) {
+			ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd_array[0], 2);
+				ft_putstr_fd(": Permission denied\n", 2);
+				exit (126);
+    		}
+		else if (NULL == fopen(cmd_array[0], "r") && errno == EACCES) {
+			ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd_array[0], 2);
+        	ft_putstr_fd(": Permission denied\n", 2);
+			exit(126);
+		}
+    	else 
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd_array[0], 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+		}
+	}
+	else if (get_env_value("PATH=", ex->env_list))
+	{
+			ft_putstr_fd(cmd_array[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
+	}
+	else
+	{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd_array[0], 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+	}
 	exit(127);
 	return (NULL);
 }
@@ -74,16 +109,30 @@ int	bad_substitution_error(t_cmd *cmd)
  */
 static void	check_if_cmd_is_directory(t_cmd *cmd)
 {
-	struct stat	cmd_stat;
-
-	stat(cmd->array[0], &cmd_stat);
-	if (S_ISDIR(cmd_stat.st_mode))
+	DIR	*dir;
+	
+	if (cmd->array && cmd->array[0] && cmd->array[0][0] && cmd->array[0][1])
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd->array[0], 2);
-		ft_putstr_fd(": Is a directory\n", 2);
-		exit(1);
+		if (!((cmd->array[0][0] == '.' && cmd->array[0][1] == '/') || (cmd->array[0][0] == '/')))
+			return ;
 	}
+	dir = opendir(cmd->array[0]);
+	if (dir != NULL && access(cmd->array[0], X_OK) != 0)
+	{
+   			closedir(dir);
+				ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd->array[0], 2);
+	ft_putstr_fd(": Is a directory\n", 2);
+	exit(126);
+	}
+	/*if (access(cmd->array[0], F_OK) != -1
+		&& access(cmd->array[0], X_OK) == 0)
+	{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd->array[0], 2);
+	ft_putstr_fd(": Is a directory\n", 2);
+	exit(126);
+	}*/
 }
 
 /**
@@ -115,10 +164,13 @@ void	execute_command(int id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 			env = ft_list_to_str_array(ex->env_list);
 		else
 			env = ft_split(get_env_value("PATH=", ex->env_list), ':');
-		cmd_path = get_cmd_path_for_exec(cmd->array, env);
+		if (env == NULL)
+			env = ft_list_to_str_array(ex->env_list);
+		cmd_path = get_cmd_path_for_exec(cmd->array, env, ex);
 		check_if_cmd_is_directory(cmd);
 		execve(cmd_path, cmd->array, env);
-		perror(cmd->array[0]);
+		ft_putstr_fd(cmd->array[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		exit(127);
 	}
 }

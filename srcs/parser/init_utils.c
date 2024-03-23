@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:21:43 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 15:02:15 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:01:42 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,22 @@
 char	**ft_malloc_node_array(t_lexer *lexer)
 {
 	int	n;
+	int	flag_file;
 
 	n = 0;
+	flag_file = FALSE;
 	while (lexer && lexer->token != 2)
 	{
-		if (lexer->str && lexer->token == 1)
+		if (lexer->token != WORD && lexer->token != PIPE)
+			flag_file = TRUE;
+		else if (lexer->str && lexer->token == 1 && flag_file == FALSE)
 			n++;
+		else if (flag_file == TRUE)
+			flag_file = FALSE;
 		lexer = lexer->next;
 	}
+	if (n == 0)
+		return (NULL);
 	return ((char **)malloc(sizeof(char *) * (n + 1)));
 }
 

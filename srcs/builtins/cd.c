@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 00:45:35 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:00:57 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,48 @@ char	*get_new_dir(char *str)
 	return (str);
 }
 
+int	change_directories(char *new_dir, char *buf, t_cmd *cmd, t_exec *ex)
+{
+	if (chdir(new_dir) == -1)
+	{
+		print_error("cd: ", new_dir, ": No such file or directory");
+		return (free_data(NULL, buf, 1));
+	}
+	if (has_pipe(cmd) == TRUE)
+	{
+		chdir(buf);
+		return (free_data(NULL, buf, SUCCESS));
+	}
+	update_env("OLD_PWD=", buf, ex);
+	update_env("PWD=", getcwd(buf, MAX_PATH_LINUX), ex);
+	return (free_data(NULL, buf, SUCCESS));
+}
+
+int	max_arguments_ok(char **cmd_array)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_array[i])
+		i++;
+	if (i > 2)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd("cd : too many arguments\n", STDERR_FILENO);
+		return (FALSE);
+	}
+	if (!cmd_array[1])
+		return (TRUE);
+	i = ft_strlen(cmd_array[1]);
+	if (i > 255)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd("cd : File name too long\n", STDERR_FILENO);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
 /**
  * @brief Execute the cd command.
  *
@@ -134,10 +176,8 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 	char	*buffer;
 	char	*new_dir;
 
-//	if (check_total_arguments(cmd_array, ex))
-//		return (1);
-	if (has_pipe(cmd) == TRUE)
-		return (0);
+	if (max_arguments_ok(cmd_array) == FALSE)
+		return (1);
 	buffer = (char *)malloc(sizeof(char) * MAX_PATH_LINUX);
 	if (!buffer)
 		return (malloc_error());
@@ -146,15 +186,8 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 		free(buffer);
 		buffer = ft_strdup(get_env_value("PWD=", ex->env_list));
 	}
-	update_env("OLD_PWD=", buffer, ex);
 	new_dir = get_new_dir(cmd_array[1]);
 	cd_with_no_arguments(&new_dir, buffer);
 	cd_with_double_dot(&new_dir, buffer);
-	if (chdir(new_dir) == -1)
-	{
-		print_error("cd: ", new_dir, ": No such file or directory");
-		return (free_data(NULL, buffer, 1));
-	}
-	update_env("PWD=", getcwd(buffer, MAX_PATH_LINUX), ex);
-	return (free_data(NULL, buffer, SUCCESS));
+	return (change_directories(new_dir, buffer, cmd, ex));
 }

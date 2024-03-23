@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/23 01:54:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 09:01:52 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ void	ft_add_cmd(t_cmd **node, t_lexer *lexer, t_exec *ex)
 		}
 		lexer = lexer->next;
 	}
-	(*node)->array[++i] = NULL;
+	if ((*node)->array)
+		(*node)->array[++i] = NULL;
 	ft_add_cmd_node_to_list(*node, &ex->cmd);
 	if (lexer && lexer->token == PIPE && lexer->next)
 	{
