@@ -6,12 +6,44 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 09:00:57 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 05:52:25 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	cd_with_tilde(char **new_dir, char *pwd)
+{
+	int	i;
+	int	slash;
+
+	if (!(*new_dir))
+		return ;
+	i = 0;
+	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
+		i++;
+	if ((*new_dir)[i] != '~')
+		return ;
+	i++;
+	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
+		i++;
+	if ((*new_dir)[i])
+		return ;
+	*new_dir = pwd;
+	i = -1;
+	slash = 0;
+	while ((*new_dir)[++i])
+	{
+		if ((*new_dir)[i] == '/')
+			slash++;
+		if (slash == 3)
+		{
+			(*new_dir)[i] = '\0';
+			break ;
+		}
+	}
+	
+}
 /**
  * @brief Go back one directory {cd ..} 
  *
@@ -121,14 +153,16 @@ char	*get_new_dir(char *str)
 	return (str);
 }
 
-int	change_directories(char *new_dir, char *buf, t_cmd *cmd, t_exec *ex)
+int	change_directories(char *new_dir, char *buf, char *og, t_exec *ex)
 {
 	if (chdir(new_dir) == -1)
 	{
-		print_error("cd: ", new_dir, ": No such file or directory");
+		print_error("cd: ", og, ": No such file or directory");
+		free(og);
 		return (free_data(NULL, buf, 1));
 	}
-	if (has_pipe(cmd) == TRUE)
+	free(og);
+	if (has_pipe(ex->cmd) == TRUE)
 	{
 		chdir(buf);
 		return (free_data(NULL, buf, SUCCESS));
@@ -156,8 +190,9 @@ int	max_arguments_ok(char **cmd_array)
 	i = ft_strlen(cmd_array[1]);
 	if (i > 255)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd("cd : File name too long\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(cmd_array[1], STDERR_FILENO);
+		ft_putstr_fd(": File name too long\n", STDERR_FILENO);
 		return (FALSE);
 	}
 	return (TRUE);
@@ -175,9 +210,13 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 {
 	char	*buffer;
 	char	*new_dir;
+	char	*og;
 
+	(void)cmd;
 	if (max_arguments_ok(cmd_array) == FALSE)
 		return (1);
+	if (cmd_array[1] && cmd_array[1][0] == 0)
+		return (0);
 	buffer = (char *)malloc(sizeof(char) * MAX_PATH_LINUX);
 	if (!buffer)
 		return (malloc_error());
@@ -186,8 +225,10 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 		free(buffer);
 		buffer = ft_strdup(get_env_value("PWD=", ex->env_list));
 	}
+	og = ft_strdup(cmd_array[1]);
 	new_dir = get_new_dir(cmd_array[1]);
 	cd_with_no_arguments(&new_dir, buffer);
 	cd_with_double_dot(&new_dir, buffer);
-	return (change_directories(new_dir, buffer, cmd, ex));
+	cd_with_tilde(&new_dir, buffer);
+	return (change_directories(new_dir, buffer, og, ex));
 }
