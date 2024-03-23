@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 19:27:39 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 04:59:32 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,32 @@ static __int128_t	atoi_128bits(const char *str)
 static int	check_numeric_argument(char *str, __int128_t num, t_exec *ex)
 {
 	int	i;
+	int	flag;
 
-	i = -1;
-	if (str[0] == '+' || str[0] == '-')
+	flag = FALSE;
+	i = 0;
+	if (str[i] == '\'' || str[i] == '"')
 		i++;
-	while (str[++i])
+	if ((str[i] == '+' || str[i] == '-') && str[i + 1])
+		i++;
+	while (str[i])
 	{
-		if (num > LLONG_MAX || num < LLONG_MIN
-			|| str_is_numerical(&str[i]) == FALSE)
+		if (ft_isdigit(str[i]) == TRUE)
+			flag = TRUE;
+		if ((num > LLONG_MAX || num < LLONG_MIN) || (ft_isdigit(str[i]) == FALSE
+			&& str[i] != '\'' && str[i] != '"' && str[i] != ' ' && str[i] != '\t')
+			|| (i != 0 && (str[i - 1] == '+' || str[i -1] == '-')
+			&& ft_isdigit(str[i]) == FALSE))
 		{
 			print_error("exit: ", str, ": numeric argument required");
 			exit_minishell(ex, 2);
 		}
+		i++;
+	}
+	if (flag == FALSE)
+	{
+		print_error("exit: ", str, ": numeric argument required");
+		exit_minishell(ex, 2);
 	}
 	return (0);
 }
@@ -100,17 +114,24 @@ int	exec_exit(char **cmd_array, t_cmd *cmd, t_exec *ex)
 {
 	int		new_exit_num;
 	t_redir	*redir;
+	int		i;
 
 	redir = cmd->redir;
 	if (!redir || redir->type != PIPE)
 		ft_putstr_fd("exit\n", 1);
 	if (cmd_array[1] == NULL)
-		return (0);
+		return (ex->exit);
 	new_exit_num = get_new_exit_num(cmd_array[1], ex);
 	if ((cmd_array[2]))
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		return (1);
+		i = 1;
+		while (cmd_array[++i])
+		{
+			if (str_is_numerical(cmd_array[i]) == FALSE)
+				return (1);
+		}
+		return (127);
 	}
 	return (new_exit_num);
 }

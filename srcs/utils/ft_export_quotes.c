@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:52:30 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/22 16:00:32 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:58:23 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ int	has_unclosed_quotes(char *str, char *cmd)
 			if (unclosed_quote == TRUE)
 			{
 				print_error("export '", cmd, "': not a valid identifier");
-				return (free_data(NULL, cmd, 1));
+				return (1);
+			//	..return (free_data(NULL, cmd, 1));
 			}
 		}
 	}
@@ -120,6 +121,8 @@ void	delete_outside_quotes(char **str)
 	i = -1;
 	while ((*str)[++i])
 	{
+		skip_whitespace(*str, &i);
+		*str = &(*str)[i];
 		if ((*str)[i] == '\'' || (*str)[i] == '"')
 		{
 			quote = (*str)[i];

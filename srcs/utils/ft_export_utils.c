@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 15:47:49 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 03:53:41 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ int	is_variable_start_valid(char *cmd_array, char *original_cmd)
 {
 	int	j;
 
+	(void)original_cmd;
 	j = 0;
-	skip_whitespace(cmd_array, &j);
 	if (!ft_isalpha(cmd_array[j]) && cmd_array[j] != '_')
 	{
 		print_error("export `", cmd_array, "': not a valid identifier");
-		return (free_data(NULL, original_cmd, 1));
+		return (1);
+		//return (free_data(NULL, original_cmd, 1));
 	}
 	return (0);
 }
@@ -42,19 +43,30 @@ int	is_variable_start_valid(char *cmd_array, char *original_cmd)
  * @param char *original_cmd - initial string prior to any modifications
  * @return int (0) no errors, (1) errors
  */
-int	is_variable_content_valid(char *cmd_array, char *original_cmd)
+int	is_variable_content_valid(char **cmd, char *original_cmd)
 {
 	int	j;
 
-	j = 0;
-	skip_whitespace(cmd_array, &j);
-	while (cmd_array[j] && cmd_array[j] != '=')
+	j = 0;	
+		(void)original_cmd;
+
+	while ((*cmd)[j] && (*cmd)[j] != '=')
 	{
-		if (!ft_isalpha(cmd_array[j]) && !ft_isnum(cmd_array[j])
-			&& cmd_array[j] != '_')
+		/*if ((*cmd)[j] == '+' && (*cmd)[j + 1]
+			&& (*cmd)[j + 1] == '=')
 		{
-			print_error("export `", cmd_array, "': not a valid identifier");
-			return (free_data(NULL, original_cmd, 1));
+			delete_char_from_str(j, cmd);
+			j--;
+			and add value to added value Test 30
+		}
+		else */
+
+		if (!ft_isalpha((*cmd)[j]) && !ft_isnum((*cmd)[j])
+			&& (*cmd)[j] != '_')
+		{
+			print_error("export `", *cmd, "': not a valid identifier");
+			return (1);
+		//	return (free_data(NULL, original_cmd, 1));
 		}
 		j++;
 	}

@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:24:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 08:51:02 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:18:11 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	quotes(t_cmd *cmd)
 		next = FALSE;
 		while (!next && cmd->array && cmd->array[++i])
 		{
+			if (double_strncmp(cmd->array[0], "export") == 0)
+				return ;
 			j = -1;
 			while (!next && cmd->array[i][++j])
 			{
