@@ -1,9 +1,0 @@
-1. Need to send the command parsed in t_exec in cmd.
-
-
-
-
-2.exit_minishell(t_exec *ex, int error_code);
-To exit the minishell program fully (for signals for example), please call this function to clean before hand
-param 1: t_exec *ex structure;
-param 2: error code, if you need a specific error code please specify here, if not just send the error code from prev command execution ex->error;
