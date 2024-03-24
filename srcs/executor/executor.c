@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/23 15:17:09 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:55:50 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	process_cmds(t_cmd *cmd, t_exec *ex)
 		}
 		else if (cmd->array)
 		{
-			execute_command(ex->id[curr_child], curr_cmd, cmd, ex);
+			execute_command(&ex->id[curr_child], curr_cmd, cmd, ex);
 			curr_child++;
 		}
 		curr_cmd++;

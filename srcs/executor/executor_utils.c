@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 12:25:57 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:56:07 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,15 +144,15 @@ static void	check_if_cmd_is_directory(t_cmd *cmd)
  * @param t_exec *ex - The execution
  * @return void
  */
-void	execute_command(int id, int curr_cmd, t_cmd *cmd, t_exec *ex)
+void	execute_command(int *id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 {
 	char	*cmd_path;
 	char	**env;
 
-	id = fork();
-	if (id == -1)
+	*id = fork();
+	if (*id == -1)
 		return ;
-	if (id == 0)
+	if (*id == 0)
 	{
 		close_open_pipes(curr_cmd, ex);
 		if (cmd->bad_substitution == TRUE)
@@ -195,7 +195,7 @@ void	wait_for_child_exit_status(t_exec *ex)
 			child_exit = WEXITSTATUS(exit_status);
 		else if (WIFSIGNALED(exit_status))
 			child_exit = WTERMSIG(exit_status);
-		if (ex->is_builtin_last == FALSE)
+		if (ex->is_builtin_last == FALSE && curr_child + 1 == ex->total_children)
 			ex->exit = child_exit;
 	}
 	if (ex->exit == 13)

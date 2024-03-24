@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:59:12 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 15:45:17 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 06:55:19 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,12 @@ int	free_data(char *should_exit, char *data, int exit_code)
 void	print_error(char *str1, char *str2, char *str3)
 {
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(str1, 2);
-	ft_putstr_fd(str2, 2);
-	ft_putstr_fd(str3, 2);
+	if (str1)
+		ft_putstr_fd(str1, 2);
+	if (str2)
+		ft_putstr_fd(str2, 2);
+	if (str3)
+		ft_putstr_fd(str3, 2);
 	ft_putstr_fd("\n", 2);
 }
 
