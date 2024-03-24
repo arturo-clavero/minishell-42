@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 10:44:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/22 23:39:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:27:09 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	exec_echo(char **cmd_array)
 {
 	int	i;
 	int	n_flag;
+	int	j;
 
 	i = 0;
 	n_flag = 0;
@@ -57,11 +58,13 @@ int	exec_echo(char **cmd_array)
 			n_flag++;
 			continue ;
 		}
-		printf("%s", cmd_array[i]);
+		j = -1;
+		while(cmd_array[i][++j] && cmd_array[i][j] != 0)
+			write(1, &cmd_array[i][j], 1);
 		if (cmd_array[i + 1] != NULL)
-			printf(" ");
+			write(1, " ", 1);
 	}
 	if (!n_flag)
-		printf("\n");
+		write(1, "\n", 1);
 	return (0);
 }
