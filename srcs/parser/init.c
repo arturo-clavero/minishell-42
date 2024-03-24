@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/23 09:01:52 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 07:01:46 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_add_redir(t_cmd **node, t_lexer **lexer)
 		*lexer = (*lexer)->next;
 	}
 	if (redir->type != HEREDOC)
-		redir->file_name = (*lexer)->str;
+		redir->file_name = ft_strdup((*lexer)->str);
 }
 
 /**

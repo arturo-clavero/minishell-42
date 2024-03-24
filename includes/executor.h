@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 16:00:47 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:56:50 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void				create_child_ids(t_cmd *cmd, t_exec *ex);
 
 // -- PROCESS EXECUTION PROTOTYPES --
 void				process_cmds(t_cmd *cmd, t_exec *ex);
-void				execute_command(int id, int curr_cmd, t_cmd *cmd,
+void				execute_command(int *id, int curr_cmd, t_cmd *cmd,
 						t_exec *ex);
 void				close_open_pipes(int curr_cmd, t_exec *ex);
 void				close_all_pipes(t_exec *ex);
