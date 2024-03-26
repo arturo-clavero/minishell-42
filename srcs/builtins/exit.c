@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/24 04:59:32 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:58:38 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static int	check_numeric_argument(char *str, __int128_t num, t_exec *ex)
 	{
 		if (ft_isdigit(str[i]) == TRUE)
 			flag = TRUE;
+		if (str[i] == '-' && str[i + 1] == 0 && i > 0 && str[i - 1] == '-')
+			exit_minishell(ex, 0);
 		if ((num > LLONG_MAX || num < LLONG_MIN) || (ft_isdigit(str[i]) == FALSE
 			&& str[i] != '\'' && str[i] != '"' && str[i] != ' ' && str[i] != '\t')
 			|| (i != 0 && (str[i - 1] == '+' || str[i -1] == '-')

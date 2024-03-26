@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 08:57:52 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 20:00:14 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	exit_minishell(t_exec *ex, int exit_num)
  */
 void	maybe_quit_program(t_exec *ex)
 {
-	if (ex->cmd->next)
+	if (ex->cmd->next || !(ex->cmd->array))
 		return ;
 	if (ft_strncmp(ex->cmd->array[0], "exit", ft_strlen("exit")) != 0)
 		return ;

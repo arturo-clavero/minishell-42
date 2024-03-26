@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 05:40:39 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 13:55:11 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 01:10:19 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	delete_outside_quotes(char **str);
 void	add_slash_to_inside_double_quotes(char **str, int len);
 void	add_quotes_around_value(char **str);
 int		is_variable_start_valid(char *cmd_array, char *original_cmd);
-int		is_variable_content_valid(char **cmd, char *original_cmd);
+int		is_variable_content_valid(char **cmd, char *original_cmd, int *add_flag);
 void	print_env_alphabetically(t_list *env, t_list *head);
 int		exec_pwd(t_exec *ex);
 int		exec_unset(char **cmd_array, t_exec *ex);

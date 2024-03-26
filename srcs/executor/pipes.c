@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:43:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 14:57:36 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 18:48:49 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ void	create_pipes(t_cmd *cmd, t_exec *ex)
 	if (!cmd->next)
 		return ;
 	ex->total_pipes = 0;
-	while (cmd->next)
+	while (cmd->next && cmd->array)
 	{
 		ex->total_pipes++;
 		cmd = cmd->next;
 	}
+	if (ex->total_pipes == 0)
+		return ;
 	ex->fd = (int **)malloc(sizeof(int *) * ex->total_pipes);
 	if (!ex->fd)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/24 03:53:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:19:30 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@ static int	next_smallest_string(t_list *env, char *new_min, char *old_min);
  * @param char *orginal_cmd - initial string prior to any modifications
  * @return int (0) no errors, (1) errors
  */
-int	is_variable_start_valid(char *cmd_array, char *original_cmd)
+int	is_variable_start_valid(char *cmd_array, char *original)
 {
 	int	j;
 
-	(void)original_cmd;
+	//(void)original_cmd;
 	j = 0;
 	if (!ft_isalpha(cmd_array[j]) && cmd_array[j] != '_')
 	{
-		print_error("export `", cmd_array, "': not a valid identifier");
+		print_error("export `", original, "': not a valid identifier");
+		free(original);
 		return (1);
 		//return (free_data(NULL, original_cmd, 1));
 	}
@@ -43,7 +44,7 @@ int	is_variable_start_valid(char *cmd_array, char *original_cmd)
  * @param char *original_cmd - initial string prior to any modifications
  * @return int (0) no errors, (1) errors
  */
-int	is_variable_content_valid(char **cmd, char *original_cmd)
+int	is_variable_content_valid(char **cmd, char *original_cmd, int *add_flag)
 {
 	int	j;
 
@@ -52,21 +53,17 @@ int	is_variable_content_valid(char **cmd, char *original_cmd)
 
 	while ((*cmd)[j] && (*cmd)[j] != '=')
 	{
-		/*if ((*cmd)[j] == '+' && (*cmd)[j + 1]
-			&& (*cmd)[j + 1] == '=')
+		if ((*cmd)[j] == '+' && (*cmd)[j + 1] && (*cmd)[j + 1] == '=')
 		{
+			*add_flag = TRUE;
 			delete_char_from_str(j, cmd);
 			j--;
-			and add value to added value Test 30
 		}
-		else */
-
-		if (!ft_isalpha((*cmd)[j]) && !ft_isnum((*cmd)[j])
+		else if (!ft_isalpha((*cmd)[j]) && !ft_isnum((*cmd)[j])
 			&& (*cmd)[j] != '_')
 		{
 			print_error("export `", *cmd, "': not a valid identifier");
 			return (1);
-		//	return (free_data(NULL, original_cmd, 1));
 		}
 		j++;
 	}
@@ -84,6 +81,8 @@ void	print_env_alphabetically(t_list *env, t_list *head)
 {
 	char	*new_min;
 	char	*old_min;
+	int		i;
+	int		flag;
 
 	new_min = ((char *)env->content);
 	old_min = NULL;
@@ -100,7 +99,22 @@ void	print_env_alphabetically(t_list *env, t_list *head)
 		}
 		if (new_min == NULL)
 			break ;
-		printf("declare -x %s\n", new_min);
+		printf("declare -x ");
+		i = -1;
+		flag = FALSE;
+		while (new_min[++i])
+		{
+			if (new_min[i] == '=')
+			{
+				printf("=\"");
+				flag = TRUE;
+			}
+			else
+				printf("%c", new_min[i]);
+		}
+		if (flag == TRUE)
+			printf("\"");
+		printf("\n");
 		old_min = new_min;
 	}
 }
@@ -121,7 +135,8 @@ static int	next_smallest_string(t_list *env, char *new_min, char *old_min)
 
 	next_str = ((char *)env->content);
 	len = ft_strlen(next_str);
-	if (!new_min || ft_strncmp(next_str, new_min, len) < 0)
+	
+	if (!new_min || ft_strncmp(next_str, new_min, len) < 0 || (ft_strncmp(next_str, new_min, len) == 0 && len < (int)ft_strlen(new_min)))
 	{
 		if (!old_min || ft_strncmp(next_str, old_min, len) > 0)
 			return (TRUE);

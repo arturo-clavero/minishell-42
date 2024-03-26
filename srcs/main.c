@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/24 12:57:43 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 06:59:39 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ void	ft_launch_minishell(t_exec *ex)
 		ft_parser(ex->lexer, ex);
 		free(line);
 		ft_free_lexer(ex);
+		heredoc(ex);
 		expand_each_cmd_node(&ex->cmd, ex);
-		quotes(ex->cmd);
+		quotes(ex->cmd, ex);
 		execution_main(ex->cmd, ex);
 	}
 }

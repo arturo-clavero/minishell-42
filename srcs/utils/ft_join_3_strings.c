@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:46:38 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 15:51:58 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/25 22:06:33 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ char	*ft_join_3_strings(char *str1, char *str2, char *str3)
 	int		len;
 	char	*result;
 
+	if (!str1 && !str2)
+		return (ft_strdup(str3));
+	if (!str1 && !str3)
+		return (ft_strdup(str2));
+	if (!str2 && !str3)
+		return (ft_strdup(str1));
+	if (!str1)
+		return (ft_strjoin(str2, str3));
+	if (!str2)
+		return (ft_strjoin(str1, str3));
+	if (!str3)
+		return (ft_strjoin(str1, str2));
 	len = ft_strlen(str1) + ft_strlen(str2) + ft_strlen(str3);
 	result = (char *)malloc(sizeof(char) * (len + 1));
 	ft_strlcpy(result, str1, ft_strlen(str1) + 1);

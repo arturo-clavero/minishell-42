@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:33:24 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 14:15:18 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 07:22:23 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	*get_expandable_value(char *str, int i, int *j, t_exec *ex)
  * @return int - (-1) for expanding errors, (0) for no expanding value
  * (1) for successful expansion
  *  */
+/*
 int	expand_variable(char **str, int *i, t_exec *ex)
 {
 	int		j;
@@ -109,6 +110,97 @@ int	expand_variable(char **str, int *i, t_exec *ex)
 	*str = result;
 	return (1);
 }
+*/
+
+void	expand_tilde(char **str, int i, t_exec *ex)
+{
+	char	*str1;
+	char	*str2;
+	char	*str3;
+	char	*result;
+
+	if (i > 0 && (*str)[i - 1] != ' ' && (*str)[i - 1] != '\t')
+		return ;
+	if ((*str)[i + 1] && (*str)[i + 1] != 0 && (*str)[i + 1] != ' '
+		&& (*str)[i + 1] != '\t')
+		return ;
+	str1 = ft_strdup(*str);
+	str1[i] = '\0';
+	str2 = get_env_value("HOME=", ex->env_list);
+	str3 = &(*str)[i + 1];
+	if (!str3 || str3[0] == 0)
+		str3 = NULL;
+	result = ft_join_3_strings(str1, str2, str3);
+	free(*str);
+	free(str1);
+	*str = result;
+}
+
+int	expand_dollar(char **original, int start, t_exec *ex, int curly)
+{
+	int		end;
+	char	*value;
+	char	*result;
+	char	*str;
+
+	//getting end of expandable
+	str = ft_strdup(*original);
+	value = NULL;
+	end = start;
+	if (curly && check_curly_brackets(&str, start) == -1)
+		return (-1);
+	while (str[end] && (ft_isalpha(str[end]) == TRUE
+		|| (ft_isalnum(str[end]) == TRUE && end > start)
+		|| str[end] == '_'))
+		end++;
+	//return if just dollar
+	if (str[start] == '$' || str[start] == '?')
+		end++;
+	//printf("end[%d]->{%s}\n", end, &str[end]);
+	if (end - start == 0)
+	{
+		//printf("return\n");
+		//exit(2);
+		return (0);
+	}
+	if (str[start] == '?')//check for exit number
+		value = ft_itoa(ex->exit);
+	else if (str[start] == '$')//check for pid
+		value = ft_get_pid();
+	else
+	{
+		str[end] = '\0';
+		value = ft_strdup(get_env_value(&str[start], ex->env_list));
+		if (value)
+		{
+			delete_char_from_str(0, &value);
+			if (ft_strchr(value, '='))
+			{
+				free(value);
+				value = NULL;
+			}
+		}
+	}
+	//printf("value: %s\n", value);
+	str[start - 1] = '\0'; //setting dollar equal to NULL first part until dollar + value + original at end
+	if (value)
+	{
+		//printf("joining [%s] + [%s] + [%s]\n", str, value, &(*original)[end]);
+		result = ft_join_3_strings(str, value, &(*original)[end]);
+		free(value);
+	}
+	else
+	{
+		//printf("joining [%s] + [%s]\n", str, &(*original)[end]);
+		result = ft_strjoin(str, &(*original)[end]);
+	}
+	free(*original);
+	free(str);
+	*original = result;
+	//printf("str->{%s}\n\n\n", result);
+	//exit(0);
+	return (1);
+}
 
 /**
  * @brief Checks strings for '$' and sends them to be expanded depending
@@ -122,28 +214,37 @@ int	expand_variable(char **str, int *i, t_exec *ex)
 char	*check_str_expandables(t_cmd **cmd, t_exec *ex, char *str)
 {
 	int		i;
-	int		double_quotes;
-	int		single_quotes;
+	int		dq;
+	int		sq;
+	int		exp;
 
 	i = -1;
 	(void)cmd;
 	(void)ex;
-	double_quotes = FALSE;
-	single_quotes = FALSE;
+	dq = CLOSED;
+	sq = CLOSED;
+	exp = 2;
 	while (++i < (int)ft_strlen(str) && str[i])
 	{
-		if (str[i] == '"')
-			double_quotes ^= 1;
-		if (str[i] == '\'')
-			single_quotes ^= 1;
-		if (str[i] == '$' && (double_quotes
-				|| (!double_quotes && !single_quotes)))
+		if ((str[i] == '"' && sq == OPEN) || (str[i] == '\'' && dq == OPEN))
+			continue;
+		else if (str[i] == '"')
+			dq ^= 1;
+		else if (str[i] == '\'')
+			sq ^= 1;
+		else if (str[i] == '$' && sq == CLOSED)
 		{
-			if (only_dollar_sign(str, i, double_quotes) == FALSE
-				&& expand_variable(&str, &i, ex) == -1)
+			exp = expand_dollar(&str, i + 1, ex, TRUE);
+			if (exp == -1)
 				(*cmd)->bad_substitution = TRUE;
+			if (exp == 1)
+				i --;
 		}
+		else if (str[i] == '~' && sq == CLOSED && dq == CLOSED)
+			expand_tilde(&str, i, ex);
 	}
+	if ((*cmd)->bad_substitution < 0)
+		(*cmd)->bad_substitution = TRUE;
 	return (str);
 }
 
@@ -175,7 +276,8 @@ void	expand_each_cmd_node(t_cmd **cmd_head, t_exec *ex)
 		{
 			file = redir->file_name;
 			if (file && redir->type != PIPE && redir->type != HEREDOC)
-				file = check_str_expandables(&cmd, ex, file);
+				redir->file_name = check_str_expandables(&cmd, ex, file);
+		//	printf("redir->{%s}\n", redir->file_name);
 			redir = redir->next;
 		}
 		(cmd) = (cmd)->next;
