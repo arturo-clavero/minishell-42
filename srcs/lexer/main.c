@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/23 12:37:43 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:26:36 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	ft_lexer(t_exec *exec)
 	int	j;
 
 	check_empty_str(exec);
-	check_unclosed_quotes(exec);
+	//check_unclosed_quotes(exec);
 	i = 0;
 	while (exec->args[i])
 	{

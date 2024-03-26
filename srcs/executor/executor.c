@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/24 12:55:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:59:39 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	process_cmds(t_cmd *cmd, t_exec *ex)
 	int	curr_child;
 
 	curr_cmd = 0;
-	curr_child = 0;
+	curr_child = -1;
 	while (cmd)
 	{
 		save_original_io(ex);
@@ -37,10 +37,11 @@ void	process_cmds(t_cmd *cmd, t_exec *ex)
 			else if (!cmd->next)
 				ex->exit = 1;
 		}
-		else if (cmd->array)
-		{
+		else if (cmd->array && ++curr_child > -1)
 			execute_command(&ex->id[curr_child], curr_cmd, cmd, ex);
-			curr_child++;
+		else
+		{
+			are_redirections_valid(cmd);
 		}
 		curr_cmd++;
 		reset_io(ex);
@@ -83,7 +84,7 @@ int	empty_cmd(t_cmd *cmd, t_exec *ex)
 	while (empty && cmd)
 	{
 		i = -1;
-		while (empty && cmd->array[++i])
+		while (empty && cmd->array && cmd->array[++i])
 		{
 				if (cmd->array[i][0] == 0)
 				{
@@ -115,7 +116,9 @@ int	empty_cmd(t_cmd *cmd, t_exec *ex)
 void	execution_main(t_cmd *cmd, t_exec *ex)
 {
 	initialize_execution(cmd, ex);
-	if (empty_cmd(cmd, ex) == TRUE)
+	if (!cmd)
+		return ;
+	if (!cmd->redir && empty_cmd(cmd, ex) == TRUE)
 	{
 		clean_t_cmd(ex->cmd, ex);
 		ex->exit = 0;

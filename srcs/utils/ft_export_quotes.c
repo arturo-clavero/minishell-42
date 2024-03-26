@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:52:30 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 15:58:23 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:26:10 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	delete_char_from_str(int delete, char **str)
 	int		len;
 	char	*new_str;
 
+	if (!*str)
+		return ;
 	len = ft_strlen(*str) - 1;
 	new_str = (char *)malloc(sizeof(char) * len + 1);
 	if (!new_str)
