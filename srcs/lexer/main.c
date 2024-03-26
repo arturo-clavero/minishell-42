@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 14:25:38 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/26 20:26:15 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void	ft_lexer(t_exec *exec)
 	{
 		j = 0;
 		skip_whitespace(exec->args, &i);
+		if (!exec->args[i] || exec->args[i] == ' ')
+			break ;
 		if (ft_check_string_token(exec->args[i]))
 			j = ft_handle_token(exec->lexer, exec->args, i);
 		else
@@ -121,4 +123,5 @@ void	ft_lexer(t_exec *exec)
 			return ;
 		i += j;
 	}
+	ft_debug_lexer(exec->lexer);
 }
