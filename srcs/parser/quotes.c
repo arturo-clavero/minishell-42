@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:24:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 12:24:24 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/26 14:26:07 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
  */
 static void	trim_quote(char **str, int *i, int *quote)
 {
-
 	*quote ^= 1;
 	delete_char_from_str(*i, str);
 	*i = *i - 1;
@@ -49,9 +48,9 @@ static t_cmd	*handle_quotes(t_cmd *cmd, t_exec *ex)
 		j = -1;
 		while (cmd->array[i][++j])
 		{
-			if ((cmd->array[i][j] == '\'' && dq == OPEN) ||
-				(cmd->array[i][j] == '"' && sq == OPEN))
-					continue ;
+			if ((cmd->array[i][j] == '\'' && dq == OPEN)
+					|| (cmd->array[i][j] == '"' && sq == OPEN))
+				continue ;
 			else if (cmd->array[i][j] == '\'')
 				trim_quote(&(cmd->array[i]), &j, &sq);
 			else if (cmd->array[i][j] == '"')
@@ -61,7 +60,8 @@ static t_cmd	*handle_quotes(t_cmd *cmd, t_exec *ex)
 	if (dq == OPEN || sq == OPEN)
 	{
 		clean_t_cmd(cmd, ex);
-		ft_parser_error(ex, ERROR_NO_CLOSE_QUOTE, NULL, 404);
+		ft_putstr_fd(ERROR_NO_CLOSE_QUOTE, STDERR_FILENO);
+		ft_parser_error(ex, 404);
 	}
 	return (cmd);
 }
@@ -79,7 +79,8 @@ void	redir_quotes(t_redir *rd)
 	i = -1;
 	while (rd->file_name[++i])
 	{
-		if ((rd->file_name[i] == '\'' && dq == OPEN) || (rd->file_name[i] == '"' && sq == OPEN))
+		if ((rd->file_name[i] == '\'' && dq == OPEN) || (rd->file_name[i] == '"'
+				&& sq == OPEN))
 			continue ;
 		else if (rd->file_name[i] == '\'')
 			trim_quote(&(rd->file_name), &i, &sq);
@@ -95,9 +96,9 @@ void	redir_quotes(t_redir *rd)
  */
 void	quotes(t_cmd *cmd, t_exec *ex)
 {
-	int		i;
-	int		j;
-	int		next;
+	int	i;
+	int	j;
+	int	next;
 
 	while (cmd)
 	{

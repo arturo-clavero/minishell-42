@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:16:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 13:14:18 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/26 14:27:31 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
  */
 void	ft_check_syntax(t_exec *ex)
 {
-	t_lexer *lexer;
+	t_lexer	*lexer;
 
 	lexer = ex->lexer;
 	if (lexer->token == PIPE)
-		ft_parser_error(ex, ERROR_SYNTAX, "|", 2);
+	{
+		printf("minishell: syntax error near unexpected token `|'\n");
+		ft_parser_error(ex, 2);
+	}
 }
