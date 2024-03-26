@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 09:45:52 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/26 10:43:15 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	check_empty_str(t_exec *exec)
 	{
 		if (exec->args[i] == 0 || exec->args[i] == ' ')
 			ft_lexer_error(exec, NULL);
+		if (exec->args[i] != 0 || exec->args[i] != ' ')
+			break ;
 	}
 	if (i == (int)ft_strlen(exec->args))
 		ft_parser_error(exec, NULL, 0);
@@ -105,7 +107,7 @@ void	ft_lexer(t_exec *exec)
 	int	j;
 
 	check_empty_str(exec);
-	//check_unclosed_quotes(exec);
+	check_unclosed_quotes(exec);
 	i = 0;
 	while (exec->args[i])
 	{
