@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 05:32:57 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 01:13:55 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*new_appended_value(char *new, char *old)
 		j++;
 	if (ft_strchr(old, '='))
 		j++;
-	printf("joining [%s] [%s]\n", old, &new[j]);
+	//printf("joining [%s] [%s]\n", old, &new[j]);
 	result = ft_strjoin(old, &new[j]);
 	free(new);
 	return (result);

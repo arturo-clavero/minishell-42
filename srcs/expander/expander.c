@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:33:24 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 07:22:23 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 03:15:54 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	expand_tilde(char **str, int i, t_exec *ex)
 	if (i > 0 && (*str)[i - 1] != ' ' && (*str)[i - 1] != '\t')
 		return ;
 	if ((*str)[i + 1] && (*str)[i + 1] != 0 && (*str)[i + 1] != ' '
-		&& (*str)[i + 1] != '\t')
+		&& (*str)[i + 1] != '\t' && (*str)[i + 1] != '/')
 		return ;
 	str1 = ft_strdup(*str);
 	str1[i] = '\0';
@@ -154,6 +154,11 @@ int	expand_dollar(char **original, int start, t_exec *ex, int curly)
 		|| str[end] == '_'))
 		end++;
 	//return if just dollar
+	if (str[start] == '\'' || str[start] == '"')
+	{
+		delete_char_from_str(start - 1, original);
+		return (1);
+	}
 	if (str[start] == '$' || str[start] == '?')
 		end++;
 	//printf("end[%d]->{%s}\n", end, &str[end]);
