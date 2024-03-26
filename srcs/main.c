@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 06:59:39 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:38:46 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@
 static char	*ft_prompt_display(void)
 {
 	char	*line;
+	char	*prompt;
 
-	line = readline(RED "[MINISHELL] $> " RESET);
+	prompt = ft_strjoin(RED "[MINISHELL]:" BLUE, getcwd(NULL, 0));
+	prompt = ft_strjoin(prompt, " $> " RESET);
+	line = readline(prompt);
+	free(prompt);
 	if (!line)
 		exit(EXIT_SUCCESS);
 	if (ft_strlen(line) > 0)
