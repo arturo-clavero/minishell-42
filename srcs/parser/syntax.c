@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 00:39:09 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 13:12:54 by ugolin-olle      ###   ########.fr       */
+/*   Created: 2024/03/26 12:16:32 by ugolin-olle       #+#    #+#             */
+/*   Updated: 2024/03/26 13:14:18 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief The main function for the paser.
+ * @brief Check the syntax of the lexer.
  *
- * @param t_exec *ex - The minishell object.
+ * @param t_lexer *lexer - The lexer object.
  * @return void
  */
-void	ft_parser(t_lexer *lexer, t_exec *ex)
+void	ft_check_syntax(t_exec *ex)
 {
-	t_cmd	*node;
+	t_lexer *lexer;
 
-	ft_check_syntax(ex);
-	node = ft_init_cmd();
-	if (!node)
-		return ;
-	node->bad_substitution = 0;
-	node->redir = NULL;
-	node->next = NULL;
-	node->array = ft_malloc_node_array(lexer);
-	ft_add_cmd(&node, lexer, ex);
+	lexer = ex->lexer;
+	if (lexer->token == PIPE)
+		ft_parser_error(ex, ERROR_SYNTAX, "|", 2);
 }

@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 10:43:15 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/26 12:24:07 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	check_unclosed_quotes(t_exec *exec)
 			single_q ^= 1;
 	}
 	if (single_q == TRUE || double_q == TRUE)
-		ft_parser_error(exec, "Unclosed quotes", 404);
+		ft_parser_error(exec, ERROR_NO_CLOSE_QUOTE, NULL, 2);
 }
 
 void	check_empty_str(t_exec *exec)
@@ -92,7 +92,7 @@ void	check_empty_str(t_exec *exec)
 			break ;
 	}
 	if (i == (int)ft_strlen(exec->args))
-		ft_parser_error(exec, NULL, 0);
+		ft_parser_error(exec, NULL, NULL, 0);
 }
 
 /**
