@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/24 07:01:46 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 07:13:17 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_cmd	*ft_init_cmd(void)
 	t_cmd	*new_cmd;
 
 	new_cmd = malloc(sizeof(t_cmd));
+	//ft_memset(new_cmd, 0, sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->array = NULL;
@@ -94,6 +95,8 @@ void	ft_add_redir(t_cmd **node, t_lexer **lexer)
 	}
 	if (redir->type != HEREDOC)
 		redir->file_name = ft_strdup((*lexer)->str);
+	else
+		redir->heredoc_buff = ft_strdup((*lexer)->str);
 }
 
 /**

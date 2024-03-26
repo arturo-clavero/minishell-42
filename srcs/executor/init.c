@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:20:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 00:09:49 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/24 19:56:29 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	initialize_execution(t_cmd *cmd, t_exec *ex)
 	ex->is_builtin_last = FALSE;
 	ex->fd = NULL;
 	ex->id = NULL;
+	ex->stdin_original = STDIN_FILENO;
+	ex->stdout_original = STDOUT_FILENO;
 }
 
 /**
