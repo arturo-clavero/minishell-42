@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:32:59 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/23 00:09:08 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:22:41 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@
  *
  * @param t_exec *ex - The minishell object.
  * @param char *message - The error message.
+ * @param char *opt - The optional message.
  * @param int err_code = Exit error code
  * @return void
  */
-void	ft_parser_error(t_exec *ex, char *message, int err_code)
+void	ft_parser_error(t_exec *ex, char *message, char *opt, int err_code)
 {
 	if (message)
 	{
-		ft_putstr_fd(RED "minishell: " RESET, STDERR_FILENO);
+		if (opt)
+			printf(RED "minishell: " RESET "%s: %s\n", message, opt);
+		else
+			ft_putstr_fd(RED "minishell: " RESET, STDERR_FILENO);
 		ft_putstr_fd(message, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
 	}

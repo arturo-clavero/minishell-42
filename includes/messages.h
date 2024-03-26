@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:58:38 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/20 22:43:41 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/26 12:20:03 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,3 +22,4 @@
 
 // -- PARSER --
 #define ERROR_INVALID_TOKEN "minishell: syntax error: invalid token\n"
+#define ERROR_SYNTAX "minishell: syntax error near unexpected token %s\n"

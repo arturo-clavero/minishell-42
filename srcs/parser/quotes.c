@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:24:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 04:54:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:24:24 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 /**
  * @brief trim found quote if not inside other quote
- * @param str - pointer to string with quote 
+ * @param str - pointer to string with quote
  * @param i - pointer to index qhere quote was found
  * @param found - pointer to int indicating type of quote found,
  * and if we are in/ or outside this quote type (single or double)
- * @param other - int ndicating type of quote not found, 
+ * @param other - int ndicating type of quote not found,
  * and if we are in/ or outside this quote type (single or double)
  */
 static void	trim_quote(char **str, int *i, int *quote)
@@ -30,9 +30,9 @@ static void	trim_quote(char **str, int *i, int *quote)
 }
 
 /**
- * @brief evaluates if quote found should be deleted or not 
+ * @brief evaluates if quote found should be deleted or not
  * @param str - string where quote was found
- * @return same string with quotes trimmed or not 
+ * @return same string with quotes trimmed or not
  */
 static t_cmd	*handle_quotes(t_cmd *cmd, t_exec *ex)
 {
@@ -49,7 +49,7 @@ static t_cmd	*handle_quotes(t_cmd *cmd, t_exec *ex)
 		j = -1;
 		while (cmd->array[i][++j])
 		{
-			if ((cmd->array[i][j] == '\'' && dq == OPEN) || 
+			if ((cmd->array[i][j] == '\'' && dq == OPEN) ||
 				(cmd->array[i][j] == '"' && sq == OPEN))
 					continue ;
 			else if (cmd->array[i][j] == '\'')
@@ -61,7 +61,7 @@ static t_cmd	*handle_quotes(t_cmd *cmd, t_exec *ex)
 	if (dq == OPEN || sq == OPEN)
 	{
 		clean_t_cmd(cmd, ex);
-		ft_parser_error(ex, "Unclosed quotes", 404);
+		ft_parser_error(ex, ERROR_NO_CLOSE_QUOTE, NULL, 404);
 	}
 	return (cmd);
 }
