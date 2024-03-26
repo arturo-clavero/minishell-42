@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/25 16:59:39 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:31:52 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,6 @@ void	execution_main(t_cmd *cmd, t_exec *ex)
 	initialize_execution(cmd, ex);
 	if (!cmd)
 		return ;
-	if (!cmd->redir && empty_cmd(cmd, ex) == TRUE)
-	{
-		clean_t_cmd(ex->cmd, ex);
-		ex->exit = 0;
-		return ;
-	}
 	create_pipes(cmd, ex);
 	create_child_ids(cmd, ex);
 	process_cmds(cmd, ex);
