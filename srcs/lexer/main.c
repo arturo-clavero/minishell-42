@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/23 12:37:43 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 09:45:52 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	check_empty_str(t_exec *exec)
 	i = -1;
 	while (exec->args[++i])
 	{
-		if (exec->args[i] != 0 || exec->args[i] != ' ')
-			break ;
+		if (exec->args[i] == 0 || exec->args[i] == ' ')
+			ft_lexer_error(exec, NULL);
 	}
 	if (i == (int)ft_strlen(exec->args))
 		ft_parser_error(exec, NULL, 0);
@@ -119,5 +119,5 @@ void	ft_lexer(t_exec *exec)
 			return ;
 		i += j;
 	}
-	//lexer_redirection(exec->lexer, exec);
+	ft_debug_lexer(exec->lexer);
 }
