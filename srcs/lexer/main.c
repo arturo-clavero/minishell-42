@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 23:04:49 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 23:56:38 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ void	check_empty_str(t_exec *exec)
 	i = -1;
 	while (exec->args[++i])
 	{
-		if (exec->args[i] == 0 || exec->args[i] == ' ')
+		if (exec->args[i] == 0)
 			ft_lexer_error(exec, NULL);
-		if (exec->args[i] != 0 || exec->args[i] != ' ')
+		if (exec->args[i] != ' ')
 			break ;
 	}
 	if (i == (int)ft_strlen(exec->args))
@@ -124,5 +124,5 @@ void	ft_lexer(t_exec *exec)
 			return ;
 		i += j;
 	}
-	//ft_debug_lexer(exec->lexer);
+//	ft_debug_lexer(exec->lexer);
 }
