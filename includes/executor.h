@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/24 12:56:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:18:11 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 
 # define TRUE 1
 # define FALSE 0
+
+# define OPEN 1
+# define CLOSED 0
 
 // -- STRUCTURES --
 

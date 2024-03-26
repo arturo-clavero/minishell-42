@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:57:26 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 00:19:06 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:17:56 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,22 @@ int	only_dollar_sign(char *str, int i, int double_quotes)
  * @param char **str - pointer to str being trimmed
  * @return int - 0 
  */
-int	trim_dollar_substr(char **str)
+int	trim_dollar_substr(char *str, char **original)
 {
 	int		i;
 	int		j;
 	char	*result;
 
 	i = 0;
-	while ((*str)[i] != '$')
+	while (str[i] != '$')
 		i++;
 	j = i;
-	while ((*str)[j] && (*str)[j] != ' ' && (*str)[j] != '\t')
+	while (str[j] && str[j] != ' ' && str[j] != '\t')
 		j++;
-	(*str)[i] = '\0';
-	result = ft_strjoin(*str, &(*str)[j]);
-	free(*str);
-	(*str) = result;
+	str[i] = '\0';
+	result = ft_strjoin(str, &str[j]);
+	*original = result;
+	free(*original);
 	return (0);
 }
 
@@ -92,6 +92,7 @@ int	trim_dollar_substr(char **str)
  */
 int	trim_question_mark(char **str, int j)
 {
+
 	char	*result;
 	int		i;
 

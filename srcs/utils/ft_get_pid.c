@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:48:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/15 15:50:52 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:08:41 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	*ft_get_pid(void)
 
 	bytes = 1;
 	buffer = (char *)malloc(sizeof(char) * 2000);
+	if (!buffer)
+		return (NULL);
 	pipe(fd);
 	id = fork();
 	if (id == 0)

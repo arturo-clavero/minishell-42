@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/23 15:54:23 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:32:57 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,19 @@
  * @return int - 0 if the syntax is valid, 1 otherwise
  */
 
-static int	is_export_syntax_valid(char **cmd_array, char *original_cmd)
+static int	is_export_syntax_valid(char **cmd_array, int *add_flag)
 {
-	int	error;
+	char	*original;
+	int		error;
 
-	error = has_unclosed_quotes(*cmd_array, original_cmd);
+	original = ft_strdup(*cmd_array);
+	error = is_variable_start_valid(*cmd_array, original);
 	if (error > 0)
 		return (error);
-	delete_outside_quotes(cmd_array);
-	error = is_variable_start_valid(*cmd_array, original_cmd);
-	if (error > 0)
-		return (error);
-	error = is_variable_content_valid(cmd_array, original_cmd);
+	error = is_variable_content_valid(cmd_array, original, add_flag);
 	if (error > 0)
 		return (error);
 	add_slash_to_inside_double_quotes(cmd_array, ft_strlen(*cmd_array));
-	if (ft_strchr(*cmd_array, '='))
-	add_quotes_around_value(cmd_array);
 	return (0);
 }
 
@@ -69,18 +65,74 @@ int	find_end_variable_index(char *str)
  * @return int - (-1) for no match, (1) for match and substitution required,
  * (0) for match and no substitution
  */
-int	find_env_match(char *new, char *old)
+int	find_env_match(char *str, char *old)
 {
-	int	len;
+	int		i;
+	char	*new;
+	char	*result;
 
-	len = find_end_variable_index(new);
-	if (find_end_variable_index(old) != len)
-		return (-1);
-	if (ft_strncmp(new, old, len) != 0)
-		return (-1);
-	if (ft_strchr(new, '='))
+	i = 0;
+	new = ft_strdup(str);
+	while(new[i] && new[i] != '=')
+		i++;
+	new[i] = '\0';
+	if (double_strncmp(new, old) == 0)
+	{
+		free(new);
 		return (1);
-	return (0);
+	}
+	result = ft_strjoin(new, "=\0");
+	if (ft_strncmp(result, old, ft_strlen(result)) == 0)
+	{
+		free(new);
+		free(result);
+		if(ft_strchr(str, '='))
+		{
+			return (1);
+		}
+		return (0);
+	}
+	free(result);
+	free(new);
+	return (-1);
+}
+
+char	*new_appended_value(char *new, char *old)
+{
+	int	j;
+	char *result;
+
+	j = 0;
+	while (new[j] && new[j] != '=')
+		j++;
+	if (ft_strchr(old, '='))
+		j++;
+	printf("joining [%s] [%s]\n", old, &new[j]);
+	result = ft_strjoin(old, &new[j]);
+	free(new);
+	return (result);
+}
+
+void	append_export_to_env(char **new, t_list **env_list)
+{
+	t_list	*node;
+	int		i;
+
+	node = *env_list;
+	while (node)
+	{
+		i = find_env_match(*new, (char *)node->content);
+		if (i == 1)
+		{
+			*new = new_appended_value(*new, (char *)node->content);
+			delete_node(node, env_list);
+			break ;
+		}
+		if (i == 0)
+			return ;
+		node = node->next;
+	}
+	new_node(*new, env_list);
 }
 
 /**
@@ -90,25 +142,25 @@ int	find_env_match(char *new, char *old)
  * @param t_list **env_list - pointer to environment list
  * @return void
  */
-void	add_export_to_env(char *export_str, t_list **env_list)
+void	add_export_to_env(char *export_str, t_exec *ex)
 {
 	t_list	*node;
 	int		i;
 
-	node = *env_list;
+	node = ex->env_list;
 	while (node)
 	{
 		i = find_env_match(export_str, (char *)node->content);
 		if (i == 1)
 		{
-			delete_node(node, env_list);
+			delete_node(node, &ex->env_list);
 			break ;
 		}
 		if (i == 0)
 			return ;
 		node = node->next;
 	}
-	new_node(export_str, env_list);
+	new_node((void *)export_str, &ex->env_list);
 }
 
 /**
@@ -121,37 +173,29 @@ void	add_export_to_env(char *export_str, t_list **env_list)
 int	exec_export(char **cmd_array, t_exec *ex)
 {
 	int		i;
-	char	*original_cmd_str;
 	char	*new_value;
+	int		add_flag;
 	int		error;
 
 	new_value = NULL;
 	error = 0;
-	original_cmd_str = NULL;
 	if (has_pipe(ex->cmd) == TRUE && cmd_array[1])
 		return (0);
 	i = 0;
 	while (cmd_array[++i])
 	{
-		original_cmd_str = ft_strdup(cmd_array[i]);
-		if (is_export_syntax_valid(&cmd_array[i], original_cmd_str) > 0)
+		add_flag = FALSE;
+		if (is_export_syntax_valid(&cmd_array[i], &add_flag) > 0)
 		{
 			error = 1;
-			//if (original_cmd_str)
-			//{
-			//	free(original_cmd_str);
-			//	original_cmd_str = NULL;
-		//	}
 			continue ;
 		}
 		new_value = ft_strdup(cmd_array[i]);
-		add_export_to_env(new_value, &ex->env_list);
+		if (add_flag == TRUE)
+			append_export_to_env(&new_value, &ex->env_list);
+		else
+			add_export_to_env(new_value, ex);
 		add_data_to_cleanup_list(new_value, &ex->long_term_data);
-		if (original_cmd_str)
-		{
-			free(original_cmd_str);
-			original_cmd_str = NULL;
-		}
 	}
 	if (!cmd_array[1])
 		print_env_alphabetically(ex->env_list, ex->env_list);

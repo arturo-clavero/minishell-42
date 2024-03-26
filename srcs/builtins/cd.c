@@ -6,11 +6,30 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/24 05:52:25 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 06:13:30 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	cd_with_dash(char **new_dir, t_exec *ex)
+{
+	int	i;
+
+	if (!(*new_dir))
+		return ;
+	i = 0;
+	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
+		i++;
+	if ((*new_dir)[i] != '-')
+		return ;
+	i++;
+	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
+		i++;
+	if ((*new_dir)[i])
+		return ;
+	*new_dir = get_env_value("OLDPWD=", ex->env_list);
+}
 
 void	cd_with_tilde(char **new_dir, char *pwd)
 {
@@ -42,7 +61,6 @@ void	cd_with_tilde(char **new_dir, char *pwd)
 			break ;
 		}
 	}
-	
 }
 /**
  * @brief Go back one directory {cd ..} 
@@ -78,6 +96,7 @@ static void	cd_with_double_dot(char **new_dir, char *pwd)
 		}
 	}
 }
+
 
 /**
  * @brief Change the current directory with no arguments.
@@ -230,5 +249,6 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 	cd_with_no_arguments(&new_dir, buffer);
 	cd_with_double_dot(&new_dir, buffer);
 	cd_with_tilde(&new_dir, buffer);
+	cd_with_dash(&new_dir, ex);
 	return (change_directories(new_dir, buffer, og, ex));
 }
