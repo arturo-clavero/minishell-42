@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 20:31:44 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/22 15:00:34 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/26 09:45:43 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,19 @@ void	ft_free_lexer(t_exec *ex)
 		lexer = tmp;
 	}
 	ex->lexer = NULL;
+}
+
+/**
+ * @brief Lexer error.
+ *
+ * @param t_exec *ex - The execution structure.
+ * @param char *str - The error message.
+ * @return void
+ */
+void	ft_lexer_error(t_exec *ex, char *str)
+{
+	if (str)
+		ft_putstr_fd(str, STDERR_FILENO);
+	ft_free_lexer(ex);
+	ft_launch_minishell(ex);
 }
