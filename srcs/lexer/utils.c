@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:32:30 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 09:04:10 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/27 18:59:03 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@
  */
 t_token_type	ft_check_string_token(int c)
 {
-	static const char			operators[] = "|<>>";
-	static const t_token_type	operator_types[] = {PIPE, INFILE, OUTFILE,
-			APPEND, HEREDOC};
+	static const char			operators[] = "|<>";
+	static const t_token_type	operator_types[] = {PIPE, INFILE, OUTFILE};
 	unsigned long				i;
 
+	if (c == 0)
+		return (UNINITIALIZED);
 	i = 0;
 	while (i < sizeof(operators))
 	{
