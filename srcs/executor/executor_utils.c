@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 18:32:01 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 03:09:53 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,50 @@
  * @param char **env - The environment
  * @return char* - The command path
  */
+
 static char	*get_cmd_path_for_exec(char **cmd_array, char **env, t_exec *ex)
 {
+	char	**all_paths;
 	char	*test_path;
 	int		i;
 	DIR		*dir;
 
-	i = -1;
+	i = 0;
+	all_paths = NULL;
+	test_path = NULL;
 	if (access(cmd_array[0], F_OK | X_OK) == 0)
 		return (cmd_array[0]);
-	while (env[++i] != NULL)
+	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
+		i++;
+	if (env[i])
 	{
-		test_path = ft_strjoin_with_sep(env[i], cmd_array[0], '/');
-		if (access(test_path, F_OK | X_OK) == 0)
-			return (test_path);
-		else
-			free(test_path);
+		all_paths = ft_split(&env[i][5], ':');
+		i = -1;
+		while (all_paths[++i])
+		{
+			test_path = ft_join_3_strings(all_paths[i], "/", cmd_array[0]);
+			if (access(test_path, F_OK | X_OK) == 0)
+			{
+				i = -1;
+				break ;
+				while (all_paths[++i])
+					free(all_paths[i]);
+				free(all_paths);
+				return (test_path);
+			}
+			else
+			{
+				free(test_path);
+				test_path = NULL;
+			}
+		}
+		i = -1;
+		while (all_paths[++i])
+			free(all_paths[i]);
+		free(all_paths);
 	}
+	if (test_path)
+		return (test_path);
 	if (ft_strchr(cmd_array[0], '/'))
 	{
 		dir = opendir(cmd_array[0]);
@@ -159,14 +186,8 @@ void	execute_command(int *id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 			exit(bad_substitution_error(cmd));
 		if (are_redirections_valid(cmd) == EXIT_FAILURE)
 			exit(1);
-		if (ft_strncmp(cmd->array[0], "./minishell",
-				ft_strlen(cmd->array[0])) == 0)
-			env = ft_list_to_str_array(ex->env_list);
-		else
-			env = ft_split(get_env_value("PATH=", ex->env_list), ':');
-		if (env == NULL)
-			env = ft_list_to_str_array(ex->env_list);
-		cmd_path = get_cmd_path_for_exec(cmd->array, env, ex);
+		env = ft_list_to_str_array(ex->env_list);
+		cmd_path = get_cmd_path_for_exec(cmd->array, env, ex); //FIX IT!!!
 		check_if_cmd_is_directory(cmd);
 		execve(cmd_path, cmd->array, env);
 		ft_putstr_fd(cmd->array[0], STDERR_FILENO);
