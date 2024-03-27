@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 03:25:40 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 04:46:45 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,15 @@ void	add_export_to_env(char *export_str, t_exec *ex)
 	while (node)
 	{
 		i = find_env_match(export_str, (char *)node->content);
-	//	printf("received %d\n", i);
 		if (i == 1)
 		{
-		//	printf("match && sub\n");
 			delete_node(node, &ex->env_list);
 			break ;
 		}
 		else if (i == 0)
-		{
-			//printf("match, no sub\n");
 			return ;
-		}
 		node = node->next;
 	}
-	//if (i == -1)
-	//{
-	//	//printf("no match, new\n");
-	//}
-	//else
-		//printf("match, no sub\n");
 	new_node((void *)export_str, &ex->env_list);
 }
 

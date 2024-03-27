@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:20:47 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 00:14:08 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 06:32:50 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,7 @@ static char	*get_new_expanded_string(char *str, char *value, char **og, int n)
 {
 	char	*result;
 
-	if (value)
-		result = ft_join_3_strings(str, value, &(*og)[n]);
-	else
-		result = ft_strdup(str);
+	result = ft_join_3_strings(str, value, &(*og)[n]);
 	free_data(NULL, (void *)str, 1);
 	free_data(NULL, (void *)value, 1);
 	free_data(NULL, (void *)*og, 1);
@@ -152,9 +149,6 @@ int	expand_dollar(char **original, int start, t_exec *ex, int curly)
 	str = ft_strdup(*original);
 	value = get_dollar_value(original, start, end, ex);
 	str[start - 1] = '\0';
-	if (value)
-		*original = get_new_expanded_string(str, value, original, end);
-	else
-		*original = get_new_expanded_string(str, NULL, original, end);
+	*original = get_new_expanded_string(str, value, original, end);
 	return (1);
 }

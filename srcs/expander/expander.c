@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:33:24 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 20:25:26 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 06:31:38 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ char	*check_str_expandables(t_cmd **cmd, t_exec *ex, char *str)
 			exp = expand_dollar(&str, i + 1, ex, TRUE);
 			if (exp == -1)
 				(*cmd)->bad_substitution = TRUE;
-			if (exp == 1)
-				i --;
+			if (exp > 0)
+				i -= exp;
 		}
 		else if (str[i] == '~' && sq == CLOSED && dq == CLOSED)
 			expand_tilde(&str, i, ex);
