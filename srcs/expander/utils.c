@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:57:26 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/25 19:17:56 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 03:40:57 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	trim_dollar_substr(char *str, char **original)
  */
 int	trim_question_mark(char **str, int j)
 {
-
 	char	*result;
 	int		i;
 

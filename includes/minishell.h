@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 14:54:51 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/23 04:22:26 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-// -- GLOBAL VARIABLES --
-extern int	g_exit_status;
 
 // -- LIBRARIES --
 # include <errno.h>

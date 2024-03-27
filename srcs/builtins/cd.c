@@ -6,123 +6,11 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 06:13:30 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 05:37:32 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	cd_with_dash(char **new_dir, t_exec *ex)
-{
-	int	i;
-
-	if (!(*new_dir))
-		return ;
-	i = 0;
-	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
-		i++;
-	if ((*new_dir)[i] != '-')
-		return ;
-	i++;
-	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
-		i++;
-	if ((*new_dir)[i])
-		return ;
-	*new_dir = get_env_value("OLDPWD=", ex->env_list);
-}
-
-void	cd_with_tilde(char **new_dir, char *pwd)
-{
-	int	i;
-	int	slash;
-
-	if (!(*new_dir))
-		return ;
-	i = 0;
-	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
-		i++;
-	if ((*new_dir)[i] != '~')
-		return ;
-	i++;
-	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
-		i++;
-	if ((*new_dir)[i])
-		return ;
-	*new_dir = pwd;
-	i = -1;
-	slash = 0;
-	while ((*new_dir)[++i])
-	{
-		if ((*new_dir)[i] == '/')
-			slash++;
-		if (slash == 3)
-		{
-			(*new_dir)[i] = '\0';
-			break ;
-		}
-	}
-}
-/**
- * @brief Go back one directory {cd ..} 
- *
- * @param char **new_dir - The new directory
- * @param char *pwd - The current directory
- * @return void
- */
-static void	cd_with_double_dot(char **new_dir, char *pwd)
-{
-	int	i;
-
-	if (!(*new_dir))
-		return ;
-	i = 0;
-	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
-		i++;
-	if ((*new_dir)[i] != '.' || (*new_dir)[++i] != '.')
-		return ;
-	while ((*new_dir)[++i])
-	{
-		if ((*new_dir)[i] != ' ' && (*new_dir)[i] != '\t')
-			return ;
-	}
-	*new_dir = pwd;
-	i = ft_strlen(*new_dir);
-	while (--i >= 0)
-	{
-		if ((*new_dir)[i] == '/')
-		{
-			(*new_dir)[i] = '\0';
-			break ;
-		}
-	}
-}
-
-
-/**
- * @brief Change the current directory with no arguments.
- *
- * @param char **new_dir - The new directory
- * @param char *pwd - The current directory
- * @return void
- */
-static void	cd_with_no_arguments(char **new_dir, char *pwd)
-{
-	int	i;
-	int	slash_counter;
-
-	if (*new_dir)
-		return ;
-	*new_dir = pwd;
-	i = -1;
-	slash_counter = 0;
-	while ((*new_dir)[++i] && slash_counter < 3)
-	{
-		if ((*new_dir)[i] == '/')
-			slash_counter++;
-		if (slash_counter == 3)
-			(*new_dir)[i] = '\0';
-	}
-}
 
 /**
  * @brief Update the environment variable.
@@ -248,7 +136,6 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 	new_dir = get_new_dir(cmd_array[1]);
 	cd_with_no_arguments(&new_dir, buffer);
 	cd_with_double_dot(&new_dir, buffer);
-	cd_with_tilde(&new_dir, buffer);
 	cd_with_dash(&new_dir, ex);
 	return (change_directories(new_dir, buffer, og, ex));
 }

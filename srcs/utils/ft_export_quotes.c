@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:52:30 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/25 19:26:10 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 03:23:44 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,111 +68,6 @@ void	add_slash_to_inside_double_quotes(char **str, int len)
 			new_str[i + ++double_quotes] = '\\';
 	}
 	new_str[i + double_quotes] = '\0';
-	free(*str);
-	*str = new_str;
-}
-
-/**
- * @brief Check if the string has unclosed quotes.
- *
- * @param char *str - The string to check
- * @param char *cmd - The original command
- * @return int - 0 if the string has no unclosed quotes, 1 otherwise
- */
-int	has_unclosed_quotes(char *str, char *cmd)
-{
-	int		i;
-	char	quote;
-	int		unclosed_quote;
-
-	i = -1;
-	while (str[++i])
-	{
-		unclosed_quote = TRUE;
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			quote = str[i];
-			while (unclosed_quote == TRUE && str[++i])
-			{
-				if (str[i] == quote)
-					unclosed_quote = FALSE;
-			}
-			if (unclosed_quote == TRUE)
-			{
-				print_error("export '", cmd, "': not a valid identifier");
-				return (1);
-			//	..return (free_data(NULL, cmd, 1));
-			}
-		}
-	}
-	return (0);
-}
-
-/**
- * @brief Delete the characters outside the quotes.
- *
- * @param char **str - The string to modify
- * @return void
- */
-void	delete_outside_quotes(char **str)
-{
-	int		i;
-	char	quote;
-	int		opening_quote_index;
-
-	i = -1;
-	while ((*str)[++i])
-	{
-		skip_whitespace(*str, &i);
-		*str = &(*str)[i];
-		if ((*str)[i] == '\'' || (*str)[i] == '"')
-		{
-			quote = (*str)[i];
-			opening_quote_index = i;
-			while ((*str)[++i])
-			{
-				if ((*str)[i] == quote)
-				{
-					delete_char_from_str(opening_quote_index, str);
-					delete_char_from_str(--i, str);
-					i--;
-					break ;
-				}
-			}
-		}
-	}
-}
-
-/**
- * @brief Add quotes around the value of the variable.
- *
- * @param char **str - The string to modify
- * @return void
-*/
-void	add_quotes_around_value(char **str)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*new_str;
-
-	len = ft_strlen(*str) + 2;
-	new_str = (char *)malloc(sizeof(char) * len + 1);
-	if (!new_str)
-		return ;
-	i = -1;
-	while ((*str)[++i])
-	{
-		new_str[i] = (*str)[i];
-		if ((*str)[i] == '=')
-			break ;
-	}
-	j = i;
-	new_str[++i] = '"';
-	while ((*str)[++j] && (*str)[j] != ' ' && (*str)[j] != '\t')
-		new_str[++i] = (*str)[j];
-	new_str[++i] = '"';
-	new_str[++i] = '\0';
 	free(*str);
 	*str = new_str;
 }

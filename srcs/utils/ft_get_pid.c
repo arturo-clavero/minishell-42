@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:48:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/25 19:08:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 03:21:30 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	*ft_get_pid(void)
 	char	*buffer;
 	int		bytes;
 
-	bytes = 1;
 	buffer = (char *)malloc(sizeof(char) * 2000);
 	if (!buffer)
 		return (NULL);
@@ -71,13 +70,9 @@ char	*ft_get_pid(void)
 		close(fd[STDOUT_FILENO]);
 		execve("/usr/bin/ps", ft_split("ps\0", ' '), NULL);
 	}
-	else
-	{
-		close(fd[STDOUT_FILENO]);
-		bytes = read(fd[STDIN_FILENO], buffer, 2000);
-		close(fd[STDIN_FILENO]);
-		buffer[bytes] = '\0';
-		buffer = find_last_minishell_pid(buffer, bytes);
-	}
-	return (buffer);
+	close(fd[STDOUT_FILENO]);
+	bytes = read(fd[STDIN_FILENO], buffer, 2000);
+	close(fd[STDIN_FILENO]);
+	buffer[bytes] = '\0';
+	return (find_last_minishell_pid(buffer, bytes));
 }

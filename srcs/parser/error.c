@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:32:59 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 14:55:05 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/26 18:16:29 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  */
 void	ft_parser_error(t_exec *ex, int err_code)
 {
-	g_exit_status = err_code;
+	ex->exit = err_code;
 	ft_free_lexer(ex);
 	ft_launch_minishell(ex);
 }

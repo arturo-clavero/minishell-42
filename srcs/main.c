@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 14:55:43 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/27 03:18:50 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_exit_status;
 
 /**
  * @brief Prompt the user for a command and execute it.
@@ -31,7 +29,7 @@ static char	*ft_prompt_display(void)
 	line = readline(prompt);
 	free(prompt);
 	if (!line)
-		exit(g_exit_status);
+		exit(EXIT_SUCCESS);
 	if (ft_strlen(line) > 0)
 		add_history(line);
 	return (line);
@@ -73,7 +71,6 @@ void	ft_launch_minishell(t_exec *ex)
  * @param char **env - The environment variables list
  * @return int 0 if success, 1 if error.
  */
-
 int	main(int argc, char **argv, char **env)
 {
 	t_exec	ex;
