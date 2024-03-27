@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 21:53:10 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 04:41:50 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ int					bad_substitution_error(t_cmd *cmd);
 void				delete_char_from_str(int delete, char **str);
 int					execution_redir_error(char *str, char **cmd_array);
 void				execution_cmd_error(char *str, t_exec *ex);
+int					find_index_of_char(char *str, char c);
 
 // -- POST EXECUTION PROTOTYPES --
 int					change_shlvl(int change, t_exec *ex);

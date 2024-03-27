@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:02:01 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 03:25:20 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 04:47:25 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,6 @@ int	find_end_variable_index(char *str)
 	return (i);
 }
 
-int	find_index_of_char(char *str, char c)
-{
-	int	i;
-
-	if (!str || str[0] == 0)
-		return (-1);
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == c)
-			return (i);
-	}
-	return (-1);
-}
 /**
  * @brief Checks wether the environment variable should be substituted
  * by export argument or not
@@ -55,6 +41,21 @@ int	find_index_of_char(char *str, char c)
  * @return int - (-1) for no match, (1) for match and substitution required,
  * (0) for match and no substitution
  */
+
+int	compare_with_equal_signs(char *new, char *old, int i)
+{
+	int	j;
+
+	j = find_index_of_char(old, '=');
+	if (ft_strncmp(new, old, j) == 0 && ft_strncmp(new, old, i) == 0)
+	{
+		if (ft_strchr(new, '='))
+			return (1);
+		return (0);
+	}
+	return (-1);
+}
+
 int	find_env_match(char *new, char *old)
 {
 	char	*temp_new;
@@ -67,42 +68,19 @@ int	find_env_match(char *new, char *old)
 		temp_old[i] = '\0';
 	temp_new = ft_strdup(new);
 	i = find_index_of_char(new, '=');
-	//printf("equal sign at[%d]\n", i);
 	if (i > 0)
 		temp_new[i] = '\0';
-	//printf("temp_new: %s, temp_old: %s\n", temp_new, temp_old);
 	if (double_strncmp(temp_old, temp_new) == 0)
 	{
-		//printf("match no equal sign\n");
-		//if (i > 0)
-		//	temp_new[i] = '=';
-		if (ft_strchr(new, '='))
-		{
-			//printf("new has = -> %s\n", new);
-			free_data(NULL, (void *)temp_old, 1);
-			free_data(NULL, (void *)temp_new, 1);
-			//printf("returning 1\n");
-			return (1);
-		}
-		//printf("new has no = -> %s\n", new);
-		free_data(NULL, (void *)temp_old, 0);
-		return (free_data(NULL, (void *)temp_new, 0));
-					
-
-	}
-//	if (i > 0)
-//			temp_new[i] = '=';
-	free_data(NULL, (void *)temp_old, 0);
-	free_data(NULL, (void *)temp_new, 0);
-//	printf("new: %s, old: %s, comparing: %d\n", new, old, i);
-	if (ft_strncmp(new, old, i) == 0)
-	{
-		//printf("match with equal sign\n");
+		free_data(NULL, (void *)temp_old, 1);
+		free_data(NULL, (void *)temp_new, 1);
 		if (ft_strchr(new, '='))
 			return (1);
 		return (0);
 	}
-	return (-1);
+	free_data(NULL, (void *)temp_old, 0);
+	free_data(NULL, (void *)temp_new, 0);
+	return (compare_with_equal_signs(new, old, i));
 }
 
 /**
