@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 14:55:05 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/27 15:02:09 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,31 @@ static __int128_t	atoi_128bits(const char *str)
 }
 
 /**
+ * @brief deals with numeric argument error if conditions are not met
+ * @param num number of the exit error
+ * @param str string of exit aarguments
+ * @param i current index being evaluated
+ * @param ex main structure (all data)
+ */
+void	is_numeric_error(__int128_t num, char *str, int i, t_exec *ex)
+{
+	if ((num > LLONG_MAX || num < LLONG_MIN) || (ft_isdigit(str[i]) == FALSE
+			&& str[i] != '\'' && str[i] != '"' && str[i] != ' '
+			&& str[i] != '\t') || (i != 0 && (str[i - 1] == '+'
+				|| str[i -1] == '-') && ft_isdigit(str[i]) == FALSE))
+	{
+		print_error("exit: ", str, ": numeric argument required");
+		exit_minishell(ex, 2);
+	}
+}
+
+/**
  * @brief Check if the argument is numeric.
  *
  * @param char *str - The string to check
  * @param __int128_t num - The 128 bits integer
  * @return int - 0 if the argument is numeric, 255 otherwise
  */
-
 static int	check_numeric_argument(char *str, __int128_t num, t_exec *ex)
 {
 	int	i;
@@ -67,14 +85,7 @@ static int	check_numeric_argument(char *str, __int128_t num, t_exec *ex)
 			flag = TRUE;
 		if (str[i] == '-' && str[i + 1] == 0 && i > 0 && str[i - 1] == '-')
 			exit_minishell(ex, 0);
-		if ((num > LLONG_MAX || num < LLONG_MIN) || (ft_isdigit(str[i]) == FALSE
-			&& str[i] != '\'' && str[i] != '"' && str[i] != ' ' && str[i] != '\t')
-			|| (i != 0 && (str[i - 1] == '+' || str[i -1] == '-')
-			&& ft_isdigit(str[i]) == FALSE))
-		{
-			print_error("exit: ", str, ": numeric argument required");
-			exit_minishell(ex, 2);
-		}
+		is_numeric_error(num, str, i, ex);
 		i++;
 	}
 	if (flag == FALSE)

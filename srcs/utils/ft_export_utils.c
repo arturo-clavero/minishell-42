@@ -6,13 +6,11 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 05:19:30 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:14:26 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	next_smallest_string(t_list *env, char *new_min, char *old_min);
 
 /**
  * @brief checks syntax of the first char of variable name
@@ -25,14 +23,12 @@ int	is_variable_start_valid(char *cmd_array, char *original)
 {
 	int	j;
 
-	//(void)original_cmd;
 	j = 0;
 	if (!ft_isalpha(cmd_array[j]) && cmd_array[j] != '_')
 	{
 		print_error("export `", original, "': not a valid identifier");
 		free(original);
 		return (1);
-		//return (free_data(NULL, original_cmd, 1));
 	}
 	return (0);
 }
@@ -48,9 +44,7 @@ int	is_variable_content_valid(char **cmd, char *original_cmd, int *add_flag)
 {
 	int	j;
 
-	j = 0;	
-		(void)original_cmd;
-
+	j = 0;
 	while ((*cmd)[j] && (*cmd)[j] != '=')
 	{
 		if ((*cmd)[j] == '+' && (*cmd)[j + 1] && (*cmd)[j + 1] == '=')
@@ -62,12 +56,64 @@ int	is_variable_content_valid(char **cmd, char *original_cmd, int *add_flag)
 		else if (!ft_isalpha((*cmd)[j]) && !ft_isnum((*cmd)[j])
 			&& (*cmd)[j] != '_')
 		{
-			print_error("export `", *cmd, "': not a valid identifier");
+			print_error("export `", original_cmd, "': not a valid identifier");
 			return (1);
 		}
 		j++;
 	}
 	return (0);
+}
+
+/**
+ * @brief checks if new_min should be printed next
+ * 
+ * @param t_list *env - environment list
+ * @param char *new_min - next possible string to be printed
+ * @param char *old_min - last string printed
+ * @return int
+ */
+static int	next_smallest_string(t_list *env, char *new_min, char *old_min)
+{
+	char	*next_str;
+	int		len;
+
+	next_str = ((char *)env->content);
+	len = ft_strlen(next_str);
+	if (!new_min || ft_strncmp(next_str, new_min, len) < 0
+		|| (ft_strncmp(next_str, new_min, len) == 0
+			&& len < (int)ft_strlen(new_min)))
+	{
+		if (!old_min || ft_strncmp(next_str, old_min, len) > 0)
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
+/**
+ * @brief prints env node with export syntax
+ * @param new_min env_node->content
+ */
+static void	print_export_syntax(char *new_min)
+{
+	int	i;
+	int	flag;
+
+	printf("declare -x ");
+	i = -1;
+	flag = FALSE;
+	while (new_min[++i])
+	{
+		if (new_min[i] == '=')
+		{
+			printf("=\"");
+			flag = TRUE;
+		}
+		else
+			printf("%c", new_min[i]);
+	}
+	if (flag == TRUE)
+		printf("\"");
+	printf("\n");
 }
 
 /**
@@ -81,8 +127,6 @@ void	print_env_alphabetically(t_list *env, t_list *head)
 {
 	char	*new_min;
 	char	*old_min;
-	int		i;
-	int		flag;
 
 	new_min = ((char *)env->content);
 	old_min = NULL;
@@ -99,47 +143,7 @@ void	print_env_alphabetically(t_list *env, t_list *head)
 		}
 		if (new_min == NULL)
 			break ;
-		printf("declare -x ");
-		i = -1;
-		flag = FALSE;
-		while (new_min[++i])
-		{
-			if (new_min[i] == '=')
-			{
-				printf("=\"");
-				flag = TRUE;
-			}
-			else
-				printf("%c", new_min[i]);
-		}
-		if (flag == TRUE)
-			printf("\"");
-		printf("\n");
+		print_export_syntax(new_min);
 		old_min = new_min;
 	}
-}
-
-/**
- * @brief checks if new_min should be printed next
- * 
- * @param t_list *env - environment list
- * @param char *new_min - next possible string to be printed
- * @param char *old_min - last string printed
- * @return int
- */
-
-static int	next_smallest_string(t_list *env, char *new_min, char *old_min)
-{
-	char	*next_str;
-	int		len;
-
-	next_str = ((char *)env->content);
-	len = ft_strlen(next_str);
-	
-	if (!new_min || ft_strncmp(next_str, new_min, len) < 0 || (ft_strncmp(next_str, new_min, len) == 0 && len < (int)ft_strlen(new_min)))
-	{
-		if (!old_min || ft_strncmp(next_str, old_min, len) > 0)
-			return (TRUE);
-	}
-	return (FALSE);
 }

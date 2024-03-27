@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:59:12 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/24 06:55:19 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:10:07 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param int exit code - return value
  * @return int exit code
  */
-int	free_data(char *should_exit, char *data, int exit_code)
+int	free_data(char *should_exit, void *data, int exit_code)
 {
 	if (data)
 		free(data);

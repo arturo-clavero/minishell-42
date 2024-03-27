@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 06:42:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/24 14:52:40 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 12:19:05 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ int	change_shlvl(int change, t_exec *ex)
 	((char *)env->content)[6 + i] = '\0';
 	if (shlvl_num >= 1000)
 	{
-		print_error("warning: shell level (", shlvl_str, ") too high, resetting to 1");
+		print_error("warning: shell level (",
+			shlvl_str, ") too high, resetting to 1");
 		change_shlvl(1 - shlvl_num, ex);
 	}
 	if (shlvl_num < 0)
-		change_shlvl(- shlvl_num, ex);
+		change_shlvl((shlvl_num - 1), ex);
 	free(shlvl_str);
 	return (shlvl_num);
 }

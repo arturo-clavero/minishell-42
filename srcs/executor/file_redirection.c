@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:41:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/24 23:03:42 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:10:57 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,35 +97,15 @@ int	are_redirections_valid(t_cmd *cmd)
 {
 	int		fd;
 	t_redir	*redir;
-	DIR	*dir;
 
 	redir = cmd->redir;
-	dir = NULL;
 	while (redir)
 	{
 		if (redir->type != PIPE)
 		{
 			fd = open_file(redir, NO_PIPE);
 			if (fd == -1)
-			{
-				if (errno == 13)
-				{
-					print_error(redir->file_name, ": Permission denied", NULL);
-					return (1) ;
-				}
-				if (cmd->array)
-					dir = opendir(redir->file_name);
-				if (dir != NULL)
-				{
-   					closedir(dir);
-					ft_putstr_fd("minishell: ", 2);
-					ft_putstr_fd(redir->file_name, 2);
-					ft_putstr_fd(": Is a directory\n", 2);
-				}
-				else
-					print_error(redir->file_name, ": No such file or directory", NULL);
-				return (1);
-			}
+				return (execution_redir_error(redir->file_name, cmd->array));
 			close(fd);
 		}
 		redir = redir->next;
