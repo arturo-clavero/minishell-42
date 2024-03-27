@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 18:39:49 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 19:01:56 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,13 @@ void	ft_lexer(t_exec *exec)
 	{
 		j = 0;
 		skip_whitespace(exec->args, &i);
-		if (ft_check_string_token(exec->args[i]))
+		if (exec->args[i] && ft_check_string_token(exec->args[i]))
 			j = ft_handle_token(exec->lexer, exec->args, i);
-		else
+		else if (exec->args[i])
 			j = ft_get_word(exec->args, i, exec->lexer);
 		if (j < 0)
 			return ;
 		i += j;
 	}
-//	ft_debug_lexer(exec->lexer);
+	//ft_debug_lexer(exec->lexer);
 }
