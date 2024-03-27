@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 14:17:11 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:08:53 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,8 @@ void	wait_for_child_exit_status(t_exec *ex)
 			child_exit = WTERMSIG(exit_status);
 		if (ex->is_builtin_last == FALSE
 			&& curr_child + 1 == ex->total_children)
-			ex->exit = child_exit;
+			g_exit_status = child_exit;
 	}
-	if (ex->exit == 13)
-		ex->exit = 127;
+	if (g_exit_status == 13)
+		g_exit_status = 127;
 }
