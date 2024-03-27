@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:47:14 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 00:13:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:55:59 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_status;
 
 /**
  * @brief Check if the command is a builtin
@@ -68,6 +70,6 @@ void	execute_builtin(t_cmd *cmd, t_exec *ex)
 	if (!cmd->next)
 	{
 		ex->is_builtin_last = TRUE;
-		ex->exit = exit_code;
+		g_exit_status = exit_code;
 	}
 }

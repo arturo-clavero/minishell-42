@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:33:24 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 03:15:54 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:55:05 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief	manipulates string based on curly brackets syntax 
- * 
+ * @brief	manipulates string based on curly brackets syntax
+ *
  * @param char **str - pointer to string being manipulated
  * @param int j - index of first char right after '$'
  * @return int - (-1) for curly bracket syntax error, (0) for no error
@@ -73,7 +73,7 @@ char	*get_expandable_value(char *str, int i, int *j, t_exec *ex)
 
 /**
  * @brief Trims curly brackets and identifies different expandable types
- * 
+ *
  * @param char **str - pointer to string to be expanded
  * @param int *i - pointer to current char in string being evaluated
  * @param t_exec *ex - exec structure
@@ -94,7 +94,7 @@ int	expand_variable(char **str, int *i, t_exec *ex)
 	if (check_curly_brackets(str, *i) == -1)
 		return (-1);
 	if ((*str)[*i] == '?')
-		value = ft_itoa(ex->exit);
+		value = ft_itoa(g_exit_status);
 	else if ((*str)[*i] == '$')
 		value = ft_get_pid();
 	else
@@ -169,7 +169,7 @@ int	expand_dollar(char **original, int start, t_exec *ex, int curly)
 		return (0);
 	}
 	if (str[start] == '?')//check for exit number
-		value = ft_itoa(ex->exit);
+		value = ft_itoa(g_exit_status);
 	else if (str[start] == '$')//check for pid
 		value = ft_get_pid();
 	else
@@ -209,8 +209,8 @@ int	expand_dollar(char **original, int start, t_exec *ex, int curly)
 
 /**
  * @brief Checks strings for '$' and sends them to be expanded depending
- * on quote status (if within double or/and single quotes) 
- * 
+ * on quote status (if within double or/and single quotes)
+ *
  * @param t_cmd **cmd - pointer to current command node
  * @param t_exec *ex - exec structure
  * @param char *str - string to be evaluated for '$'
@@ -256,7 +256,7 @@ char	*check_str_expandables(t_cmd **cmd, t_exec *ex, char *str)
 /**
  * @brief Iterates through each command node and redir node and sends
  * all strings to be checked for expandables
- * 
+ *
  * @param t_cmd **cmd_head - pointer to head of command list
  * @param t_exec *ex = exec structure
  * @return void
