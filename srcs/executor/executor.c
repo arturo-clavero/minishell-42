@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 18:31:52 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:14:13 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	process_cmds(t_cmd *cmd, t_exec *ex)
 		{
 			if (are_redirections_valid(cmd) == EXIT_SUCCESS)
 				execute_builtin(cmd, ex);
+
 			else if (!cmd->next)
 				ex->exit = 1;
 		}
