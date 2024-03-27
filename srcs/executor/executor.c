@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 00:14:13 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:55:05 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	process_cmds(t_cmd *cmd, t_exec *ex)
 				execute_builtin(cmd, ex);
 
 			else if (!cmd->next)
-				ex->exit = 1;
+				g_exit_status = 1;
 		}
 		else if (cmd->array && ++curr_child > -1)
 			execute_command(&ex->id[curr_child], curr_cmd, cmd, ex);
@@ -92,7 +92,7 @@ int	empty_cmd(t_cmd *cmd, t_exec *ex)
 					if (empty && cmd->array[++i] == NULL)
 					{
 						clean_t_cmd(ex->cmd, ex);
-						ex->exit = 0;
+						g_exit_status = 0;
 						return (TRUE);
 					}
 					else

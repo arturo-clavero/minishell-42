@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 00:14:25 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:55:43 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_status;
 
 /**
  * @brief Prompt the user for a command and execute it.
@@ -29,7 +31,7 @@ static char	*ft_prompt_display(void)
 	line = readline(prompt);
 	free(prompt);
 	if (!line)
-		exit(EXIT_SUCCESS);
+		exit(g_exit_status);
 	if (ft_strlen(line) > 0)
 		add_history(line);
 	return (line);

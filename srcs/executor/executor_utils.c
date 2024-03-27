@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 03:09:53 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:55:05 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env, t_exec *ex)
         	ft_putstr_fd(": Permission denied\n", 2);
 			exit(126);
 		}
-    	else 
+    	else
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd_array[0], 2);
@@ -137,7 +137,7 @@ int	bad_substitution_error(t_cmd *cmd)
 static void	check_if_cmd_is_directory(t_cmd *cmd)
 {
 	DIR	*dir;
-	
+
 	if (cmd->array && cmd->array[0] && cmd->array[0][0] && cmd->array[0][1])
 	{
 		if (!((cmd->array[0][0] == '.' && cmd->array[0][1] == '/') || (cmd->array[0][0] == '/')))
@@ -217,8 +217,8 @@ void	wait_for_child_exit_status(t_exec *ex)
 		else if (WIFSIGNALED(exit_status))
 			child_exit = WTERMSIG(exit_status);
 		if (ex->is_builtin_last == FALSE && curr_child + 1 == ex->total_children)
-			ex->exit = child_exit;
+			g_exit_status = child_exit;
 	}
-	if (ex->exit == 13)
-		ex->exit = 127;
+	if (g_exit_status == 13)
+		g_exit_status = 127;
 }

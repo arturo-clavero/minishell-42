@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:20:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/24 19:56:29 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:55:05 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	initialize_minishell(t_exec *ex, char **env)
 	ex->is_builtin_last = FALSE;
 	ex->fd = NULL;
 	ex->id = NULL;
-	ex->exit = 0;
+	g_exit_status = 0;
 	i = -1;
 	while (env && env[++i])
 		new_node((void *)env[i], &ex->env_list);

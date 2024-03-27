@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 05:58:38 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:55:05 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	exec_exit(char **cmd_array, t_cmd *cmd, t_exec *ex)
 	if (!redir || redir->type != PIPE)
 		ft_putstr_fd("exit\n", 1);
 	if (cmd_array[1] == NULL)
-		return (ex->exit);
+		return (g_exit_status);
 	new_exit_num = get_new_exit_num(cmd_array[1], ex);
 	if ((cmd_array[2]))
 	{
