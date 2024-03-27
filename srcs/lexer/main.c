@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 19:01:56 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 03:32:59 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,22 @@ int	ft_handle_token(t_lexer *lexer, char *str, int i)
 	return (0);
 }
 
+void	check_empty_str(t_exec *exec)
+{
+	int	i;
+
+	i = -1;
+	while (exec->args[++i])
+	{
+		if (exec->args[i] == 0)
+			ft_lexer_error(exec, NULL);
+		if (exec->args[i] != ' ')
+			break ;
+	}
+	if (i == (int)ft_strlen(exec->args))
+		ft_parser_error(exec, 2);
+}
+
 void	check_unclosed_quotes(t_exec *exec)
 {
 	char	*str;
@@ -80,22 +96,61 @@ void	check_unclosed_quotes(t_exec *exec)
 		ft_parser_error(exec, 2);
 	}
 }
+/*
+void	check_syntax(t_lexer *lex, t_exec *exec);
 
-void	check_empty_str(t_exec *exec)
+void	update_token(int new_type, t_lexer *update, t_exec *ex)
 {
-	int	i;
+	t_lexer	*lex;
+	t_lexer	*delete;
 
-	i = -1;
-	while (exec->args[++i])
+	lex = ex->lexer;
+	while (lex != update)
+		lex = lex->next;
+	lex->token = new_type;
+	delete = lex->next;
+	if (delete)
 	{
-		if (exec->args[i] == 0)
-			ft_lexer_error(exec, NULL);
-		if (exec->args[i] != ' ')
-			break ;
+		lex->next = delete->next;
+		if (delete->str)
+			free_data(NULL, (void *)delete->str, 0);
+		free_data(NULL, (void *)delete, 0);
+		if (lex->next)
+			check_syntax(lex->next, ex);
 	}
-	if (i == (int)ft_strlen(exec->args))
-		ft_parser_error(exec, 2);
 }
+
+void	syntax_error(t_lexer *lex, t_exec *ex)
+{
+	(void)lex;
+	printf("SYNTAX ERROR\n");
+	ft_parser_error(ex, 2);
+}
+
+void	check_syntax(t_lexer *lex, t_exec *ex)
+{
+	while (lex)
+	{
+		if (lex->token != WORD)
+		{
+			if (lex == ex->lexer && lex->token == PIPE)
+				syntax_error(lex, ex);
+			if (!lex->next)
+				syntax_error(lex, ex);
+			if (lex->next->token != WORD)
+			{
+				if (lex->token == OUTFILE && lex->next->token == OUTFILE)
+					update_token(APPEND, lex, ex);
+				if (lex->token == INFILE && lex->next->token == INFILE)
+					update_token(HEREDOC, lex, ex);
+				else if (!(lex->token == PIPE && lex->next->token != PIPE))
+					syntax_error(lex, ex);
+			}
+		}
+		lex = lex->next;
+	}
+}
+*/
 
 /**
  * @brief The main function of the lexer.
@@ -123,5 +178,6 @@ void	ft_lexer(t_exec *exec)
 			return ;
 		i += j;
 	}
+	//check_syntax(exec->lexer, exec);
 	//ft_debug_lexer(exec->lexer);
 }

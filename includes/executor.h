@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 14:10:19 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:53:10 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ t_list				*get_env_node(char *variable, t_exec *ex);
 void				delete_node(t_list *node_delete, t_list **head);
 int					find_env_match(char *new, char *old);
 int					free_data(char *should_exit, void *data, int exit_code);
-void				print_error(char *str1, char *str2, char *str3);
+int					print_error(char *str1, char *str2, char *str3, int err);
 int					malloc_error(void);
 void				skip_whitespace(char *str, int *i);
 int					has_pipe(t_cmd *cmd);

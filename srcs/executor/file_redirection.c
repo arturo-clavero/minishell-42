@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:41:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 14:10:57 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:24:15 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ static int	write_heredoc_to_pipe(char *buffer)
 	int	fd[2];
 	int	len;
 
+	len = 0;
 	if (pipe(fd) == -1)
 		return (-1);
-	len = ft_strlen(buffer);
+	if (buffer)
+		len = ft_strlen(buffer);
 	write(fd[STDOUT_FILENO], buffer, len);
 	close(fd[STDOUT_FILENO]);
 	return (fd[STDIN_FILENO]);

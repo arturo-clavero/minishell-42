@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 05:37:32 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 01:27:34 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	update_env(char *var_name, char *new_env, t_exec *ex)
 	char	*result;
 
 	env = get_env_node(var_name, ex);
-	if (env == NULL)
+	if (env == NULL || new_env == NULL)
 		return ;
 	len = ft_strlen(var_name) + ft_strlen(new_env);
 	result = (char *)malloc(sizeof(char) * len + 1);
@@ -50,32 +50,44 @@ char	*get_new_dir(char *str)
 {
 	int	i;
 
-	if (!str)
+	if (!str || str[0] == 0)
 		return (NULL);
 	i = ft_strlen(str) - 1;
-	while (str[i] == ' ' || str[i] == '\t')
+	while (i >= 0 && (str[i] == ' ' || str[i] == '\t'))
 		i--;
-	if (str[i] == '/')
+	if (i >= 0 && str[i] == '/')
 		str[i] = '\0';
 	return (str);
 }
 
 int	change_directories(char *new_dir, char *buf, char *og, t_exec *ex)
 {
+	char	*new_value;
+
 	if (chdir(new_dir) == -1)
 	{
-		print_error("cd: ", og, ": No such file or directory");
-		free(og);
+		print_error("cd: ", og, ": No such file or directory", 0);
+		free_data(NULL, og, 0);
 		return (free_data(NULL, buf, 1));
 	}
-	free(og);
+	free_data(NULL, og, 0);
 	if (has_pipe(ex->cmd) == TRUE)
 	{
 		chdir(buf);
 		return (free_data(NULL, buf, SUCCESS));
 	}
 	update_env("OLD_PWD=", buf, ex);
-	update_env("PWD=", getcwd(buf, MAX_PATH_LINUX), ex);
+	new_value = ft_strdup(getcwd(buf, MAX_PATH_LINUX));
+	if (new_value == NULL)
+	{
+		ft_putstr_fd("cd: error retrieving current directory:\
+		 getcwd: cannot access parent directories: No such file\
+		or directory\n", 2);
+		if (ft_strncmp(og, ".\0", ft_strlen(og)))
+			new_value = ft_strjoin(get_env_value("PWD=", ex->env_list), "/.\0");
+	}
+	update_env("PWD=", new_value, ex);
+	free_data(NULL, new_value, 0);
 	return (free_data(NULL, buf, SUCCESS));
 }
 
@@ -129,7 +141,7 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 		return (malloc_error());
 	if (getcwd(buffer, MAX_PATH_LINUX) == NULL)
 	{
-		free(buffer);
+		free_data(NULL, buffer, 0);
 		buffer = ft_strdup(get_env_value("PWD=", ex->env_list));
 	}
 	og = ft_strdup(cmd_array[1]);

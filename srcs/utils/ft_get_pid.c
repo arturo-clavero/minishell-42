@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:48:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 03:21:30 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 20:29:22 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*find_last_minishell_pid(char *str, int i)
 		i--;
 	if (i < 0)
 	{
-		free(str);
+		free_data(NULL, (void *)str, 0);
 		return (NULL);
 	}
 	while (i > 0 && str[i] != '\n')
@@ -41,7 +41,7 @@ static char	*find_last_minishell_pid(char *str, int i)
 		j++;
 	str[j] = '\0';
 	result = ft_strdup(&str[i]);
-	free(str);
+	free_data(NULL, (void *)str, 0);
 	return (result);
 }
 

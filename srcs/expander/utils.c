@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:57:26 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 03:40:57 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 20:26:56 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	trim_dollar_substr(char *str, char **original)
 	str[i] = '\0';
 	result = ft_strjoin(str, &str[j]);
 	*original = result;
-	free(*original);
+	free_data(NULL, (void *)*original, 0);
 	return (0);
 }
 
@@ -100,7 +100,7 @@ int	trim_question_mark(char **str, int j)
 		i++;
 	(*str)[j] = '\0';
 	result = ft_join_3_strings(*str, "?", &(*str)[i + 1]);
-	free(*str);
+	free_data(NULL, (void *)*str, 0);
 	*str = result;
 	return (0);
 }
@@ -123,7 +123,7 @@ int	trim_curly_brackets_only(char **str, int j)
 	(*str)[i] = '\0';
 	(*str)[j] = '\0';
 	result = ft_join_3_strings(*str, &(*str)[j + 1], &(*str)[i + 1]);
-	free(*str);
+	free_data(NULL, (void *)*str, 0);
 	*str = result;
 	return (0);
 }

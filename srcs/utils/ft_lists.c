@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:54:56 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/15 07:53:58 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:06:15 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,23 @@ t_list	*get_last_node(t_list *list)
 	while (list && list->next)
 		list = list->next;
 	return (list);
+}
+
+/**
+ * @brief Add data to the cleanup list.
+ *
+ * @param void *content - The content
+ * @param t_list **list - The list
+ * @return void
+ */
+void	add_data_to_cleanup_list(void *content, t_list **list)
+{
+	t_list	*node;
+
+	node = NULL;
+	if (!content)
+		return ;
+	new_node(content, &node);
+	node->next = (*list);
+	(*list) = node;
 }

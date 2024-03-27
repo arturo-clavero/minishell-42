@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:20:47 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 15:08:53 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/28 00:14:08 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	should_dollar_expand(int curly, char **og, int start, int *end)
 
 	str = ft_strdup(*og);
 	if (curly == TRUE && check_curly_brackets(&str, start) == -1)
-		return (-1);
+		return (free_data(NULL, (void *)str, -1));
 	while (str[*end] && (ft_isalpha(str[*end]) == TRUE
 			|| (ft_isalnum(str[*end]) == TRUE && *end > start)
 			|| str[*end] == '_'))
@@ -65,19 +65,17 @@ static int	should_dollar_expand(int curly, char **og, int start, int *end)
 	if (str[start] == '\'' || str[start] == '"')
 	{
 		delete_char_from_str(start - 1, og);
-		free(str);
 		(*end) = 1;
-		return (FALSE);
+		return (free_data(NULL, (void *)str, FALSE));
 	}
 	if (str[start] == '$' || str[start] == '?')
 		(*end)++;
 	if (*end - start == 0)
 	{
-		free(str);
 		*end = 0;
-		return (FALSE);
+		return (free_data(NULL, (void *)str, FALSE));
 	}
-	return (TRUE);
+	return (free_data(NULL, (void *)str, TRUE));
 }
 
 /**
@@ -108,12 +106,12 @@ static char	*get_dollar_value(char **original, int start, int end, t_exec *ex)
 			delete_char_from_str(0, &value);
 			if (ft_strchr(value, '='))
 			{
-				free(value);
+				free_data(NULL, value, 0);
 				value = NULL;
 			}
 		}
 	}
-	free(str);
+	free_data(NULL, str, 0);
 	return (value);
 }
 
@@ -125,9 +123,9 @@ static char	*get_new_expanded_string(char *str, char *value, char **og, int n)
 		result = ft_join_3_strings(str, value, &(*og)[n]);
 	else
 		result = ft_strdup(str);
-	free_data(NULL, str, 1);
-	free_data(NULL, value, 1);
-	free_data(NULL, *og, 1);
+	free_data(NULL, (void *)str, 1);
+	free_data(NULL, (void *)value, 1);
+	free_data(NULL, (void *)*og, 1);
 	return (result);
 }
 
@@ -157,6 +155,6 @@ int	expand_dollar(char **original, int start, t_exec *ex, int curly)
 	if (value)
 		*original = get_new_expanded_string(str, value, original, end);
 	else
-		*original = get_new_expanded_string(str, value, original, end);
+		*original = get_new_expanded_string(str, NULL, original, end);
 	return (1);
 }

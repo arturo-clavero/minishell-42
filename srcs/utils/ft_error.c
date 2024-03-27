@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:59:12 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 14:10:07 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:52:36 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	free_data(char *should_exit, void *data, int exit_code)
  * @param char *str3 - third part of the error message
  * @return void
  */
-void	print_error(char *str1, char *str2, char *str3)
+int	print_error(char *str1, char *str2, char *str3, int err)
 {
 	ft_putstr_fd("minishell: ", 2);
 	if (str1)
@@ -48,6 +48,7 @@ void	print_error(char *str1, char *str2, char *str3)
 	if (str3)
 		ft_putstr_fd(str3, 2);
 	ft_putstr_fd("\n", 2);
+	return (err);
 }
 
 /**

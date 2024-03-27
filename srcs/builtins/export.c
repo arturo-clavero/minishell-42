@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 06:08:18 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 03:25:40 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static int	is_export_syntax_valid(char **cmd_array, int *add_flag)
 	original = ft_strdup(*cmd_array);
 	error = is_variable_start_valid(*cmd_array, original);
 	if (error > 0)
-		return (error);
+		return (free_data(NULL, (void *)original, error));
 	error = is_variable_content_valid(cmd_array, original, add_flag);
 	if (error > 0)
-		return (error);
+		return (free_data(NULL, (void *)original, error));
 	add_slash_to_inside_double_quotes(cmd_array, ft_strlen(*cmd_array));
-	return (0);
+	return (free_data(NULL, (void *)original, 0));
 }
 
 /**
@@ -47,19 +47,31 @@ void	add_export_to_env(char *export_str, t_exec *ex)
 	t_list	*node;
 	int		i;
 
+	i = -1;
 	node = ex->env_list;
 	while (node)
 	{
 		i = find_env_match(export_str, (char *)node->content);
+	//	printf("received %d\n", i);
 		if (i == 1)
 		{
+		//	printf("match && sub\n");
 			delete_node(node, &ex->env_list);
 			break ;
 		}
-		if (i == 0)
+		else if (i == 0)
+		{
+			//printf("match, no sub\n");
 			return ;
+		}
 		node = node->next;
 	}
+	//if (i == -1)
+	//{
+	//	//printf("no match, new\n");
+	//}
+	//else
+		//printf("match, no sub\n");
 	new_node((void *)export_str, &ex->env_list);
 }
 
