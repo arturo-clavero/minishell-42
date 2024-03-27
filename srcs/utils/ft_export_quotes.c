@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:52:30 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 03:23:44 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 20:28:10 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	delete_char_from_str(int delete, char **str)
 		return ;
 	ft_strlcpy(new_str, *str, delete + 1);
 	ft_strcat(new_str, &(*str)[delete + 1]);
-	free(*str);
+	free_data(NULL, (void *)*str, 0);
 	*str = new_str;
 }
 
@@ -68,6 +68,6 @@ void	add_slash_to_inside_double_quotes(char **str, int len)
 			new_str[i + ++double_quotes] = '\\';
 	}
 	new_str[i + double_quotes] = '\0';
-	free(*str);
+	free_data(NULL, (void *)*str, 0);
 	*str = new_str;
 }

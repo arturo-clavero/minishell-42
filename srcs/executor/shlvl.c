@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 06:42:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 12:19:05 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 00:37:45 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	change_shlvl(int change, t_exec *ex)
 	t_list	*env;
 
 	shlvl_str = get_env_value("SHLVL=", ex->env_list);
+	if (!shlvl_str)
+		return (-1);
 	shlvl_num = ft_atoi(shlvl_str);
 	shlvl_num += change;
 	shlvl_str = ft_itoa(shlvl_num);
@@ -38,11 +40,11 @@ int	change_shlvl(int change, t_exec *ex)
 	if (shlvl_num >= 1000)
 	{
 		print_error("warning: shell level (",
-			shlvl_str, ") too high, resetting to 1");
+			shlvl_str, ") too high, resetting to 1", 0);
 		change_shlvl(1 - shlvl_num, ex);
 	}
 	if (shlvl_num < 0)
 		change_shlvl((shlvl_num - 1), ex);
-	free(shlvl_str);
+	free_data(NULL, (void *)shlvl_str, 0);
 	return (shlvl_num);
 }

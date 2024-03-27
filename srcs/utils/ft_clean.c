@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clean.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 15:08:53 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/27 22:11:31 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,24 @@ void	clean_list(t_list *list, int clean_content)
 	{
 		temp = list->next;
 		if (clean_content == TRUE)
-			free(list->content);
-		free(list);
+			free_data(NULL, (void *)list->content, 0);
+		free_data(NULL, (void *)list, 0);
 		list = NULL;
 		list = temp;
+	}
+}
+
+void	clean_redir(t_redir	*redir)
+{
+	t_redir	*temp_redir;
+
+	while (redir)
+	{
+		temp_redir = redir->next;
+		free_data(NULL, (void *)redir->file_name, 0);
+		free_data(NULL, (void *)redir->heredoc_buff, 0);
+		free_data(NULL, (void *)redir, 0);
+		redir = temp_redir;
 	}
 }
 
@@ -82,45 +96,20 @@ void	clean_t_cmd(t_cmd *cmd, t_exec *ex)
 {
 	int		i;
 	t_cmd	*temp_cmd;
-	t_redir	*temp_redir;
 
 	while (cmd)
 	{
 		i = -1;
-		while (cmd->redir)
-		{
-			temp_redir = cmd->redir->next;
-			free(cmd->redir);
-			cmd->redir = temp_redir;
-		}
+		clean_redir(cmd->redir);
 		if (cmd->array)
 		{
 			while (cmd->array[++i])
-				free(cmd->array[i]);
-			free(cmd->array);
+				free_data(NULL, (void *)cmd->array[i], 0);
+			free_data(NULL, (void *)cmd->array, 0);
 		}
 		temp_cmd = cmd->next;
-		free(cmd);
+		free_data(NULL, (void *)cmd, 0);
 		cmd = temp_cmd;
 	}
 	ex->cmd = NULL;
-}
-
-/**
- * @brief Add data to the cleanup list.
- *
- * @param void *content - The content
- * @param t_list **list - The list
- * @return void
- */
-void	add_data_to_cleanup_list(void *content, t_list **list)
-{
-	t_list	*node;
-
-	node = NULL;
-	if (!content)
-		return ;
-	new_node(content, &node);
-	node->next = (*list);
-	(*list) = node;
 }
