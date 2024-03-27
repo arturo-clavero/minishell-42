@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 03:18:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:08:27 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*ft_prompt_display(void)
 	line = readline(prompt);
 	free(prompt);
 	if (!line)
-		exit(EXIT_SUCCESS);
+		exit(g_exit_status);
 	if (ft_strlen(line) > 0)
 		add_history(line);
 	return (line);

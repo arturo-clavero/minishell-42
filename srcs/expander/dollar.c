@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:20:47 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 14:41:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:08:53 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief	manipulates string based on curly brackets syntax 
- * 
+ * @brief	manipulates string based on curly brackets syntax
+ *
  * @param char **str - pointer to string being manipulated
  * @param int j - index of first char right after '$'
  * @return int - (-1) for curly bracket syntax error, (0) for no error
@@ -49,7 +49,7 @@ static int	check_curly_brackets(char **str, int j)
  * @param og pointer to string being evaluated prior to any modifications
  * @param start index of '$' + 1
  * @param end pointer of index of end of $variable
- * @return 
+ * @return
  */
 static int	should_dollar_expand(int curly, char **og, int start, int *end)
 {
@@ -86,7 +86,7 @@ static int	should_dollar_expand(int curly, char **og, int start, int *end)
  * @param start index of '$' + 1
  * @param end index of the end of $variable
  * @param ex main structure (all data)
- * @return 
+ * @return
  */
 static char	*get_dollar_value(char **original, int start, int end, t_exec *ex)
 {
@@ -96,7 +96,7 @@ static char	*get_dollar_value(char **original, int start, int end, t_exec *ex)
 	value = NULL;
 	str = ft_strdup(*original);
 	if (str[start] == '?')
-		value = ft_itoa(ex->exit);
+		value = ft_itoa(g_exit_status);
 	else if (str[start] == '$')
 		value = ft_get_pid();
 	else
@@ -139,7 +139,7 @@ static char	*get_new_expanded_string(char *str, char *value, char **og, int n)
  * @param curly int = TRUE if '{' found before '$', else = FALSE
  * //if ((*original)[start] != '\\')
 *	//	result = ft_strjoin(str, &(*original)[end]);
- * @return 
+ * @return
  */
 int	expand_dollar(char **original, int start, t_exec *ex, int curly)
 {

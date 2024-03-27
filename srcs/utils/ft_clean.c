@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clean.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 12:37:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:08:53 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	maybe_quit_program(t_exec *ex)
 			|| (str_is_numerical(ex->cmd->array[1])
 				&& ex->cmd->array[2] == NULL)))
 		return ;
-	exit_minishell(ex, ex->exit);
+	exit_minishell(ex, g_exit_status);
 }
 
 /**
