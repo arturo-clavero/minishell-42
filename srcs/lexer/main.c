@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 23:56:38 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:39:49 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_handle_quote(char *str, int i, char quote)
 		n++;
 		while (str[i + n] && str[i + n] != quote)
 			n++;
-		n++;
 	}
 	return (n);
 }
