@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:24:30 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 09:21:11 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/28 19:42:44 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 // -- PROTOTYPES --
 void	ft_debug_parser(t_cmd *cmd);
 
+void	ft_syntax_error(t_exec *ex, int token, int status);
 void	ft_parser_clean(t_exec *ex, int err_code);
 void	ft_parser_error(t_exec *ex, int status);
 
