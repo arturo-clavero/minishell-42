@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 19:01:56 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:56:37 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,4 @@ void	ft_lexer(t_exec *exec)
 			return ;
 		i += j;
 	}
-	//ft_debug_lexer(exec->lexer);
 }

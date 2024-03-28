@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:24:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 14:26:07 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/27 23:56:23 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void	redir_quotes(t_redir *rd)
 	i = -1;
 	while (rd->file_name[++i])
 	{
-		if ((rd->file_name[i] == '\'' && dq == OPEN) || (rd->file_name[i] == '"'
+		if ((rd->file_name[i] == '\'' && dq == OPEN)
+			|| (rd->file_name[i] == '"'
 				&& sq == OPEN))
 			continue ;
 		else if (rd->file_name[i] == '\'')

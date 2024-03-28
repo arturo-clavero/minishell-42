@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 15:08:53 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/27 23:55:34 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	execute_command(int *id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 			exit(1);
 		env = ft_list_to_str_array(ex->env_list);
 		cmd_path = get_cmd_path_for_exec(cmd->array, env, ex);
-		//check_if_cmd_is_directory(cmd);
 		execve(cmd_path, cmd->array, env);
 		execution_cmd_error(cmd->array[0], ex);
 		exit(127);
@@ -117,8 +116,8 @@ void	wait_for_child_exit_status(t_exec *ex)
 			child_exit = WEXITSTATUS(exit_status);
 		else if (WIFSIGNALED(exit_status))
 			child_exit = WTERMSIG(exit_status);
-		if (ex->is_builtin_last == FALSE
-			&& curr_child + 1 == ex->total_children)
+		if (ex->is_builtin_last == FALSE && curr_child
+			+ 1 == ex->total_children)
 			g_exit_status = child_exit;
 	}
 	if (g_exit_status == 13)
