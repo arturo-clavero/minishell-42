@@ -6,41 +6,40 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:20:47 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 06:32:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:46:10 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief	manipulates string based on curly brackets syntax
- *
- * @param char **str - pointer to string being manipulated
- * @param int j - index of first char right after '$'
- * @return int - (-1) for curly bracket syntax error, (0) for no error
+ * @brief check if quotes are closed
+ * @param str srting to check
+ * @param n max index to check
+ * @return 
  */
-static int	check_curly_brackets(char **str, int j)
+int	quotes_are_closed(char	*str, int n)
 {
+	int	sq;
+	int	dq;
 	int	i;
 
-	i = j;
-	if ((*str)[i] != '{')
-		return (0);
-	while ((*str)[i] && (*str)[i] != '}')
-		i++;
-	if ((*str)[i] == '\0')
-		return (-1);
-	if ((*str)[j + 1] == '?')
-		return (trim_question_mark(str, j));
-	i = j;
-	while ((*str)[++i] && (*str)[i] != '}')
+	sq = CLOSED;
+	dq = CLOSED;
+	i = -1;
+	while (str[++i] && i < n)
 	{
-		if (!ft_isdigit((*str)[i]) && !ft_isalpha((*str)[i])
-			&& (*str)[i] != '_')
-			return (-1);
+		if ((str[i] == '\'' && dq == OPEN)
+			|| (str[i] == '"' && sq == OPEN))
+			continue ;
+		else if (str[i] == '\'')
+			sq ^= 1;
+		else if (str[i] == '"')
+			dq ^= 1;
 	}
-	trim_curly_brackets_only(str, j);
-	return (0);
+	if (dq == CLOSED && sq == CLOSED)
+		return (TRUE);
+	return (FALSE);
 }
 
 /**
@@ -64,13 +63,14 @@ static int	should_dollar_expand(int curly, char **og, int start, int *end)
 		(*end) = (*end) + 1;
 	if (str[start] == '\'' || str[start] == '"')
 	{
-		delete_char_from_str(start - 1, og);
-		(*end) = 1;
+		(*end) = 0;
+		if (quotes_are_closed(str, start - 1) == TRUE)
+			delete_char_from_str(start - 1, og);
 		return (free_data(NULL, (void *)str, FALSE));
 	}
-	if (str[start] == '$' || str[start] == '?')
+	if (str[start] == '$' || str[start] == '?' || str[start] == '0')
 		(*end)++;
-	if (*end - start == 0)
+	if (*end - start == 0 && (!str[*end] || str[*end] == 0))
 	{
 		*end = 0;
 		return (free_data(NULL, (void *)str, FALSE));
@@ -90,6 +90,7 @@ static char	*get_dollar_value(char **original, int start, int end, t_exec *ex)
 {
 	char	*str;
 	char	*value;
+	char	*temp;
 
 	value = NULL;
 	str = ft_strdup(*original);
@@ -97,24 +98,28 @@ static char	*get_dollar_value(char **original, int start, int end, t_exec *ex)
 		value = ft_itoa(g_exit_status);
 	else if (str[start] == '$')
 		value = ft_get_pid();
+	else if (str[start] == '0')
+		value = ft_strdup("minishell");
 	else
 	{
-		str[end] = '\0';
-		value = ft_strdup(get_env_value(&str[start], ex->env_list));
-		if (value)
-		{
-			delete_char_from_str(0, &value);
-			if (ft_strchr(value, '='))
-			{
-				free_data(NULL, value, 0);
-				value = NULL;
-			}
-		}
+		if (end < (int)ft_strlen(str))
+			str[end] = '\0';
+		temp = ft_strjoin(str, "=\0");
+		value = ft_strdup(get_env_value(&temp[start], ex->env_list));
+		free_data(NULL, temp, 0);
 	}
 	free_data(NULL, str, 0);
 	return (value);
 }
 
+/**
+ * @brief join 3 strings to get expanded strings
+ * @param str part of string before expanded value
+ * @param value expanded value
+ * @param og original string
+ * @param n index in string where the NOT expanded value ends
+ * @return 
+ */
 static char	*get_new_expanded_string(char *str, char *value, char **og, int n)
 {
 	char	*result;
