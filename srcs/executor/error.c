@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:29:35 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 14:55:27 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:43:26 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execution_cmd_error(char *str, t_exec *ex)
 		if (dir != NULL)
 		{
 			closedir(dir);
-			print_error(str, ": Is a directory", NULL);
+			print_error(str, ": is a directory", NULL);
 			exit (126);
 		}
 		print_error(str, ": No such file or directory", NULL);
@@ -43,7 +43,7 @@ void	execution_cmd_error(char *str, t_exec *ex)
 	else if (get_env_value("PATH=", ex->env_list))
 		print_error(str, ": command not found", NULL);
 	else
-		print_error(str, ": No such file or directory", NULL);
+		print_error(str, ": no such file or directory", NULL);
 	exit(127);
 }
 

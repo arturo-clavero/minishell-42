@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 07:13:17 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:55:50 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_cmd	*ft_init_cmd(void)
 	t_cmd	*new_cmd;
 
 	new_cmd = malloc(sizeof(t_cmd));
-	//ft_memset(new_cmd, 0, sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->array = NULL;

@@ -6,15 +6,12 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:06:13 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 15:07:52 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/27 23:41:43 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-// -- GLOBAL VARIABLES --
-extern int	g_exit_status;
 
 // -- LIBRARIES --
 # include <errno.h>
@@ -39,6 +36,9 @@ extern int	g_exit_status;
 # include "parser.h"
 # include "builtins.h"
 # include "utils.h"
+
+// -- GLOBAL VARIABLES --
+extern int	g_exit_status;
 
 // -- PROTOTYPES --
 void			ft_launch_minishell(t_exec *ex);
