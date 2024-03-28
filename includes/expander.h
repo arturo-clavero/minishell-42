@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:34:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/26 07:21:53 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 20:34:10 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 void	expand_each_cmd_node(t_cmd **cmd, t_exec *ex);
 void	check_expandables(char **str);
 int		expand_variable(char **str, int *i, t_exec *ex);
+int		check_curly_brackets(char **str, int j);
 int		trim_question_mark(char **str, int j);
 int		trim_curly_brackets_only(char **str, int j);
 int		trim_dollar_substr(char *str, char **original);
