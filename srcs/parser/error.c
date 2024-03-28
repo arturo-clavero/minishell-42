@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:32:59 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 09:23:43 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/28 19:42:38 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,29 @@ void	ft_parser_error(t_exec *ex, int status)
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
 			STDERR_FILENO);
 	ft_parser_clean(ex, 2);
+}
+
+/**
+ * @brief Print syntax error and relaunch minishell.
+ *
+ * @param t_exec *ex - The minishell object.
+ * @param int token - The token of the error.
+ * @param int status - The status of the error.
+ * @return void
+ */
+void	ft_syntax_error(t_exec *ex, int token, int status)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token `",
+		STDERR_FILENO);
+	if (token == PIPE)
+		ft_putstr_fd("|'\n", STDERR_FILENO);
+	else if (token == APPEND)
+		ft_putstr_fd(">>'\n", STDERR_FILENO);
+	else if (token == OUTFILE)
+		ft_putstr_fd(">'\n", STDERR_FILENO);
+	else if (token == INFILE)
+		ft_putstr_fd("<'\n", STDERR_FILENO);
+	else if (token == HEREDOC)
+		ft_putstr_fd("<<'\n", STDERR_FILENO);
+	ft_parser_clean(ex, status);
 }

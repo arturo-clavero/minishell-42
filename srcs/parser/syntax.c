@@ -3,38 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:16:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 14:23:43 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/28 20:24:12 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Print syntax error and relaunch minishell.
+ * @brief Check redirection syntax.
  *
+ * @param t_lexer *lexer - The lexer object.
  * @param t_exec *ex - The minishell object.
- * @param int token - The token of the error.
- * @param int status - The status of the error.
  * @return void
  */
-static void	ft_syntax_error(t_exec *ex, int token, int status)
+static void	ft_check_redirection_syntax(t_lexer *lexer, t_exec *ex)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected token `",
-		STDERR_FILENO);
-	if (token == PIPE)
-		ft_putstr_fd("|'\n", STDERR_FILENO);
-	else if (token == APPEND)
-		ft_putstr_fd(">>'\n", STDERR_FILENO);
-	else if (token == OUTFILE)
-		ft_putstr_fd(">'\n", STDERR_FILENO);
-	else if (token == INFILE)
-		ft_putstr_fd("<'\n", STDERR_FILENO);
-	else if (token == HEREDOC)
-		ft_putstr_fd("<<'\n", STDERR_FILENO);
-	ft_parser_clean(ex, status);
+	int	count;
+
+	if (lexer->token == INFILE || lexer->token == HEREDOC)
+	{
+		count = 1;
+		while (lexer->next && lexer->next->token == INFILE)
+		{
+			count++;
+			lexer = lexer->next;
+		}
+		if (count >= 5)
+			ft_syntax_error(ex, HEREDOC, STDERR_FILENO);
+		if (count >= 4)
+			ft_syntax_error(ex, lexer->token, STDERR_FILENO);
+	}
 }
 
 /**
@@ -88,11 +89,13 @@ static void	ft_double_pipes(t_lexer *lexer, t_exec *ex)
 					|| lexer->prev->token == OUTFILE
 					|| lexer->prev->token == INFILE
 					|| lexer->prev->token == HEREDOC))
-				ft_syntax_error(ex, lexer->prev->token, STDERR_FILENO);
+				ft_syntax_error(ex, lexer->token, STDERR_FILENO);
 			else if (lexer->next && (lexer->next->token == APPEND
 					|| lexer->next->token == INFILE
 					|| lexer->next->token == HEREDOC))
 				ft_syntax_error(ex, lexer->next->token, STDERR_FILENO);
+			else if (lexer->prev && lexer->prev->token == OUTFILE)
+				ft_syntax_error(ex, PIPE, STDERR_FILENO);
 		}
 		lexer = lexer->next;
 	}
@@ -137,6 +140,7 @@ void	ft_check_syntax(t_exec *ex)
 		ft_parser_error(ex, 2);
 	while (lexer)
 	{
+		ft_check_redirection_syntax(lexer, ex);
 		ft_double_pipes(lexer, ex);
 		ft_check_redirection(lexer, ex);
 		if (ft_count_tokens(lexer) == 1)
