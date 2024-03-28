@@ -6,7 +6,7 @@
 /*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:16:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 09:24:56 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/28 10:37:51 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,19 @@ static void	ft_double_pipes(t_lexer *lexer, t_exec *ex)
 	{
 		if (lexer->token == PIPE)
 		{
-			if (lexer->next && lexer->next->token == PIPE)
-				ft_syntax_error(ex, STDERR_FILENO, lexer->next->token);
+			if (lexer->next && (lexer->next->token == PIPE
+					|| lexer->next->token == INFILE))
+				ft_syntax_error(ex, lexer->next->token, STDERR_FILENO);
 			else if (lexer->prev && (lexer->prev->token == APPEND
 					|| lexer->prev->token == OUTFILE
 					|| lexer->prev->token == INFILE
 					|| lexer->prev->token == HEREDOC))
-				ft_syntax_error(ex, STDERR_FILENO, lexer->prev->token);
+				ft_syntax_error(ex, lexer->prev->token, STDERR_FILENO);
 			else if (lexer->next && (lexer->next->token == APPEND
 					|| lexer->next->token == OUTFILE
 					|| lexer->next->token == INFILE
 					|| lexer->next->token == HEREDOC))
-				ft_syntax_error(ex, STDERR_FILENO, lexer->next->token);
+				ft_syntax_error(ex, lexer->next->token, STDERR_FILENO);
 		}
 		lexer = lexer->next;
 	}
@@ -104,6 +105,9 @@ static void	ft_check_redirection(t_lexer *lexer, t_exec *ex)
 		{
 			if (!lexer->next)
 				ft_parser_error(ex, 1);
+			else if ((lexer->token == APPEND || lexer->token == OUTFILE)
+				&& lexer->next->token == INFILE)
+				ft_syntax_error(ex, INFILE, STDERR_FILENO);
 		}
 		lexer = lexer->next;
 	}
