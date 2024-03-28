@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:32:59 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 19:42:38 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/28 20:35:42 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ void	ft_syntax_error(t_exec *ex, int token, int status)
 		ft_putstr_fd("<'\n", STDERR_FILENO);
 	else if (token == HEREDOC)
 		ft_putstr_fd("<<'\n", STDERR_FILENO);
+	else if (token == 7)
+		ft_putstr_fd("<<<'\n", STDERR_FILENO);
 	ft_parser_clean(ex, status);
 }

@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:16:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 20:24:12 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/28 20:35:46 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	ft_check_redirection_syntax(t_lexer *lexer, t_exec *ex)
 			count++;
 			lexer = lexer->next;
 		}
+		if (count >= 6)
+			ft_syntax_error(ex, 7, STDERR_FILENO);
 		if (count >= 5)
 			ft_syntax_error(ex, HEREDOC, STDERR_FILENO);
 		if (count >= 4)
