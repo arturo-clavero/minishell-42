@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:24:30 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 14:24:22 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/28 09:21:11 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 // -- PROTOTYPES --
 void	ft_debug_parser(t_cmd *cmd);
 
-void	ft_parser_error(t_exec *ex, int err_code);
+void	ft_parser_clean(t_exec *ex, int err_code);
+void	ft_parser_error(t_exec *ex, int status);
 
 char	**ft_malloc_node_array(t_lexer *lexer);
 void	ft_add_cmd_node_to_list(t_cmd *node, t_cmd **cmd);
