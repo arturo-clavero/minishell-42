@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 22:11:15 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:13:17 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,19 @@
  * @param void
  * @return char * The command entered by the user.
  */
-
 static char	*ft_prompt_display(t_exec *ex)
 {
 	char	*line;
 	char	*prompt;
 	char	*temp;
 
-	prompt = ft_strjoin(RED "[MINISHELL]:" BLUE,
-			get_env_value("PWD=", ex->env_list));
+	prompt = ft_strjoin(RED "[MINISHELL]:" BLUE, get_env_value("PWD=",
+				ex->env_list));
 	temp = ft_strjoin(prompt, " $> " RESET);
-	free_data(NULL, (void *)prompt, 0);
+	free_data(NULL, (void *)prompt, -2);
 	prompt = temp;
 	line = readline(prompt);
-	free_data(NULL, (void *)prompt, 0);
+	free_data(NULL, (void *)prompt, -2);
 	if (!line)
 		exit(g_exit_status);
 	if (ft_strlen(line) > 0)
