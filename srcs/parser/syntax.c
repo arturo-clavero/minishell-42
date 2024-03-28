@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:16:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 00:07:35 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/28 09:24:56 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_syntax_error(t_exec *ex, int token, int status)
 		ft_putstr_fd("<'\n", STDERR_FILENO);
 	else if (token == HEREDOC)
 		ft_putstr_fd("<<'\n", STDERR_FILENO);
-	ft_parser_error(ex, status);
+	ft_parser_clean(ex, status);
 }
 
 /**
@@ -94,6 +94,7 @@ static void	ft_double_pipes(t_lexer *lexer, t_exec *ex)
  * @param t_exec *ex - The minishell object.
  * @return void
  */
+
 static void	ft_check_redirection(t_lexer *lexer, t_exec *ex)
 {
 	while (lexer)
@@ -101,12 +102,8 @@ static void	ft_check_redirection(t_lexer *lexer, t_exec *ex)
 		if (lexer->token == APPEND || lexer->token == OUTFILE
 			|| lexer->token == INFILE || lexer->token == HEREDOC)
 		{
-			if (!lexer->next || lexer->next->token == PIPE)
-				ft_syntax_error(ex, STDERR_FILENO, lexer->token);
-			else if (lexer->next->token == APPEND
-				|| lexer->next->token == OUTFILE || lexer->next->token == INFILE
-				|| lexer->next->token == HEREDOC)
-				ft_syntax_error(ex, STDERR_FILENO, lexer->next->token);
+			if (!lexer->next)
+				ft_parser_error(ex, 1);
 		}
 		lexer = lexer->next;
 	}
@@ -124,11 +121,7 @@ void	ft_check_syntax(t_exec *ex)
 
 	lexer = ex->lexer;
 	if (lexer->token == PIPE)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
-			STDERR_FILENO);
 		ft_parser_error(ex, 2);
-	}
 	while (lexer)
 	{
 		ft_double_pipes(lexer, ex);
