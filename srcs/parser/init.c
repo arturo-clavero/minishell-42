@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 23:55:50 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/28 14:30:58 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,27 @@ t_redir	*ft_init_redir(t_cmd **node)
 	return (new_redir);
 }
 
+static void	check_double_token_redir(t_redir *redir, t_lexer **lexer)
+{
+	*lexer = (*lexer)->next;
+	if ((*lexer)->token == OUTFILE && redir->type == INFILE)
+	{
+		redir->duplication = STDOUT_FILENO;
+		redir->type = RDWR;
+		*lexer = (*lexer)->next;
+	}
+	else if ((*lexer)->token == INFILE)
+	{
+		redir->type = HEREDOC;
+		*lexer = (*lexer)->next;
+	}
+	else if ((*lexer)->token == OUTFILE)
+	{
+		redir->type = APPEND;
+		*lexer = (*lexer)->next;
+	}
+}
+
 /**
  * @brief fills data for redirection node
  *
@@ -84,14 +105,7 @@ void	ft_add_redir(t_cmd **node, t_lexer **lexer)
 			redir->duplication = STDOUT_FILENO;
 		return ;
 	}
-	*lexer = (*lexer)->next;
-	if (*lexer && (int)(*lexer)->token == redir->type)
-	{
-		redir->type = HEREDOC;
-		if ((*lexer)->token == OUTFILE)
-			redir->type = APPEND;
-		*lexer = (*lexer)->next;
-	}
+	check_double_token_redir(redir, lexer);
 	if (redir->type != HEREDOC)
 		redir->file_name = ft_strdup((*lexer)->str);
 	else
