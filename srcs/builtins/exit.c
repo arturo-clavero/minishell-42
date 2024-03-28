@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 15:02:09 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:53:44 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	is_numeric_error(__int128_t num, char *str, int i, t_exec *ex)
 			&& str[i] != '\t') || (i != 0 && (str[i - 1] == '+'
 				|| str[i -1] == '-') && ft_isdigit(str[i]) == FALSE))
 	{
-		print_error("exit: ", str, ": numeric argument required");
+		print_error("exit: ", str, ": numeric argument required", 0);
 		exit_minishell(ex, 2);
 	}
 }
@@ -90,7 +90,7 @@ static int	check_numeric_argument(char *str, __int128_t num, t_exec *ex)
 	}
 	if (flag == FALSE)
 	{
-		print_error("exit: ", str, ": numeric argument required");
+		print_error("exit: ", str, ": numeric argument required", 0);
 		exit_minishell(ex, 2);
 	}
 	return (0);

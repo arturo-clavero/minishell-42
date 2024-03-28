@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:02:01 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 06:08:07 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 04:47:25 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,46 @@ int	find_end_variable_index(char *str)
  * @return int - (-1) for no match, (1) for match and substitution required,
  * (0) for match and no substitution
  */
-int	find_env_match(char *str, char *old)
-{
-	int		i;
-	char	*new;
-	char	*result;
 
-	i = 0;
-	new = ft_strdup(str);
-	while (new[i] && new[i] != '=')
-		i++;
-	new[i] = '\0';
-	if (double_strncmp(new, old) == 0)
-		return (free_data(NULL, new, 1));
-	result = ft_strjoin(new, "=\0");
-	free(new);
-	if (ft_strncmp(result, old, ft_strlen(result)) == 0)
+int	compare_with_equal_signs(char *new, char *old, int i)
+{
+	int	j;
+
+	j = find_index_of_char(old, '=');
+	if (ft_strncmp(new, old, j) == 0 && ft_strncmp(new, old, i) == 0)
 	{
-		free(new);
-		free(result);
-		if (ft_strchr(str, '='))
+		if (ft_strchr(new, '='))
 			return (1);
-		return (free_data(NULL, result, 0));
+		return (0);
 	}
-	return (free_data(NULL, result, -1));
+	return (-1);
+}
+
+int	find_env_match(char *new, char *old)
+{
+	char	*temp_new;
+	char	*temp_old;
+	int		i;
+
+	temp_old = ft_strdup(old);
+	i = find_index_of_char(old, '=');
+	if (i > 0)
+		temp_old[i] = '\0';
+	temp_new = ft_strdup(new);
+	i = find_index_of_char(new, '=');
+	if (i > 0)
+		temp_new[i] = '\0';
+	if (double_strncmp(temp_old, temp_new) == 0)
+	{
+		free_data(NULL, (void *)temp_old, 1);
+		free_data(NULL, (void *)temp_new, 1);
+		if (ft_strchr(new, '='))
+			return (1);
+		return (0);
+	}
+	free_data(NULL, (void *)temp_old, 0);
+	free_data(NULL, (void *)temp_new, 0);
+	return (compare_with_equal_signs(new, old, i));
 }
 
 /**
@@ -84,7 +100,7 @@ char	*new_appended_value(char *new, char *old)
 	if (ft_strchr(old, '='))
 		j++;
 	result = ft_strjoin(old, &new[j]);
-	free(new);
+	free_data(NULL, (void *)new, 0);
 	return (result);
 }
 

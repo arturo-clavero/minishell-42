@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:29:35 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 23:43:26 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/27 21:59:57 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,21 @@ void	execution_cmd_error(char *str, t_exec *ex)
 		if ((dir == NULL && errno == EACCES)
 			|| (-1 == access(str, R_OK) && errno == EACCES)
 			|| (NULL == fopen(str, "r") && errno == EACCES))
-		{
-			print_error(str, ": Permission denied", NULL);
-			exit (126);
-		}
+			exit(print_error(str, ": Permission denied", NULL, 126));
 		if (dir != NULL)
 		{
 			closedir(dir);
-			print_error(str, ": is a directory", NULL);
-			exit (126);
+			exit(print_error(str, ": Is a directory", NULL, 126));
 		}
-		print_error(str, ": No such file or directory", NULL);
+		exit(print_error(str, ": No such file or directory", NULL, 127));
 	}
 	else if (get_env_value("PATH=", ex->env_list))
-		print_error(str, ": command not found", NULL);
-	else
-		print_error(str, ": no such file or directory", NULL);
-	exit(127);
+	{
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(127);
+	}
+	exit (print_error(str, ": No such file or directory", NULL, 127));
 }
 
 /**
@@ -57,19 +55,16 @@ int	execution_redir_error(char *str, char **cmd_array)
 
 	dir = NULL;
 	if (errno == 13)
-	{
-		print_error(str, ": Permission denied", NULL);
-		return (1);
-	}
+		return (print_error(str, ": Permission denied", NULL, 1));
 	if (cmd_array)
 		dir = opendir(str);
 	if (dir != NULL)
 	{
 		closedir(dir);
-		print_error(str, ": Is a directory", NULL);
+		print_error(str, ": Is a directory", NULL, 0);
 	}
 	else
-		print_error(str, ": No such file or directory", NULL);
+		print_error(str, ": No such file or directory", NULL, 0);
 	return (1);
 }
 
