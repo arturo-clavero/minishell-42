@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 18:54:14 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:11:15 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,19 @@
  * @return char * The command entered by the user.
  */
 
-static char	*ft_prompt_display(void)
+static char	*ft_prompt_display(t_exec *ex)
 {
 	char	*line;
 	char	*prompt;
+	char	*temp;
 
-	prompt = ft_strjoin(RED "[MINISHELL]:" BLUE, getcwd(NULL, 0));
-	prompt = ft_strjoin(prompt, " $> " RESET);
+	prompt = ft_strjoin(RED "[MINISHELL]:" BLUE,
+			get_env_value("PWD=", ex->env_list));
+	temp = ft_strjoin(prompt, " $> " RESET);
+	free_data(NULL, (void *)prompt, 0);
+	prompt = temp;
 	line = readline(prompt);
-	free(prompt);
+	free_data(NULL, (void *)prompt, 0);
 	if (!line)
 		exit(g_exit_status);
 	if (ft_strlen(line) > 0)
@@ -47,14 +51,14 @@ void	ft_launch_minishell(t_exec *ex)
 
 	while (1)
 	{
-		line = ft_prompt_display();
+		line = ft_prompt_display(ex);
 		if (!line)
 			continue ;
 		initialize_parsing(ex);
 		ex->args = line;
 		ft_lexer(ex);
 		ft_parser(ex->lexer, ex);
-		free(line);
+		free_data(NULL, (void *)line, 0);
 		ft_free_lexer(ex);
 		heredoc(ex);
 		expand_each_cmd_node(&ex->cmd, ex);
@@ -83,5 +87,5 @@ int	main(int argc, char **argv, char **env)
 	initialize_minishell(&ex, env);
 	ft_init_signals();
 	ft_launch_minishell(&ex);
-	return (0);
+	return (g_exit_status);
 }

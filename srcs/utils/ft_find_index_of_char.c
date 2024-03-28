@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_find_index_of_char.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 23:04:16 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 00:38:37 by artclave         ###   ########.fr       */
+/*   Created: 2024/03/28 04:40:18 by artclave          #+#    #+#             */
+/*   Updated: 2024/03/28 04:47:30 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_atoi(const char *str)
+int	find_index_of_char(char *str, char c)
 {
-	int	sign;
 	int	i;
-	int	res;
 
-	sign = 1;
-	i = 0;
-	res = 0;
-	if (!str)
+	if (!str || str[0] == 0)
 		return (-1);
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-		sign = 1 - 2 * (str[i++] == '-');
-	while (str[i] >= '0' && str[i] <= '9')
+	i = -1;
+	while (str[++i])
 	{
-		res = res * 10 + str[i] - '0';
-		i++;
+		if (str[i] == c)
+			return (i);
 	}
-	return (res * sign);
+	return (-1);
 }

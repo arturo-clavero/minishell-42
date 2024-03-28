@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:24:40 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 15:08:53 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/27 20:24:19 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	realloc_cmd_array(char ***arr, int i, t_cmd *cmd, t_exec *ex)
 	result[++n] = NULL;
 	n = -1;
 	while ((*arr)[++n])
-		free((*arr)[n]);
-	free(*arr);
+		free_data(NULL, (void *)(*arr)[n], 0);
+	free_data(NULL, (void *)*arr, 0);
 	*arr = result;
 	return (empty_cmd(cmd, ex));
 }

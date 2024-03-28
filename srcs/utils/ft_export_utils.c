@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 14:14:26 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:13:09 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	is_variable_start_valid(char *cmd_array, char *original)
 	j = 0;
 	if (!ft_isalpha(cmd_array[j]) && cmd_array[j] != '_')
 	{
-		print_error("export `", original, "': not a valid identifier");
-		free(original);
+		print_error("export `", original, "': not a valid identifier", 0);
 		return (1);
 	}
 	return (0);
@@ -55,10 +54,8 @@ int	is_variable_content_valid(char **cmd, char *original_cmd, int *add_flag)
 		}
 		else if (!ft_isalpha((*cmd)[j]) && !ft_isnum((*cmd)[j])
 			&& (*cmd)[j] != '_')
-		{
-			print_error("export `", original_cmd, "': not a valid identifier");
-			return (1);
-		}
+			return (print_error("export `", original_cmd,
+					"': not a valid identifier", 1));
 		j++;
 	}
 	return (0);
