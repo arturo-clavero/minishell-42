@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 04:41:50 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:20:47 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef enum e_token_type
 	OUTFILE,
 	APPEND,
 	HEREDOC,
+	RDWR,
 }					t_token_type;
 
 /**
