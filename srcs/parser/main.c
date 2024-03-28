@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:39:09 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/26 23:04:15 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:08:59 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_parser(t_lexer *lexer, t_exec *ex)
 	t_cmd	*node;
 
 	ft_check_syntax(ex);
+	ft_debug_lexer(ex->lexer);
 	node = ft_init_cmd();
 	if (!node)
 		return ;

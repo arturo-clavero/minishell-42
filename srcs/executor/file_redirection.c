@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:41:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 21:24:15 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:22:25 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ int	open_file(t_redir *redir, int pipe_fd)
 		fd = pipe_fd;
 	else if (redir->type == INFILE)
 		fd = open(redir->file_name, O_RDONLY, 0222);
+	else if (redir->type == RDWR)
+		fd = open(redir->file_name, O_RDWR | O_CREAT, 0644);
 	else if (redir->type == OUTFILE)
 		fd = open(redir->file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else if (redir->type == APPEND)
