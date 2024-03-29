@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 05:40:39 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 18:43:57 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:14:45 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int		is_builtin(char *cmd);
 void	execute_builtin(t_cmd *cmd, t_exec *ex);
 int		exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex);
-void	cd_with_no_arguments(char **new_dir, char *pwd);
+void	cd_with_no_arguments(char **new_dir, t_exec *ex);
 void	cd_with_double_dot(char **new_dir, char *pwd);
 void	cd_with_dash(char **new_dir, t_exec *ex, char **og);
 int		exec_echo(char **cmd_array);

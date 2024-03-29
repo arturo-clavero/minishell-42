@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 18:42:15 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:15:21 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 	}
 	og = ft_strdup(cmd_array[1]);
 	new_dir = ft_strdup(get_new_dir(cmd_array[1]));
-	cd_with_no_arguments(&new_dir, buffer);
+	cd_with_no_arguments(&new_dir, ex);
 	cd_with_double_dot(&new_dir, buffer);
 	cd_with_dash(&new_dir, ex, &og);
 	return (change_directories(&new_dir, buffer, og, ex));
