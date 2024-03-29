@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 13:32:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 00:32:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:09:35 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	exec_unset(char **cmd, t_exec *ex)
 	if (check_unset_syntax(cmd) == EXIT_FAILURE)
 		return (1);
 	i = 0;
-	while (cmd[++i])
+	while (cmd && cmd[0] && cmd[++i])
 	{
 		node = ex->env_list;
 		while (node)
