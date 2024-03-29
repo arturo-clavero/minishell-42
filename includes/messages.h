@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:58:38 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/29 09:43:16 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 10:09:49 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // -- COMMON
 #define ERROR_MALLOC "minishell: Malloc cannot allocate memory\n"
 #define ERROR_NO_ARGS "minishell: no arguments\n"
-#define ERROR_NO_CLOSE_QUOTE "minishell: syntax error: unexpected end of file"
+#define ERROR_NO_CLOSE_QUOTE "minishell: syntax error: unclosed quotes\n"
 
 // -- LEXER --
 #define ERROR_LENGTH_WORD "Error: Word exceeds maximum length\n"
