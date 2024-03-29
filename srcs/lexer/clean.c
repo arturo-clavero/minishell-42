@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 20:31:44 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 20:27:06 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:52:52 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ft_free_lexer(t_exec *ex)
 	{
 		tmp = lexer->next;
 		if (lexer->str)
-			free_data(NULL, (void *)lexer->str, 0);
-		free_data(NULL, (void *)lexer, 0);
+			free_data((void **)&lexer->str, 0);
+		free_data((void **)&lexer, 0);
 		lexer = tmp;
 	}
 	ex->lexer = NULL;

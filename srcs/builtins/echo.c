@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 10:44:48 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 05:34:00 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 23:58:06 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static int	is_nflag(char *str)
 	if (str[i] != '-')
 		return (0);
 	i++;
+	if (str[i] != 'n')
+		return (0);
 	while (str[i] == 'n')
 		i++;
 	skip_whitespace(str, &i);

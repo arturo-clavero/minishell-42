@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 13:32:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 22:02:17 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:32:41 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ static int	check_unset_syntax(char **array)
 		{
 			if (ft_isdigit(array[i][0]) || (!ft_isdigit(array[i][j])
 					&& !ft_isalpha(array[i][j]) && array[i][j] != '_'))
-				return (print_error("unset: `", array[i],
-						"': not a valid identifier", 1));
+				return (1);
 		}
 	}
 	return (0);
@@ -55,7 +54,7 @@ void	delete_node(t_list *node_delete, t_list **head)
 	if (list == node_delete)
 	{
 		list = node_delete->next;
-		free_data(NULL, (void *)node_delete, 0);
+		free_data((void **)&node_delete, 0);
 		return ;
 	}
 	while (list)
@@ -63,7 +62,7 @@ void	delete_node(t_list *node_delete, t_list **head)
 		if (list->next == node_delete)
 		{
 			list->next = list->next->next;
-			free_data(NULL, (void *)node_delete, 0);
+			free_data((void **)&node_delete, 0);
 			return ;
 		}
 		list = list->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:59:12 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 13:24:46 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/29 00:22:46 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,11 @@
  * @param int exit code - return value
  * @return int exit code
  */
-int	free_data(char *should_exit, void *data, int exit_code)
+int	free_data(void **data, int exit_code)
 {
-	if (data)
-		free(data);
-	data = NULL;
-	if (should_exit)
-		exit(exit_code);
+	if (*data)
+		free(*data);
+	*data = NULL;
 	return (exit_code);
 }
 

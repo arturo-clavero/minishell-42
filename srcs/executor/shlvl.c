@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 06:42:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 09:42:24 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 11:49:24 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int	change_shlvl(int change, t_exec *ex)
 	}
 	if (shlvl_num < 0)
 		change_shlvl((shlvl_num * (-1)), ex);
-	free_data(NULL, (void *)shlvl_str, 0);
+	free_data((void **)&shlvl_str, 0);
 	return (shlvl_num);
 }

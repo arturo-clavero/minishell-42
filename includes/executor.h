@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 20:35:07 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 03:44:03 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ typedef struct s_exec
 	t_list			*short_term_data;
 	t_list			*long_term_data;
 	int				is_builtin_last;
+	char			*path;
 }					t_exec;
 
 // -- UTILS EXECUTION PROTOTYPES --
@@ -166,7 +167,7 @@ char				*get_env_value(char *variable, t_list *env_list);
 t_list				*get_env_node(char *variable, t_exec *ex);
 void				delete_node(t_list *node_delete, t_list **head);
 int					find_env_match(char *new, char *old);
-int					free_data(char *should_exit, void *data, int exit_code);
+int					free_data(void **data, int exit_code);
 int					print_error(char *str1, char *str2, char *str3, int err);
 int					malloc_error(void);
 void				skip_whitespace(char *str, int *i);

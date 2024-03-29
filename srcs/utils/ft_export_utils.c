@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 23:13:09 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/28 23:59:42 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void	print_export_syntax(char *new_min)
 	flag = FALSE;
 	while (new_min[++i])
 	{
-		if (new_min[i] == '=')
+		if (flag == FALSE && new_min[i] == '=')
 		{
 			printf("=\"");
 			flag = TRUE;

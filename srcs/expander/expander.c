@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:33:24 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 18:36:20 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:58:39 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_expandable_value(char *str, int i, int *j, t_exec *ex)
 		result[end] = '\0';
 		result = &result[1];
 	}
-	free_data(NULL, (void *)temp, 0);
+	free_data((void **)&temp, 0);
 	return (result);
 }
 
@@ -65,8 +65,8 @@ void	expand_tilde(char **str, int i, t_exec *ex)
 	if (!str3 || str3[0] == 0)
 		str3 = NULL;
 	result = ft_join_3_strings(str1, str2, str3);
-	free_data(NULL, (void *)*str, 0);
-	free_data(NULL, (void *)str1, 0);
+	free_data((void **)str, 0);
+	free_data((void **)&str1, 0);
 	*str = result;
 }
 

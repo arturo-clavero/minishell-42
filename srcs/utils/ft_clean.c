@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 22:11:31 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:27:04 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	clean_list(t_list *list, int clean_content)
 	{
 		temp = list->next;
 		if (clean_content == TRUE)
-			free_data(NULL, (void *)list->content, 0);
-		free_data(NULL, (void *)list, 0);
+			free_data((void **)&list->content, 0);
+		free_data((void **)&list, 0);
 		list = NULL;
 		list = temp;
 	}
@@ -79,9 +79,9 @@ void	clean_redir(t_redir	*redir)
 	while (redir)
 	{
 		temp_redir = redir->next;
-		free_data(NULL, (void *)redir->file_name, 0);
-		free_data(NULL, (void *)redir->heredoc_buff, 0);
-		free_data(NULL, (void *)redir, 0);
+		free_data((void **)&(redir->file_name), 0);
+		free_data((void **)&(redir->heredoc_buff), 0);
+		free_data((void **)&redir, 0);
 		redir = temp_redir;
 	}
 }
@@ -104,11 +104,11 @@ void	clean_t_cmd(t_cmd *cmd, t_exec *ex)
 		if (cmd->array)
 		{
 			while (cmd->array[++i])
-				free_data(NULL, (void *)cmd->array[i], 0);
-			free_data(NULL, (void *)cmd->array, 0);
+				free_data((void **)&(cmd->array[i]), 0);
+			free_data((void **)&(cmd->array), 0);
 		}
 		temp_cmd = cmd->next;
-		free_data(NULL, (void *)cmd, 0);
+		free_data((void **)&cmd, 0);
 		cmd = temp_cmd;
 	}
 	ex->cmd = NULL;

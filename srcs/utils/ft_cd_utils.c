@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:38:10 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 05:41:05 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:54:52 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @param new_dir pointer to the new directory
  * @param ex main structure (all data)
  */
-void	cd_with_dash(char **new_dir, t_exec *ex)
+void	cd_with_dash(char **new_dir, t_exec *ex, char **og)
 {
 	int	i;
 
@@ -31,9 +31,37 @@ void	cd_with_dash(char **new_dir, t_exec *ex)
 	i++;
 	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
 		i++;
-	if ((*new_dir)[i])
+	if ((*new_dir)[i] && (*new_dir)[i] != 0)
 		return ;
-	*new_dir = get_env_value("OLDPWD=", ex->env_list);
+	free_data((void **)new_dir, 0);
+	*new_dir = ft_strdup(get_env_value("OLDPWD=", ex->env_list));
+	free_data((void **)og, 0);
+	*og = ft_strdup(*new_dir);
+	printf("%s\n", *og);
+}
+
+void	get_new_dir_dots(char **new_dir, char *pwd)
+{
+	int	i;
+	int flag;
+
+	i = ft_strlen(*new_dir);
+	flag = 0;
+	while (--i >= 0)
+	{
+		if ((*new_dir)[i] == '/')
+		{
+			(*new_dir)[i] = '\0';
+			if (!(i + 1 < (int)ft_strlen(pwd)- - 1 && (*new_dir)[i] == '.')
+				&& !(i > 0 && (*new_dir)[i - 1] == '.'))
+			{
+				if (flag <= 0)
+					break;
+				flag -= 100;
+			}
+			flag += 1;
+		}
+	}
 }
 
 /**
@@ -59,16 +87,9 @@ void	cd_with_double_dot(char **new_dir, char *pwd)
 		if ((*new_dir)[i] != ' ' && (*new_dir)[i] != '\t')
 			return ;
 	}
-	*new_dir = pwd;
-	i = ft_strlen(*new_dir);
-	while (--i >= 0)
-	{
-		if ((*new_dir)[i] == '/')
-		{
-			(*new_dir)[i] = '\0';
-			break ;
-		}
-	}
+	free_data((void **)new_dir, 0);
+	*new_dir = ft_strdup(pwd);
+	get_new_dir_dots(new_dir, pwd);
 }
 
 /**
@@ -85,7 +106,8 @@ void	cd_with_no_arguments(char **new_dir, char *pwd)
 
 	if (*new_dir)
 		return ;
-	*new_dir = pwd;
+	free_data((void **)new_dir, 0);
+	*new_dir = ft_strdup(pwd);
 	i = -1;
 	slash_counter = 0;
 	while ((*new_dir)[++i] && slash_counter < 3)

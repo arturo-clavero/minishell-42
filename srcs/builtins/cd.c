@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 01:27:34 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:47:34 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*get_new_dir(char *str)
 
 	if (!str || str[0] == 0)
 		return (NULL);
+	if (double_strncmp(str, "//") == 0)
+		return ("//\0");
 	i = ft_strlen(str) - 1;
 	while (i >= 0 && (str[i] == ' ' || str[i] == '\t'))
 		i--;
@@ -65,32 +67,32 @@ int	change_directories(char *new_dir, char *buf, char *og, t_exec *ex)
 	char	*new_value;
 
 	if (chdir(new_dir) == -1)
-	{
-		print_error("cd: ", og, ": No such file or directory", 0);
-		free_data(NULL, og, 0);
-		return (free_data(NULL, buf, 1));
-	}
-	free_data(NULL, og, 0);
+		return (general_cd_error(&og, &buf));
 	if (has_pipe(ex->cmd) == TRUE)
 	{
 		chdir(buf);
-		return (free_data(NULL, buf, SUCCESS));
+		free_data((void **)&new_dir, 0);
+		free_data((void **)&og, 0);
+		return (free_data((void **)&buf, SUCCESS));
 	}
-	update_env("OLD_PWD=", buf, ex);
+	update_env("OLDPWD=", buf, ex);
 	new_value = ft_strdup(getcwd(buf, MAX_PATH_LINUX));
 	if (new_value == NULL)
-	{
-		ft_putstr_fd("cd: error retrieving current directory:\
-		 getcwd: cannot access parent directories: No such file\
-		or directory\n", 2);
-		if (ft_strncmp(og, ".\0", ft_strlen(og)))
-			new_value = ft_strjoin(get_env_value("PWD=", ex->env_list), "/.\0");
-	}
+		new_value_error(og, &new_value, ex);
 	update_env("PWD=", new_value, ex);
-	free_data(NULL, new_value, 0);
-	return (free_data(NULL, buf, SUCCESS));
+	if (double_strncmp(new_dir, "//") == 0)
+		update_env("PWD=", new_dir, ex);
+	free_data((void **)&og, 0);
+	free_data((void **)&new_dir, 0);
+	free_data((void **)&new_value, 0);
+	return (free_data((void **)&buf, SUCCESS));
 }
 
+/**
+ * @brief checks if cd has more than one argument
+ * @param cmd_array array of strings for current command
+ * @return FALSE for incorrect and TRUE for CORRECT
+ */
 int	max_arguments_ok(char **cmd_array)
 {
 	int	i;
@@ -101,7 +103,7 @@ int	max_arguments_ok(char **cmd_array)
 	if (i > 2)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd("cd : too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
 		return (FALSE);
 	}
 	if (!cmd_array[1])
@@ -120,7 +122,7 @@ int	max_arguments_ok(char **cmd_array)
 /**
  * @brief Execute the cd command.
  *
- * @param char **cmd_array - The command array
+ * @param char **cmd_array - free(): double free detected in tcache 2The command array
  * @param t_cmd *cmd - The command structure
  * @param t_exec *ex - The execution structure
  * @return int - The exit code
@@ -141,13 +143,13 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 		return (malloc_error());
 	if (getcwd(buffer, MAX_PATH_LINUX) == NULL)
 	{
-		free_data(NULL, buffer, 0);
+		free_data((void **)&buffer, 0);
 		buffer = ft_strdup(get_env_value("PWD=", ex->env_list));
 	}
 	og = ft_strdup(cmd_array[1]);
-	new_dir = get_new_dir(cmd_array[1]);
+	new_dir = ft_strdup(get_new_dir(cmd_array[1]));
 	cd_with_no_arguments(&new_dir, buffer);
 	cd_with_double_dot(&new_dir, buffer);
-	cd_with_dash(&new_dir, ex);
+	cd_with_dash(&new_dir, ex, &og);
 	return (change_directories(new_dir, buffer, og, ex));
 }

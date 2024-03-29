@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:38:06 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 21:53:44 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 02:42:37 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
  * @param char *str - The string to convert
  * @return __int128_t - The 128 bits integer
  */
+/*
 static __int128_t	atoi_128bits(const char *str)
 {
 	int			i;
@@ -40,7 +41,7 @@ static __int128_t	atoi_128bits(const char *str)
 		num += (str[i++] - '0');
 	}
 	return (num * sign);
-}
+}*/
 
 /**
  * @brief deals with numeric argument error if conditions are not met
@@ -68,6 +69,7 @@ void	is_numeric_error(__int128_t num, char *str, int i, t_exec *ex)
  * @param __int128_t num - The 128 bits integer
  * @return int - 0 if the argument is numeric, 255 otherwise
  */
+/*
 static int	check_numeric_argument(char *str, __int128_t num, t_exec *ex)
 {
 	int	i;
@@ -84,17 +86,17 @@ static int	check_numeric_argument(char *str, __int128_t num, t_exec *ex)
 		if (ft_isdigit(str[i]) == TRUE)
 			flag = TRUE;
 		if (str[i] == '-' && str[i + 1] == 0 && i > 0 && str[i - 1] == '-')
-			exit_minishell(ex, 0);
+			return (0);
 		is_numeric_error(num, str, i, ex);
 		i++;
 	}
 	if (flag == FALSE)
 	{
 		print_error("exit: ", str, ": numeric argument required", 0);
-		exit_minishell(ex, 2);
+		return (2);
 	}
 	return (0);
-}
+}*/
 
 /**
  * @brief Get the new exit number.
@@ -102,7 +104,8 @@ static int	check_numeric_argument(char *str, __int128_t num, t_exec *ex)
  * @param char *cmd - The command
  * @return int - The new exit number
  */
-static int	get_new_exit_num(char *cmd, t_exec *ex)
+/*
+static int	get_new_exit_num(int *error, char *cmd, t_exec *ex)
 {
 	__int128_t	num;
 	int			i;
@@ -110,11 +113,12 @@ static int	get_new_exit_num(char *cmd, t_exec *ex)
 	i = 0;
 	skip_whitespace(cmd, &i);
 	num = atoi_128bits(cmd);
-	check_numeric_argument(&cmd[i], num, ex);
+	if (check_numeric_argument(&cmd[i], num, ex) == 2)
+		*error = 2;
 	if (num > 255 || num < 0)
 		return ((int)(num % 256));
 	return ((int)num);
-}
+}*/
 
 /**
  * @brief Execute the exit command.
@@ -123,18 +127,19 @@ static int	get_new_exit_num(char *cmd, t_exec *ex)
  * @param t_cmd *cmd - The command structure
  * @return int - The exit status
  */
-int	exec_exit(char **cmd_array, t_cmd *cmd, t_exec *ex)
+int	exec_exit(char **cmd_array, t_exec *ex)
 {
-	int		new_exit_num;
-	t_redir	*redir;
+	//int		new_exit_num;
 	int		i;
+	int		error;
 
-	redir = cmd->redir;
-	if (!redir || redir->type != PIPE)
-		ft_putstr_fd("exit\n", 1);
+(void)ex;
+	error = 1;
 	if (cmd_array[1] == NULL)
 		return (g_exit_status);
-	new_exit_num = get_new_exit_num(cmd_array[1], ex);
+	//for compiling //new_exit_num = get_new_exit_num(cmd_array[1], ex, &error);
+	if (error != 1)
+		return (error);
 	if ((cmd_array[2]))
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
@@ -146,5 +151,6 @@ int	exec_exit(char **cmd_array, t_cmd *cmd, t_exec *ex)
 		}
 		return (127);
 	}
-	return (new_exit_num);
+//	return (new_exit_num);
+return (0);
 }

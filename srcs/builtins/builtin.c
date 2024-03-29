@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:47:14 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 15:07:30 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 00:09:21 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	execute_builtin(t_cmd *cmd, t_exec *ex)
 	else if (double_strncmp("env", cmd->array[0]) == 0 && exit_code == 0)
 		exit_code = exec_env(ex);
 	else if (double_strncmp("exit", cmd->array[0]) == 0 && exit_code == 0)
-		exit_code = exec_exit(cmd->array, cmd, ex);
+		exit_code = exec_exit(cmd->array, ex);
 	else if (double_strncmp("export", cmd->array[0]) == 0 && exit_code == 0)
 		exit_code = exec_export(cmd->array, ex);
 	else if (double_strncmp("pwd", cmd->array[0]) == 0 && exit_code == 0)

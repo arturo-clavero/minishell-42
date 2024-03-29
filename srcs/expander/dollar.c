@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:20:47 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 18:46:10 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 02:48:55 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	should_dollar_expand(int curly, char **og, int start, int *end)
 
 	str = ft_strdup(*og);
 	if (curly == TRUE && check_curly_brackets(&str, start) == -1)
-		return (free_data(NULL, (void *)str, -1));
+		return (free_data((void **)&str, -1));
 	while (str[*end] && (ft_isalpha(str[*end]) == TRUE
 			|| (ft_isalnum(str[*end]) == TRUE && *end > start)
 			|| str[*end] == '_'))
@@ -66,16 +66,16 @@ static int	should_dollar_expand(int curly, char **og, int start, int *end)
 		(*end) = 0;
 		if (quotes_are_closed(str, start - 1) == TRUE)
 			delete_char_from_str(start - 1, og);
-		return (free_data(NULL, (void *)str, FALSE));
+		return (free_data((void **)&str, FALSE));
 	}
-	if (str[start] == '$' || str[start] == '?' || str[start] == '0')
+	if (str[start] == '$' || str[start] == '?')
 		(*end)++;
 	if (*end - start == 0 && (!str[*end] || str[*end] == 0))
 	{
 		*end = 0;
-		return (free_data(NULL, (void *)str, FALSE));
+		return (free_data((void **)&str, FALSE));
 	}
-	return (free_data(NULL, (void *)str, TRUE));
+	return (free_data((void **)&str, TRUE));
 }
 
 /**
@@ -98,17 +98,15 @@ static char	*get_dollar_value(char **original, int start, int end, t_exec *ex)
 		value = ft_itoa(g_exit_status);
 	else if (str[start] == '$')
 		value = ft_get_pid();
-	else if (str[start] == '0')
-		value = ft_strdup("minishell");
 	else
 	{
 		if (end < (int)ft_strlen(str))
 			str[end] = '\0';
 		temp = ft_strjoin(str, "=\0");
 		value = ft_strdup(get_env_value(&temp[start], ex->env_list));
-		free_data(NULL, temp, 0);
+		free_data((void **)&temp, 0);
 	}
-	free_data(NULL, str, 0);
+	free_data((void **)&str, 0);
 	return (value);
 }
 
@@ -125,9 +123,9 @@ static char	*get_new_expanded_string(char *str, char *value, char **og, int n)
 	char	*result;
 
 	result = ft_join_3_strings(str, value, &(*og)[n]);
-	free_data(NULL, (void *)str, 1);
-	free_data(NULL, (void *)value, 1);
-	free_data(NULL, (void *)*og, 1);
+	free_data((void **)&str, 1);
+	free_data((void **)&value, 1);
+	free_data((void **)og, 1);
 	return (result);
 }
 
