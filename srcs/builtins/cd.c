@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 17:29:35 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/29 18:42:15 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char	*get_new_dir(char *str)
 		return (NULL);
 	if (double_strncmp(str, "//") == 0)
 		return ("//\0");
+	if (double_strncmp(str, "/") == 0)
+		return ("/\0");
 	i = ft_strlen(str) - 1;
 	while (i >= 0 && (str[i] == ' ' || str[i] == '\t'))
 		i--;
@@ -62,16 +64,16 @@ char	*get_new_dir(char *str)
 	return (str);
 }
 
-int	change_directories(char *new_dir, char *buf, char *og, t_exec *ex)
+int	change_directories(char **new_dir, char *buf, char *og, t_exec *ex)
 {
 	char	*new_value;
 
-	if (chdir(new_dir) == -1)
-		return (general_cd_error(&og, &buf));
+	if (chdir(*new_dir) == -1)
+		return (general_cd_error(&og, &buf, new_dir));
 	if (has_pipe(ex->cmd) == TRUE)
 	{
 		chdir(buf);
-		free_data((void **)&new_dir, 0);
+		free_data((void **)new_dir, 0);
 		free_data((void **)&og, 0);
 		return (free_data((void **)&buf, SUCCESS));
 	}
@@ -80,10 +82,10 @@ int	change_directories(char *new_dir, char *buf, char *og, t_exec *ex)
 	if (new_value == NULL)
 		new_value_error(og, &new_value, ex);
 	update_env("PWD=", new_value, ex);
-	if (double_strncmp(new_dir, "//") == 0)
-		update_env("PWD=", new_dir, ex);
+	if (double_strncmp(*new_dir, "//") == 0)
+		update_env("PWD=", *new_dir, ex);
 	free_data((void **)&og, 0);
-	free_data((void **)&new_dir, 0);
+	free_data((void **)new_dir, 0);
 	free_data((void **)&new_value, 0);
 	return (free_data((void **)&buf, SUCCESS));
 }
@@ -122,9 +124,7 @@ int	max_arguments_ok(char **cmd_array)
 /**
  * @brief Execute the cd command.
  *
- * @param char **cmd_array - free(): double free detected
- * in cache the command array.
- * 
+ * @param char **cmd_array 
  * @param t_cmd *cmd - The command structure
  * @param t_exec *ex - The execution structure
  * @return int - The exit code
@@ -153,5 +153,5 @@ int	exec_cd(char **cmd_array, t_cmd *cmd, t_exec *ex)
 	cd_with_no_arguments(&new_dir, buffer);
 	cd_with_double_dot(&new_dir, buffer);
 	cd_with_dash(&new_dir, ex, &og);
-	return (change_directories(new_dir, buffer, og, ex));
+	return (change_directories(&new_dir, buffer, og, ex));
 }

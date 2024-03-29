@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:55:08 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/29 12:55:19 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:38:22 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ int		ft_count_quotes(char *str);
 int		ft_is_space(int c);
 void	clean_redir(t_redir	*redir);
 void	new_value_error(char *og, char **new_value, t_exec *ex);
-int		general_cd_error(char **og, char **buf);
+int		general_cd_error(char **og, char **buf, char **new_dir);
 
 #endif

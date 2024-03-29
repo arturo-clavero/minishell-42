@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 17:30:41 by uolle             #+#    #+#             */
-/*   Updated: 2024/03/29 17:30:42 by uolle            ###   ########.fr       */
+/*   Created: 2024/03/29 12:29:18 by artclave          #+#    #+#             */
+/*   Updated: 2024/03/29 18:39:13 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,10 @@ void	new_value_error(char *og, char **new_value, t_exec *ex)
 	printf("og: %s\n", og);
 	printf("pre\n");
 	if (ft_strncmp(og, ".\0", ft_strlen(og)) == 0)
-	{
-		printf("post a\n");
-		free_data((void **)new_value, 0);
 		*new_value = ft_strjoin(get_env_value("PWD=", ex->env_list), "/.\0");
-	}
-	printf("post b\n");
 }
 
-int	general_cd_error(char **og, char **buf)
+int	general_cd_error(char **og, char **buf, char **new_dir)
 {
 	if (errno == ENOENT)
 		print_error("cd: ", *og, ": No such file or directory", 0);
@@ -41,5 +36,6 @@ int	general_cd_error(char **og, char **buf)
 	else
 		print_error("cd: ", *og, ": Unkown error", 0);
 	free_data((void **)og, 0);
+	free_data((void **)new_dir, 0);
 	return (free_data((void **)buf, 1));
 }
