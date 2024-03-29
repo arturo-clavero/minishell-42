@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:38:10 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 18:36:12 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:15:44 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,22 +118,10 @@ void	cd_with_double_dot(char **new_dir, char *pwd)
  * @param char *pwd - The current directory
  * @return void
  */
-void	cd_with_no_arguments(char **new_dir, char *pwd)
+void	cd_with_no_arguments(char **new_dir, t_exec *ex)
 {
-	int	i;
-	int	slash_counter;
-
 	if (*new_dir)
 		return ;
 	free_data((void **)new_dir, 0);
-	*new_dir = ft_strdup(pwd);
-	i = -1;
-	slash_counter = 0;
-	while ((*new_dir)[++i] && slash_counter < 3)
-	{
-		if ((*new_dir)[i] == '/')
-			slash_counter++;
-		if (slash_counter == 3)
-			(*new_dir)[i] = '\0';
-	}
+	*new_dir = ft_strdup(get_env_value("HOME=", ex->env_list));
 }
