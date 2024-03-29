@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   double_strncmp.c                                   :+:      :+:    :+:   */
+/*   ft_double_strncmp.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:48:09 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/13 16:48:28 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:10:45 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
  */
 int	double_strncmp(char *str1, char *str2)
 {
+	if (!str1 || !str2)
+		return (1);
 	if (ft_strncmp(str1, str2, ft_strlen(str1)) == 0
 		&& ft_strncmp(str1, str2, ft_strlen(str2)) == 0)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:02:01 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 00:24:59 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:12:07 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	find_env_match(char *new, char *old)
 	char	*temp_old;
 	int		i;
 
+	if (!new || !old)
+		return (FALSE);
 	temp_old = ft_strdup(old);
 	i = find_index_of_char(old, '=');
 	if (i > 0)

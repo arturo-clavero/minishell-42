@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:38:10 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 13:54:52 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:59:09 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,23 @@ void	get_new_dir_dots(char **new_dir, char *pwd)
 	}
 }
 
+int	cd_double_dot_edge_case(char *pwd, char **new_dir)
+{
+	if (double_strncmp(pwd, "//") == 0 || double_strncmp(pwd, "/") == 0)
+	{
+		free_data((void **)new_dir, 0);
+		*new_dir = ft_strdup(pwd);
+		return (TRUE);
+	}
+	if (double_strncmp(pwd, "/home") == 0 || double_strncmp(pwd, "/home/") == 0)
+	{
+		free_data((void **)new_dir, 0);
+		*new_dir = ft_strdup("/");
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
 /**
  * @brief Go back one directory {cd ..} 
  *
@@ -76,6 +93,8 @@ void	cd_with_double_dot(char **new_dir, char *pwd)
 	int	i;
 
 	if (!(*new_dir))
+		return ;
+	if (cd_double_dot_edge_case(pwd, new_dir) == TRUE)
 		return ;
 	i = 0;
 	while ((*new_dir)[i] == ' ' || (*new_dir)[i] == '\t')
