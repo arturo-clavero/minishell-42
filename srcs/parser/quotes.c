@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:24:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 08:36:13 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 09:44:54 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void	trim_quote(char **str, int *i, int *quote)
 }
 
 /**
- * @brief evaluates if quote found should be deleted or not
+ * @brief Evaluates if quote found should be deleted or not
+ *
  * @param str - string where quote was found
  * @return same string with quotes trimmed or not
  */
