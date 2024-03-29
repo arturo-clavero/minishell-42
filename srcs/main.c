@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 18:36:04 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:26:33 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static char	*ft_prompt_display(t_exec *ex)
 	prompt = temp;
 	line = readline(prompt);
 	free_data(NULL, (void *)prompt, -2);
-	if (!line)
-		exit(g_exit_status);
 	if (ft_strlen(line) > 0)
 		add_history(line);
 	return (line);
@@ -52,7 +50,10 @@ void	ft_launch_minishell(t_exec *ex)
 	{
 		line = ft_prompt_display(ex);
 		if (!line)
-			continue ;
+		{
+			ft_putstr_fd("exit\n", 1);
+			exit(g_exit_status);
+		}
 		initialize_parsing(ex);
 		ex->args = line;
 		ft_lexer(ex);
@@ -84,7 +85,6 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	}
 	initialize_minishell(&ex, env);
-	ft_init_signals();
 	ft_launch_minishell(&ex);
 	return (g_exit_status);
 }

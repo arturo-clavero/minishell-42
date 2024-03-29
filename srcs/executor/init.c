@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:20:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 15:22:41 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:25:29 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	initialize_minishell(t_exec *ex, char **env)
 	while (env && env[++i])
 		new_node((void *)env[i], &ex->env_list);
 	change_shlvl(1, ex);
+	ft_init_signals();
 }
 
 /**
