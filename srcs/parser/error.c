@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:32:59 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 20:35:42 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 08:38:07 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	ft_parser_error(t_exec *ex, int status)
 	else if (status == 2)
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
 			STDERR_FILENO);
+	else if (status == 404)
+		ft_putstr_fd(ERROR_NO_CLOSE_QUOTE, STDERR_FILENO);
 	ft_parser_clean(ex, 2);
 }
 

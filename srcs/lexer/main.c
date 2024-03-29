@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 14:59:50 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/29 08:37:54 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	check_unclosed_quotes(t_exec *exec)
 	if (single_q == TRUE || double_q == TRUE)
 	{
 		ft_putstr_fd("minishell: syntax error: unclosed quotes\n", 2);
-		ft_parser_error(exec, 2);
+		ft_parser_error(exec, 404);
 	}
 }
 

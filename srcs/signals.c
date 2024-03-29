@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:07 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/27 23:57:05 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 08:33:18 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,7 @@ static void	ft_handle_signal(int sig)
 void	ft_handle_quit_signal(int sig)
 {
 	if (sig == SIGQUIT)
-	{
-		ft_putstr_fd("Quit: \n", 1);
-		ft_putnbr_fd(sig, 1);
 		ft_putstr_fd("\n", 1);
-	}
 }
 
 /**
