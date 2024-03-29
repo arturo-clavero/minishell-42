@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:29:35 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 21:59:57 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 04:32:42 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,15 @@ void	execution_cmd_error(char *str, t_exec *ex)
 		}
 		exit(print_error(str, ": No such file or directory", NULL, 127));
 	}
-	else if (get_env_value("PATH=", ex->env_list))
+	else if (get_env_value("PATH=", ex->env_list) && ex->cmd->array[0][0] != 0)
 	{
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": command not found\n", 2);
 		exit(127);
 	}
-	exit (print_error(str, ": No such file or directory", NULL, 127));
+	else if (ex->cmd->array[0][0] != 0)
+		exit (print_error(str, ": No such file or directory", NULL, 127));
+	exit(0);
 }
 
 /**

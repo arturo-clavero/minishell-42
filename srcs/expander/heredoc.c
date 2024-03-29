@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:59:49 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 21:58:23 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 01:00:25 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	process_content(char **line, char **doc, t_exec *ex)
 	else
 	{
 		temp = ft_join_3_strings(*doc, *line, "\n\0");
-		free_data(NULL, (void *)(*doc), 0);
+		free_data((void **)doc, 0);
 		*doc = temp;
 	}
-	free_data(NULL, (void *)*line, 0);
+	free_data((void **)line, 0);
 }
 
 /**
@@ -70,15 +70,15 @@ void	open_heredoc(t_redir *redir, t_exec *ex)
 			break ;
 		if (double_strncmp(line, redir->heredoc_buff) == 0)
 		{
-			free_data(NULL, (void *)redir->heredoc_buff, 0);
+			free_data((void **)&(redir->heredoc_buff), 0);
 			redir->heredoc_buff = ft_strdup(doc);
-			free_data(NULL, (void *)doc, 0);
+			free_data((void **)&doc, 0);
 			break ;
 		}
 		else
 			process_content(&line, &doc, ex);
 	}
-	free_data(NULL, (void *)line, 0);
+	free_data((void **)&line, 0);
 }
 
 /**

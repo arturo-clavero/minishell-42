@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:02:01 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 04:47:25 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:24:59 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ int	find_env_match(char *new, char *old)
 		temp_new[i] = '\0';
 	if (double_strncmp(temp_old, temp_new) == 0)
 	{
-		free_data(NULL, (void *)temp_old, 1);
-		free_data(NULL, (void *)temp_new, 1);
+		free_data((void **)&temp_old, 1);
+		free_data((void **)&temp_new, 1);
 		if (ft_strchr(new, '='))
 			return (1);
 		return (0);
 	}
-	free_data(NULL, (void *)temp_old, 0);
-	free_data(NULL, (void *)temp_new, 0);
+	free_data((void **)&temp_old, 0);
+	free_data((void **)&temp_new, 0);
 	return (compare_with_equal_signs(new, old, i));
 }
 
@@ -100,7 +100,7 @@ char	*new_appended_value(char *new, char *old)
 	if (ft_strchr(old, '='))
 		j++;
 	result = ft_strjoin(old, &new[j]);
-	free_data(NULL, (void *)new, 0);
+	free_data((void **)&new, 0);
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 06:22:23 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 23:55:34 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 00:32:21 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ static char	*get_cmd_path_for_exec(char **cmd_array, char **env, t_exec *ex)
 		test_path = ft_join_3_strings(all_paths[i], "/", cmd_array[0]);
 		if (access(test_path, F_OK | X_OK) == 0)
 			break ;
-		free_data(NULL, (void *)test_path, 0);
+		free_data((void **)&test_path, 0);
 	}
 	i = -1;
 	while (all_paths && all_paths[++i])
-		free_data(NULL, (void *)all_paths[i], 0);
-	free_data(NULL, (void *)all_paths, 0);
+		free_data((void **)&all_paths[i], 0);
+	free_data((void **)&all_paths, 0);
 	if (test_path)
 		return (test_path);
 	execution_cmd_error(cmd_array[0], ex);
@@ -92,7 +92,6 @@ void	execute_command(int *id, int curr_cmd, t_cmd *cmd, t_exec *ex)
 		cmd_path = get_cmd_path_for_exec(cmd->array, env, ex);
 		execve(cmd_path, cmd->array, env);
 		execution_cmd_error(cmd->array[0], ex);
-		exit(127);
 	}
 }
 

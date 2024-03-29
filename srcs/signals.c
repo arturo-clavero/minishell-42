@@ -3,36 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:07 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/29 10:52:08y uolle            ###   ########.fr       */
+/*   Updated: 2024/03/29 11:49:55 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Handle the signal.
+ *
+ * @param int sig - The signal to handle.
+ * @return void
+ */
 static void	ft_handle_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
-		ft_putchar_fd('\n', 1);
+		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
 
+/**
+ * @brief Handle quit signal.
+ *
+ * @param int sig - The signal to handle.
+ * @return void
+ */
 void	ft_handle_quit_signal(int sig)
 {
-	(void)sig;
-	ft_putstr_fd("exit\n", 1);
-	g_exit_status = 130;
-	exit(g_exit_status);
+	if (sig == SIGQUIT)
+		ft_putstr_fd("\n", 1);
 }
 
+/**
+ * @brief Initialize the signals.
+ *
+ * @param void
+ * @return void
+ */
 void	ft_init_signals(void)
 {
 	signal(SIGINT, ft_handle_signal);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, ft_handle_quit_signal);
 }

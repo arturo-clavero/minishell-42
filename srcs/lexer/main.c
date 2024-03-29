@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/29 12:48:59 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/29 10:12:38 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_handle_token(t_lexer *lexer, char *str, int i)
  *
  * @param t_exec *exec - The structure of the minishell.
  * @return void
- */
+*/
 static void	check_empty_str(t_exec *exec)
 {
 	int	i;
@@ -79,34 +79,6 @@ static void	check_empty_str(t_exec *exec)
 }
 
 /**
- * @brief Check if the quotes are closed.
- *
- * @param t_exec *exec - The structure of the minishell.
- * @return void
-*/
-static void	check_unclosed_quotes(t_exec *exec)
-{
-	char	*str;
-	int		i;
-	int		double_q;
-	int		single_q;
-
-	double_q = FALSE;
-	single_q = FALSE;
-	str = exec->args;
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '"' && single_q == FALSE)
-			double_q ^= 1;
-		if (str[i] == '\'' && double_q == FALSE)
-			single_q ^= 1;
-	}
-	if (single_q == TRUE || double_q == TRUE)
-		ft_parser_error(exec, 404);
-}
-
-/**
  * @brief The main function of the lexer.
  *
  * @param t_exec *exec - The structure of the minishell.
@@ -118,7 +90,6 @@ void	ft_lexer(t_exec *exec)
 	int	j;
 
 	check_empty_str(exec);
-	check_unclosed_quotes(exec);
 	i = 0;
 	while (exec->args[i])
 	{
