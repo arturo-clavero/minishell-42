@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:04:37 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 15:24:13 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:32:43 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	exec_exit(char **cmd, t_exec *ex)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		exit_code = 127;
-		if (str_is_numerical(cmd[2]) == TRUE)
+		if (str_is_numerical(cmd[1]) == TRUE)
 			exit_code = 1;
 	}
 	if (ex->total_pipes > 0 || cmd[2])
