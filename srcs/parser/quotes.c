@@ -6,7 +6,7 @@
 /*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:24:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/27 23:56:23 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 08:36:13 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static t_cmd	*handle_quotes(t_cmd *cmd, t_exec *ex)
 	if (dq == OPEN || sq == OPEN)
 	{
 		clean_t_cmd(cmd, ex);
-		ft_putstr_fd(ERROR_NO_CLOSE_QUOTE, STDERR_FILENO);
 		ft_parser_error(ex, 404);
 	}
 	return (cmd);
