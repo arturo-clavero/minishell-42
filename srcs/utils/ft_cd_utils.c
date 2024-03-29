@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:38:10 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 17:31:37 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/29 18:36:12 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	get_new_dir_dots(char **new_dir, char *pwd)
 		if ((*new_dir)[i] == '/')
 		{
 			(*new_dir)[i] = '\0';
-			if (!(i + 1 < (int)ft_strlen(pwd) - -1 && (*new_dir)[i] == '.')
+			if (!(i + 1 < (int)ft_strlen(pwd) - 1 && (*new_dir)[i] == '.')
 				&& !(i > 0 && (*new_dir)[i - 1] == '.'))
 			{
 				if (flag <= 0)
@@ -66,7 +66,7 @@ void	get_new_dir_dots(char **new_dir, char *pwd)
 
 int	cd_double_dot_edge_case(char *pwd, char **new_dir)
 {
-	if (double_strncmp(pwd, "//") == 0 || double_strncmp(pwd, "/") == 0)
+	if (double_strncmp(pwd, "//") == 0)
 	{
 		free_data((void **)new_dir, 0);
 		*new_dir = ft_strdup(pwd);
@@ -82,7 +82,7 @@ int	cd_double_dot_edge_case(char *pwd, char **new_dir)
 }
 
 /**
- * @brief Go back one directory {cd ..}
+ * @brief Go back one directory {cd ..} 
  *
  * @param char **new_dir - The new directory
  * @param char *pwd - The current directory

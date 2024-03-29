@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:29:35 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 16:04:00 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 18:41:46 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	execution_cmd_error(char *str, t_exec *ex)
 	}
 	else if (ex->cmd->array[0][0] != 0)
 		exit (print_error(str, ": No such file or directory", NULL, 127));
-	exit(0);
 }
 
 /**

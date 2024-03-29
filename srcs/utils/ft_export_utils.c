@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 17:31:09 by uolle             #+#    #+#             */
-/*   Updated: 2024/03/29 17:31:10 by uolle            ###   ########.fr       */
+/*   Created: 2024/02/11 12:58:52 by artclave          #+#    #+#             */
+/*   Updated: 2024/03/29 18:35:35 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * @brief checks syntax of the first char of variable name
- *
+ * 
  * @param char *cmd_array - current string being modified
  * @param char *orginal_cmd - initial string prior to any modifications
  * @return int (0) no errors, (1) errors
@@ -34,7 +34,7 @@ int	is_variable_start_valid(char *cmd_array, char *original)
 
 /**
  * @brief checks syntax of variable name
- *
+ * 
  * @param char *cmd_array - current string being modified
  * @param char *original_cmd - initial string prior to any modifications
  * @return int (0) no errors, (1) errors
@@ -63,7 +63,7 @@ int	is_variable_content_valid(char **cmd, char *original_cmd, int *add_flag)
 
 /**
  * @brief checks if new_min should be printed next
- *
+ * 
  * @param t_list *env - environment list
  * @param char *new_min - next possible string to be printed
  * @param char *old_min - last string printed
@@ -114,8 +114,8 @@ static void	print_export_syntax(char *new_min)
 }
 
 /**
- * @brief	prints environment list in alphabetical order
- *
+ * @brief	prints environment list in alphabetical order 
+ * 
  * @param t_list *env - environment list
  * @param t_list *head - copy of environment list
  * @return void

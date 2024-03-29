@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:24:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 09:44:54 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/29 18:41:33 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ static void	trim_quote(char **str, int *i, int *quote)
 	*quote ^= 1;
 	delete_char_from_str(*i, str);
 	*i = *i - 1;
+}
+
+static void	ft_quote_error(int dq, int sq, t_cmd *cmd, t_exec *ex)
+{
+	if (dq == OPEN || sq == OPEN)
+	{
+		clean_t_cmd(cmd, ex);
+		ft_parser_error(ex, 404);
+	}
 }
 
 /**
@@ -58,11 +67,7 @@ static t_cmd	*handle_quotes(t_cmd *cmd, t_exec *ex)
 				trim_quote(&(cmd->array[i]), &j, &dq);
 		}
 	}
-	if (dq == OPEN || sq == OPEN)
-	{
-		clean_t_cmd(cmd, ex);
-		ft_parser_error(ex, 404);
-	}
+	ft_quote_error(dq, sq, cmd, ex);
 	return (cmd);
 }
 
