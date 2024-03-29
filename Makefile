@@ -23,7 +23,7 @@ LIBS_FLAGS   = -L$(LIBSDIR) -lft -lreadline #-L/opt/homebrew/Cellar/readline/8.2
 
 # -- Compilation flags
 CC = cc
-C_FLAGS = -Werror -Wall -Wextra -fsanitize=address
+C_FLAGS = -Werror -Wall -Wextra # -fsanitize=address
 RL_FLAGS = -l readline
 RM = rm -rf
 MKDIR = mkdir -p
