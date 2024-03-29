@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:29:35 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 04:32:42 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:04:00 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	execution_cmd_error(char *str, t_exec *ex)
 		}
 		exit(print_error(str, ": No such file or directory", NULL, 127));
 	}
-	else if (get_env_value("PATH=", ex->env_list) && ex->cmd->array[0][0] != 0)
+	else if (get_env_value("PATH=", ex->env_list))
 	{
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": command not found\n", 2);
