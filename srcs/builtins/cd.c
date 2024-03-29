@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 17:15:21 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:29:35 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,9 @@ int	max_arguments_ok(char **cmd_array)
 /**
  * @brief Execute the cd command.
  *
- * @param char **cmd_array - free(): double free detected in tcache 2The command array
+ * @param char **cmd_array - free(): double free detected
+ * in cache the command array.
+ * 
  * @param t_cmd *cmd - The command structure
  * @param t_exec *ex - The execution structure
  * @return int - The exit code
