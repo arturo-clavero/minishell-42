@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/29 15:41:32 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:28:05 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	ft_launch_minishell(t_exec *ex)
 int	main(int argc, char **argv, char **env)
 {
 	t_exec	ex;
-
 
 	if (argc != 1 || argv[0] == NULL)
 	{

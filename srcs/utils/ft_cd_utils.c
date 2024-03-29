@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:38:10 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 16:59:09 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:31:37 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	cd_with_dash(char **new_dir, t_exec *ex, char **og)
 void	get_new_dir_dots(char **new_dir, char *pwd)
 {
 	int	i;
-	int flag;
+	int	flag;
 
 	i = ft_strlen(*new_dir);
 	flag = 0;
@@ -52,11 +52,11 @@ void	get_new_dir_dots(char **new_dir, char *pwd)
 		if ((*new_dir)[i] == '/')
 		{
 			(*new_dir)[i] = '\0';
-			if (!(i + 1 < (int)ft_strlen(pwd)- - 1 && (*new_dir)[i] == '.')
+			if (!(i + 1 < (int)ft_strlen(pwd) - -1 && (*new_dir)[i] == '.')
 				&& !(i > 0 && (*new_dir)[i - 1] == '.'))
 			{
 				if (flag <= 0)
-					break;
+					break ;
 				flag -= 100;
 			}
 			flag += 1;
@@ -82,7 +82,7 @@ int	cd_double_dot_edge_case(char *pwd, char **new_dir)
 }
 
 /**
- * @brief Go back one directory {cd ..} 
+ * @brief Go back one directory {cd ..}
  *
  * @param char **new_dir - The new directory
  * @param char *pwd - The current directory
