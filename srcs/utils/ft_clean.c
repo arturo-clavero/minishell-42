@@ -6,11 +6,13 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 04:12:45 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 00:27:04 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:14:40 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//do I need ot include global here?
 
 /**
  * @brief Exit the minishell and free structure.
@@ -19,13 +21,15 @@
  * @param int exit_num - The exit number
  * @return void
  */
-void	exit_minishell(t_exec *ex, int exit_num)
+int	exit_minishell(t_exec *ex, int exit_num)
 {
 	clean_t_cmd(ex->cmd, ex);
 	clean_list(ex->env_list, FALSE);
 	clean_list(ex->short_term_data, TRUE);
 	clean_list(ex->long_term_data, TRUE);
+	g_exit_status = exit_num;
 	exit(exit_num);
+	return (0);
 }
 
 /**
