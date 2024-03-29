@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 23:42:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/29 03:44:03 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:14:59 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ int					find_index_of_char(char *str, char c);
 int					change_shlvl(int change, t_exec *ex);
 void				wait_for_child_exit_status(t_exec *ex);
 void				maybe_quit_program(t_exec *ex);
-void				exit_minishell(t_exec *ex, int exit_num);
+int					exit_minishell(t_exec *ex, int exit_num);
 void				clean_list(t_list *list, int clean_content);
 void				clean_t_cmd(t_cmd *cmd, t_exec *ex);
 void				add_data_to_cleanup_list(void *content, t_list **list);
