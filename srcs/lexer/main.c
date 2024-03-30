@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 21:24:45 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/29 10:12:38 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/30 17:15:04 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_handle_quote(char *str, int i, char quote)
 	int	n;
 
 	n = 0;
-	if (str[i + n] == quote)
+	if ((int)ft_strlen(str) > (i + n + 1) && str[i + n] == quote)
 	{
 		n++;
 		while (str[i + n] && str[i + n] != quote)
@@ -61,7 +61,7 @@ int	ft_handle_token(t_lexer *lexer, char *str, int i)
  *
  * @param t_exec *exec - The structure of the minishell.
  * @return void
-*/
+ */
 static void	check_empty_str(t_exec *exec)
 {
 	int	i;
