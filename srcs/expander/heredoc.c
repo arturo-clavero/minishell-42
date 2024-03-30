@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:59:49 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/30 16:18:16 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:02:32 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	heredoc_quotes(t_redir *rd, t_exec *ex)
 	int	dq;
 	int	sq;
 
-	if (!(rd->heredoc_buff) || (rd->heredoc_buff)[0] == 0)
-		return ;
 	dq = CLOSED;
 	sq = CLOSED;
 	i = -1;
