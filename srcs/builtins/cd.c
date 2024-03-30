@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:04:27 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 19:15:21 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:41:23 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,21 @@ int	change_directories(char **new_dir, char *buf, char *og, t_exec *ex)
 {
 	char	*new_value;
 
+	new_value = NULL;
 	if (chdir(*new_dir) == -1)
 		return (general_cd_error(&og, &buf, new_dir));
-	if (has_pipe(ex->cmd) == TRUE)
+	new_value = getcwd(new_value, MAX_PATH_LINUX);
+	if (new_value == NULL)
+		new_value_error(og, &new_value, ex);
+	if (ex->cmd->next)
 	{
 		chdir(buf);
 		free_data((void **)new_dir, 0);
 		free_data((void **)&og, 0);
+		free_data((void **)&new_value, 0);
 		return (free_data((void **)&buf, SUCCESS));
 	}
 	update_env("OLDPWD=", buf, ex);
-	new_value = ft_strdup(getcwd(buf, MAX_PATH_LINUX));
-	if (new_value == NULL)
-		new_value_error(og, &new_value, ex);
 	update_env("PWD=", new_value, ex);
 	if (double_strncmp(*new_dir, "//") == 0)
 		update_env("PWD=", *new_dir, ex);

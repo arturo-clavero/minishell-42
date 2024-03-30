@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 12:29:18 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 18:39:13 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:41:35 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	new_value_error(char *og, char **new_value, t_exec *ex)
 	ft_putstr_fd("cd: error retrieving current directory: ", 2);
 	ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
 	ft_putstr_fd("No such file or directory\n", 2);
-	printf("og: %s\n", og);
-	printf("pre\n");
 	if (ft_strncmp(og, ".\0", ft_strlen(og)) == 0)
 		*new_value = ft_strjoin(get_env_value("PWD=", ex->env_list), "/.\0");
 }

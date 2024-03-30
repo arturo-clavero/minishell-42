@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:46:56 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 00:33:06 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:40:39 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	exec_export(char **cmd_array, t_exec *ex)
 	int		error;
 
 	error = 0;
-	if (has_pipe(ex->cmd) == TRUE && cmd_array[1])
+	if (ex->cmd->next && cmd_array[1])
 		return (0);
 	i = 0;
 	while (cmd_array[++i])
