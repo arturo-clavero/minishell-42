@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:47:14 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 19:30:46 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/30 12:17:42 by ugolin-olle      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		g_exit_status;
 
 /**
  * @brief Check if the command is a builtin
