@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:16:32 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 20:35:46 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/30 14:47:58 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ static int	ft_count_tokens(t_lexer *lexer)
 	consecutive_count = 0;
 	while (lexer)
 	{
-		if (lexer->token != WORD && lexer->token != UNINITIALIZED)
+		if (lexer->token != WORD && lexer->token != UNINITIALIZED
+			&& lexer->token != PIPE && lexer->token != INFILE
+			&& lexer->token != HEREDOC)
 		{
 			consecutive_count++;
 			if (consecutive_count == 3)
@@ -84,18 +86,13 @@ static void	ft_double_pipes(t_lexer *lexer, t_exec *ex)
 	{
 		if (lexer->token == PIPE)
 		{
-			if (lexer->next && (lexer->next->token == PIPE
-					|| lexer->next->token == INFILE))
+			if (lexer->next && lexer->next->token == PIPE)
 				ft_syntax_error(ex, lexer->next->token, STDERR_FILENO);
 			else if (lexer->prev && (lexer->prev->token == APPEND
 					|| lexer->prev->token == OUTFILE
 					|| lexer->prev->token == INFILE
 					|| lexer->prev->token == HEREDOC))
 				ft_syntax_error(ex, lexer->token, STDERR_FILENO);
-			else if (lexer->next && (lexer->next->token == APPEND
-					|| lexer->next->token == INFILE
-					|| lexer->next->token == HEREDOC))
-				ft_syntax_error(ex, lexer->next->token, STDERR_FILENO);
 			else if (lexer->prev && lexer->prev->token == OUTFILE)
 				ft_syntax_error(ex, PIPE, STDERR_FILENO);
 		}
