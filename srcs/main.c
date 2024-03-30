@@ -6,7 +6,7 @@
 /*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/29 19:09:57 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/30 12:29:22 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,14 @@
  * @param void
  * @return char * The command entered by the user.
  */
-static char	*ft_prompt_display(t_exec *ex)
+static char	*ft_prompt_display(void)
 {
 	char	*line;
 	char	*prompt;
 	char	*temp;
 
-	prompt = ft_strjoin(RED "[MINISHELL]:" BLUE, get_env_value("PWD=",
-				ex->env_list));
-	temp = ft_strjoin(prompt, " $> " RESET);
+	prompt = ft_strjoin("[MINISHELL]:", getcwd(NULL, 0));
+	temp = ft_strjoin(prompt, " $> ");
 	free(prompt);
 	prompt = temp;
 	line = readline(prompt);
@@ -48,7 +47,7 @@ void	ft_launch_minishell(t_exec *ex)
 
 	while (1)
 	{
-		line = ft_prompt_display(ex);
+		line = ft_prompt_display();
 		if (!line)
 		{
 			ft_putstr_fd("exit\n", 1);
