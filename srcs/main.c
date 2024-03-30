@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:11:21 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/30 12:30:08 by uolle            ###   ########.fr       */
+/*   Updated: 2024/03/30 16:15:33 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ static char	*ft_prompt_display(void)
 	char	*prompt;
 	char	*temp;
 
-	prompt = ft_strjoin("[MINISHELL]:", getcwd(NULL, 0));
+	temp = getcwd(NULL, 0);
+	prompt = ft_strjoin("[MINISHELL]:", temp);
+	free(temp);
 	temp = ft_strjoin(prompt, " $> ");
 	free(prompt);
 	prompt = temp;

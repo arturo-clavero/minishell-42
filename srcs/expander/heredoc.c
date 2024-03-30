@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:59:49 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 01:00:25 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:18:16 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,37 @@ void	process_content(char **line, char **doc, t_exec *ex)
 		*doc = temp;
 	}
 	free_data((void **)line, 0);
+}
+
+void	heredoc_quotes(t_redir *rd, t_exec *ex)
+{
+	int	i;
+	int	dq;
+	int	sq;
+
+	if (!(rd->heredoc_buff) || (rd->heredoc_buff)[0] == 0)
+		return ;
+	dq = CLOSED;
+	sq = CLOSED;
+	i = -1;
+	while ((rd->heredoc_buff)[++i])
+	{
+		if ((rd->heredoc_buff[i] == '\'' && dq == OPEN)
+			|| (rd->heredoc_buff[i] == '"'
+				&& sq == OPEN))
+			continue ;
+		else if (rd->heredoc_buff[i] == '\'')
+			trim_quote(&rd->heredoc_buff, &i, &sq);
+		else if (rd->heredoc_buff[i] == '"')
+			trim_quote(&(rd->heredoc_buff), &i, &dq);
+	}
+	if (dq == OPEN || sq == OPEN)
+	{
+		ft_putstr_fd(ERROR_NO_CLOSE_QUOTE, 2);
+		clean_t_cmd(ex->cmd, ex);
+		clean_list(ex->short_term_data, TRUE);
+		ft_launch_minishell(ex);
+	}
 }
 
 /**
@@ -97,7 +128,10 @@ void	heredoc(t_exec *ex)
 		while (redir)
 		{
 			if (redir->type == HEREDOC && redir->heredoc_buff)
+			{
+				heredoc_quotes(redir, ex);
 				open_heredoc(redir, ex);
+			}
 			redir = redir->next;
 		}
 		cmd = cmd->next;

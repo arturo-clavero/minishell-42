@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/28 14:30:58 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:22:53 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,10 @@ void	ft_add_cmd(t_cmd **node, t_lexer *lexer, t_exec *ex)
 	{
 		if (lexer->str && lexer->token == WORD)
 			(*node)->array[++i] = ft_strdup(lexer->str);
-		if (lexer->token != WORD)
-			ft_add_redir(node, &lexer);
-		if (lexer->token == PIPE)
-		{
-			if ((*node)->array && (*node)->array[0])
+		else if (lexer->token == PIPE)
 				break ;
-		}
+		else if (lexer->token != WORD)
+			ft_add_redir(node, &lexer);
 		lexer = lexer->next;
 	}
 	if ((*node)->array)

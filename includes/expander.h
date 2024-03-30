@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugolin-olle <ugolin-olle@student.42.fr>    +#+  +:+       +#+        */
+/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:34:34 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/28 20:34:10 by ugolin-olle      ###   ########.fr       */
+/*   Updated: 2024/03/30 15:51:46 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		expand_dollar(char **original, int start, t_exec *ex, int curly);
 char	*modify_str_for_expansion(char *input);
 void	quotes(t_cmd *cmd, t_exec *ex);
 void	heredoc(t_exec *ex);
+void	trim_quote(char **str, int *i, int *quote);
 
 #endif

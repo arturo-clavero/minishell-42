@@ -6,7 +6,7 @@
 /*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:24:59 by artclave          #+#    #+#             */
-/*   Updated: 2024/03/29 18:41:33 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:06:40 by artclave         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param other - int ndicating type of quote not found,
  * and if we are in/ or outside this quote type (single or double)
  */
-static void	trim_quote(char **str, int *i, int *quote)
+void	trim_quote(char **str, int *i, int *quote)
 {
 	*quote ^= 1;
 	delete_char_from_str(*i, str);
