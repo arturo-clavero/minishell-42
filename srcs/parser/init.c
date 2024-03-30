@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artclave <artclave@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uolle <uolle@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:55:23 by ugolin-olle       #+#    #+#             */
-/*   Updated: 2024/03/30 15:22:53 by artclave         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:00:42 by uolle            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	ft_add_redir(t_cmd **node, t_lexer **lexer)
  */
 void	ft_add_cmd(t_cmd **node, t_lexer *lexer, t_exec *ex)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	while (lexer)
@@ -129,7 +129,7 @@ void	ft_add_cmd(t_cmd **node, t_lexer *lexer, t_exec *ex)
 		if (lexer->str && lexer->token == WORD)
 			(*node)->array[++i] = ft_strdup(lexer->str);
 		else if (lexer->token == PIPE)
-				break ;
+			break ;
 		else if (lexer->token != WORD)
 			ft_add_redir(node, &lexer);
 		lexer = lexer->next;
